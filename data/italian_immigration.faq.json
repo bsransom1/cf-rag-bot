@@ -1,0 +1,211 @@
+[
+  {
+    "question": "What is the codice fiscale?",
+    "answer": "The Italian term \"codice fiscale\" is commonly translated as \"tax code,\" \"fiscal code,\" or \"tax number.\" The Italian codice fiscale is an Italian identification code — an alphanumeric code of 16 characters. The personal codice fiscale is the result of a formula applied to a person's name, date and place of birth. It serves to unambiguously identify individuals irrespective of citizenship or residency status.",
+    "plain_english": "Think of it as Italy's version of a Social Security Number. It's a 16-character code that identifies you in any official Italian context — banks, government offices, property deals, universities. You need it any time Italy needs to know who you are.",
+    "section": "1.1",
+    "category": "definition",
+    "tags": ["definition", "overview", "identifier"]
+  },
+  {
+    "question": "Is the codice fiscale the same as a Social Security Number?",
+    "answer": "It is similar in function to a Social Security Number (SSN) in the United States or the National Insurance Number issued in the United Kingdom, but it is not identical. It is used to identify individuals in dealings with Italian public administrations, private individuals, and entities — not solely for tax purposes.",
+    "plain_english": "Similar idea, different country. It plays the same role as a Social Security Number in the US — a unique ID the government uses to track you in official records. But it's specific to Italy, and anyone can get one, even if you've never set foot there.",
+    "section": "1.1",
+    "category": "definition",
+    "tags": ["ssn", "comparison", "definition"]
+  },
+  {
+    "question": "Does having a codice fiscale mean I owe Italian taxes?",
+    "answer": "No. Having an Italian tax code does not imply any tax duty. You are subject to Italian tax duties only if one of the following applies: (i) you own or inherit certain qualifying Italian assets such as real estate; (ii) you are an Italian tax resident; or (iii) you earn Italian taxable income, such as rental income.",
+    "plain_english": "No — just having the number doesn't mean Italy can tax you. You'd only owe Italian taxes if you live in Italy, own property there, or earn money from Italian sources. Getting the code is just getting an ID. That's it.",
+    "section": "1.1",
+    "category": "definition",
+    "tags": ["taxes", "obligations", "residency"]
+  },
+  {
+    "question": "Does the codice fiscale expire?",
+    "answer": "No. The Italian codice fiscale never expires. Once you obtain your codice fiscale it is valid forever. However, if you change your legal name or acquire a new legal name — for example, upon marriage or obtaining Italian citizenship — you may be required to obtain a new Italian tax code.",
+    "plain_english": "Once you have it, you have it for life. The only time you'd need a new one is if your legal name changes significantly — for example, after marriage if your name on official documents changes.",
+    "section": "1.1",
+    "category": "definition",
+    "tags": ["expiration", "validity", "name-change"]
+  },
+  {
+    "question": "What is the plastic codice fiscale card?",
+    "answer": "In the past, each person in Italy was issued a paper or plastic card bearing the tax code along with personal details. Today, the fiscal code card has been replaced by a combined Italian health insurance card for qualifying residents, which shows an expiration date. The plastic tax code card has the same validity as the Italian tax code certificate and can only be issued if you have an Italian address and specifically request it through the Italian Revenue Office.",
+    "section": "1.1",
+    "category": "definition",
+    "tags": ["card", "health-insurance", "physical-document"]
+  },
+  {
+    "question": "When do I need a codice fiscale?",
+    "answer": "It is mandatory to have an Italian tax code for a number of Italian activities, including: opening an Italian bank account, starting an Italian court dispute, buying or inheriting Italian property, registering a preliminary contract for a property purchase, buying a mobile phone number, applying for a utility connection, obtaining an Italian mortgage, renting a property for more than 30 days, enrolling at an Italian university, signing a lease, and any administrative procedure or legal or contractual activity involving Italian public or private entities.",
+    "plain_english": "Basically any time Italy needs to identify you officially. Buying a house, opening a bank account, renting an apartment, enrolling in school, getting a phone plan — all of these require the code. If you're doing anything formal in Italy, assume you'll need it.",
+    "section": "1.2",
+    "category": "usage",
+    "tags": ["usage", "requirements", "banking", "property", "university", "lease"]
+  },
+  {
+    "question": "Can I use my generated codice fiscale on official documents right away?",
+    "answer": "In most practical situations, yes. The codice fiscale is computed using a fully deterministic algorithm published by Italy's tax authority. Your generated code is mathematically identical to the one they would officially issue — it simply has not yet been registered in their system. You can use it on any form that requires it — for example, to show interest in purchasing a property, to enroll at a university, or to open a bank account — while the official registration proceeds in parallel.",
+    "plain_english": "Yes, in most cases. The code our generator produces is the exact same code Italy would give you — it's just not in their system yet. Think of it like knowing your passport number before the physical passport arrives. You can fill in the field, move the process forward, and get it officially registered in the background through a lawyer. By the time any paperwork is processed, you're covered.",
+    "section": "1.2",
+    "category": "usage",
+    "tags": ["generator", "registration", "usage", "pre-registration"]
+  },
+  {
+    "question": "I already have a codice fiscale from years ago but lost the certificate. What do I do?",
+    "answer": "If you believe you were already assigned an Italian tax code, you can first calculate it using any online codice fiscale generator (including this one) to determine what your code should be. You can then verify whether it is valid and currently registered at the Italian Revenue Office's (Agenzia delle Entrate) official verification webpage. If an Italian codice fiscale was assigned to you but you have misplaced the official certificate, you can apply for a duplicate certificate following the same procedure as a first-time application. For a duplicate, you do not need to provide a visa or entry stamp even if you are not an EU or Schengen citizen.",
+    "section": "1.2",
+    "category": "usage",
+    "tags": ["lost-certificate", "duplicate", "verification"]
+  },
+  {
+    "question": "How is the codice fiscale assigned?",
+    "answer": "The codice fiscale is assigned by birth to Italians and upon request to non-Italians. It can be requested and obtained for children as well as adults. For a child's application, additional documentation is required in the form of a parent's passport.",
+    "section": "1.3",
+    "category": "acquisition",
+    "tags": ["assignment", "children", "application"]
+  },
+  {
+    "question": "How do I get an official codice fiscale?",
+    "answer": "Depending on your situation, you may be able to apply for free through one of the following channels: (1) directly at any Italian tax office (Agenzia delle Entrate) in Italy, if you qualify and can make an appointment; (2) through an Italian Consular Office or Embassy in your home country; or (3) through a licensed Italian representative, such as a lawyer or accountant, who can apply on your behalf remotely. Both the Italian tax office and consulate routes can be challenging — offices may require conditions to be met in advance, appointments may have long waits, and some consulates have become significantly more restrictive since July 2024.",
+    "plain_english": "Three options: go to a tax office in Italy in person, apply through your local Italian consulate (slow, and getting harder since 2024), or hire an Italian lawyer to do it for you remotely — which is by far the easiest and fastest route if you're not in Italy. Studio Legale Metta can handle it in about 3 days.",
+    "section": "1.3",
+    "category": "acquisition",
+    "tags": ["application", "tax-office", "consulate", "representative"]
+  },
+  {
+    "question": "Can I apply through an Italian Consulate or Embassy?",
+    "answer": "Yes, but policies vary by location and have become significantly stricter since July 15, 2024. For example, the Embassy of Italy in Washington D.C. now requires that those engaging in long-term activities in Italy first attempt to request the codice fiscale through a delegated representative in Italy. If that representative is unable to obtain it, written proof of the failed attempt must be provided. Due to high demand, priority is given to Italian taxpayers, citizens, and those applying for a visa where a codice fiscale is expressly required. Delays are to be expected.",
+    "section": "1.3",
+    "category": "acquisition",
+    "tags": ["consulate", "embassy", "2024-policy"]
+  },
+  {
+    "question": "How long does it take to get an official codice fiscale?",
+    "answer": "If you qualify to apply directly at an Italian tax office in Italy, it is issued on the same day at the appointment (over the counter). If you apply through an Italian Consulate or Embassy in your home country, it may take anywhere from a few days to several weeks, depending on their policies and workload. Some Italian Consulates may be unresponsive. Through a licensed representative service such as Studio Legale Metta, you can obtain the official tax code certificate completely remotely in as quickly as 3 days.",
+    "plain_english": "Fastest is in-person at an Italian tax office — same day. Through your Italian consulate abroad, expect anywhere from a few days to several weeks, and some never respond at all. Through a lawyer like Studio Legale Metta, you're typically looking at around 3 days, fully remote.",
+    "section": "1.3",
+    "category": "acquisition",
+    "tags": ["timeline", "processing-time"]
+  },
+  {
+    "question": "What documents do I need to apply for a codice fiscale?",
+    "answer": "If you are a citizen of the European Union or a Schengen country, you need your passport and, in some cases, proof of address such as a bank statement or utility bill. If you are not an EU or Schengen citizen, you need a copy of your current passport plus one of the following: (a) an entry stamp from Italy or any EU or Schengen country, no older than 3 months; (b) a current visa issued by Italy or any EU or Schengen country; or (c) a special proxy prepared by a lawyer or accountant explaining why you need the codice fiscale. If you do not have a current visa or entry stamp and are applying through Studio Legale Metta, a special proxy must be prepared, which involves additional processing time and an additional fee of $135.",
+    "plain_english": "EU passport holders: just your passport, maybe proof of address. Everyone else: passport plus either a recent Italian or European entry stamp, a current visa, or a document from a lawyer explaining why you need the code. No visa or stamp? A lawyer can prepare the paperwork for you, though there's an extra fee for that.",
+    "section": "1.3",
+    "category": "acquisition",
+    "tags": ["documents", "eu", "non-eu", "visa", "passport"]
+  },
+  {
+    "question": "Can I apply for a codice fiscale remotely, without going to Italy or a consulate?",
+    "answer": "Yes. Studio Legale Metta provides a codice fiscale service as professional delegated representatives who can apply for and obtain a tax code certificate on your behalf, completely remotely, without you needing to personally deal with Italian tax authorities or provide documents that may be difficult or time-consuming to retrieve. The process can be completed in as quickly as 3 days and does not require your birth certificate.",
+    "section": "1.3",
+    "category": "acquisition",
+    "tags": ["remote", "representative", "studio-legale-metta"]
+  },
+  {
+    "question": "I am a dual citizen. Which passport should I use when applying?",
+    "answer": "To determine the Italian tax code, the place of birth is relevant, not the citizenship. Therefore, if your name on both passports is identical, it does not matter which passport you use. If one of your passports is from the EU, using that one typically streamlines the process compared to a non-EU passport. If your two passports carry different names — for example, an Italian passport with your maiden name and a non-EU passport with your married name — the passport you use will affect your tax code. In this case, it is advisable to consult a professional before applying, as proper planning may avoid significant issues and costly formalities to correct the record later.",
+    "section": "1.4",
+    "category": "edge-cases",
+    "tags": ["dual-citizen", "passport", "name-difference"]
+  },
+  {
+    "question": "I am an Italian citizen living abroad. How do I apply?",
+    "answer": "Adult Italian citizens registered with AIRE (Registry of Italians Residing Abroad) may apply for a tax identification number for themselves and their minor children through the Italian government's online Fast It portal. Once the application is processed by the Consulate, you can download the certificate directly from the portal. If you already have a tax identification number, you can also download the certificate directly through Fast It without Consulate intervention.",
+    "section": "1.4",
+    "category": "edge-cases",
+    "tags": ["aire", "italian-citizen", "fast-it", "expat"]
+  },
+  {
+    "question": "I am a foreign citizen coming to Italy to study. How do I get a codice fiscale?",
+    "answer": "If you will stay less than 90 days, you may request the tax identification number at any office of the Italian Revenue Agency. If you will stay more than 90 days, you must first apply for a residence permit at the Questura (Provincial Police Headquarters), during which you will receive the tax identification number as part of that process.",
+    "section": "1.4",
+    "category": "edge-cases",
+    "tags": ["student", "residence-permit", "questura", "short-stay", "long-stay"]
+  },
+  {
+    "question": "When I receive my official codice fiscale certificate, what should I check?",
+    "answer": "When you receive the Italian tax code certificate, the first thing to do is verify it carefully. Make sure all information is fully consistent with the information on your identification document, such as your passport. Typos and inconsistencies are not uncommon, especially when foreign names are involved. If you detect a typo, request a correction immediately.",
+    "section": "1.4",
+    "category": "edge-cases",
+    "tags": ["verification", "typo", "certificate-check"]
+  },
+  {
+    "question": "How does the CodiceFiscale.ai generator work?",
+    "answer": "The codice fiscale is computed using a fully deterministic algorithm established by Italy's Ministry of Economy and Finances on December 23, 1976. The algorithm takes your surname, first name (including any middle names), date of birth, gender, and place of birth, and computes a unique 16-character alphanumeric code. Because the algorithm is deterministic, the same inputs always produce the same code — meaning our generated code is mathematically identical to the one the Italian tax authority would issue.",
+    "plain_english": "You enter your name, birthday, gender, and where you were born — and the calculator runs the official Italian government formula on your data. There's no randomness involved. The same person will always get the same code, every time, on any calculator that uses the correct algorithm. We use the official one.",
+    "section": "1.5",
+    "category": "generator",
+    "tags": ["algorithm", "generator", "deterministic"]
+  },
+  {
+    "question": "Is the generated code the same as the official one?",
+    "answer": "Yes. The codice fiscale algorithm is public and deterministic. The code generated by this tool is mathematically identical to the one the Agenzia delle Entrate would compute. The only difference is that it has not yet been officially registered in the Italian tax authority's system. Once you register it — through a licensed representative or directly — your code becomes fully active and usable for all official purposes.",
+    "plain_english": "Yes — same code. The Italian government uses a fixed formula, and so do we. The difference is that your code isn't in their database yet. Getting it officially registered is a separate step — that's what a lawyer handles. But the number itself? Identical.",
+    "section": "1.5",
+    "category": "generator",
+    "tags": ["generator", "registration", "official"]
+  },
+  {
+    "question": "What is omocodia?",
+    "answer": "Omocodia occurs when two different people yield the same computed codice fiscale. This is most common among people born in foreign countries, where the 4-character place code is a country code rather than a unique municipality code. When this happens, the Italian fiscal administration resolves the conflict by substituting certain numeric digits in the code with letters, starting from the rightmost digit. The check character is then recalculated. Our generator produces the standard computed code — in the rare event of omocodia, the official authority will handle the substitution when they register your code.",
+    "plain_english": "Very occasionally, two different people end up with the same computed code — usually people born in the same foreign country on the same day. When that happens, the Italian government tweaks one of the codes slightly to make them unique. Our generator gives you the standard version. If yours happens to be a duplicate, the government sorts it out automatically when you register. You don't need to do anything extra.",
+    "section": "1.5",
+    "category": "generator",
+    "tags": ["omocodia", "duplicate", "foreign-birth"]
+  },
+  {
+    "question": "What information do I need to generate my codice fiscale?",
+    "answer": "You need: (1) your surname, exactly as it appears on your passport or official ID; (2) your first name and any middle names, exactly as they appear on your passport or official ID; (3) your date of birth; (4) your gender as listed on Italian documents; and (5) your place of birth — either an Italian municipality or your country of birth if you were born outside Italy.",
+    "section": "1.5",
+    "category": "generator",
+    "tags": ["generator", "inputs", "information-required"]
+  },
+  {
+    "question": "Does the information I enter get stored?",
+    "answer": "No. CodiceFiscale.ai does not store any personal information you enter into the generator. The calculation is performed entirely in your browser and no data is retained.",
+    "plain_english": "Nothing is saved. The calculation happens entirely on your device — your name, birthday, and other details never leave your browser. We don't collect it, store it, or send it anywhere.",
+    "section": "1.5",
+    "category": "generator",
+    "tags": ["privacy", "data-storage", "generator"]
+  },
+  {
+    "question": "How can I advertise on CodiceFiscale.ai?",
+    "answer": "CodiceFiscale.ai offers sponsored banner placements to businesses and professionals whose services are relevant to our audience — primarily expats, foreign nationals, property buyers, students, and anyone navigating Italian legal or bureaucratic processes. If you are interested in advertising, please use the Contact form on our website and select \"Advertise on this website.\" Our team will follow up with placement options, audience data, and pricing.",
+    "section": "1.6",
+    "category": "business",
+    "tags": ["advertising", "sponsorship", "contact"]
+  },
+  {
+    "question": "What kind of businesses are a good fit to advertise on this site?",
+    "answer": "Our audience consists largely of English-speaking individuals dealing with Italian institutions — ideal advertisers include Italian immigration lawyers, notary services, expat banking and financial services, Italian language schools, relocation and visa services, and real estate professionals operating in Italy. If your service is relevant to someone obtaining or using an Italian codice fiscale, there is likely a good fit.",
+    "section": "1.6",
+    "category": "business",
+    "tags": ["advertising", "audience", "fit"]
+  },
+  {
+    "question": "Can I have my firm's information or resources cited on the site?",
+    "answer": "We are open to content partnerships and co-branding opportunities with qualified professionals and organizations. If you believe your firm's resources, guides, or expertise would add value to our users, please reach out via the Contact form and select \"Advertise on this website.\" Our team will evaluate the opportunity.",
+    "section": "1.6",
+    "category": "business",
+    "tags": ["partnerships", "co-branding", "content"]
+  },
+  {
+    "question": "How is advertising performance measured?",
+    "answer": "All banner placements are tracked via Google Analytics 4. We provide monthly reports to sponsors showing total site visitors, banner impressions, and click-through data via UTM-tagged links. Performance-based pricing options may be available depending on the arrangement.",
+    "section": "1.6",
+    "category": "business",
+    "tags": ["analytics", "reporting", "ga4"]
+  },
+  {
+    "question": "Who do I contact about advertising or partnerships?",
+    "answer": "Please use the Contact form on our website and select \"Advertise on this website.\" Alternatively, you can reach our team directly at advertise@theitalianbureau.com.",
+    "section": "1.6",
+    "category": "business",
+    "tags": ["contact", "advertising", "email"]
+  }
+]
