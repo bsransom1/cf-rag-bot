@@ -209,17 +209,37 @@ To **swap** for a hosted STT API later, replace `useSpeechToText` with a hook th
 
 ## 8. Deployment (Vercel)
 
-1. Push this repo to GitHub.
-2. Import into Vercel.
-3. Set the following environment variables in **Project Settings → Environment Variables**:
-   - `OPENAI_API_KEY`
-   - `SUPABASE_URL`
-   - `SUPABASE_ANON_KEY`
-   - `SUPABASE_SERVICE_ROLE_KEY` — *only needed if you run ingest from CI; not required at runtime for `/api/chat`*
-4. Deploy over **HTTPS** so dictation can request the microphone.
-5. From your local machine (with `.env.local` populated), run `npm run ingest` against the production Supabase project to populate the knowledge base.
+### 8.1 Prerequisites
 
-The `/api/chat` route uses the Node runtime and only uses `fetch` + the OpenAI + Supabase SDKs, so it runs unmodified on Vercel serverless. `maxDuration` is set to 30 seconds.
+- Repo on GitHub (or GitLab / Bitbucket connected to Vercel).
+- Supabase project with [`supabase/schema.sql`](./supabase/schema.sql) applied.
+- FAQ rows loaded: run `npm run ingest` **locally** (or in CI) using `SUPABASE_SERVICE_ROLE_KEY` pointed at the **same** Supabase project Vercel will use. The hosted app never needs the service-role key at runtime.
+
+### 8.2 New project on Vercel
+
+1. **Import** the repository in the [Vercel dashboard](https://vercel.com/new).
+2. **Framework preset:** Next.js (auto-detected). Root directory: **`.`**  
+   Build: `npm run build` · Output: Next.js default · Install: `npm install`.
+3. **Environment variables** — add for **Production** (and **Preview** if you want preview deployments to work):
+
+   | Name | Required at runtime | Notes |
+   |------|---------------------|--------|
+   | `OPENAI_API_KEY` | Yes | Server only; never expose to the client. |
+   | `SUPABASE_URL` | Yes | Same project you ingested into. |
+   | `SUPABASE_ANON_KEY` | Yes | Used by `/api/chat` for `match_documents`. |
+   | `SUPABASE_SERVICE_ROLE_KEY` | **No** | Only for local/CI `npm run ingest`. Do **not** add to Vercel unless you have a dedicated ingest job there. |
+
+4. **Deploy.** The site is served over **HTTPS** (required for microphone dictation in the browser).
+
+### 8.3 After the first deploy
+
+- Open the production URL and send a test message. If answers always fall back to “no information,” confirm **`documents`** in Supabase has rows and `SUPABASE_*` values match that project.
+- **Hobby** plan serverless routes are capped at **~10s** execution; `app/api/chat/route.ts` sets `maxDuration = 30` for **Pro**. If you see timeouts on Hobby, upgrade or shorten the model path.
+
+### 8.4 Technical notes
+
+- `/api/chat` uses the **Node.js** runtime (`export const runtime = "nodejs"`).
+- No Edge-only APIs; OpenAI and Supabase run in Node as usual on Vercel.
 
 ---
 
