@@ -7,7 +7,7 @@
  *   3. If nothing passes the similarity threshold, short-circuit with the
  *      project's "I don't know" fallback — no LLM call, no hallucination.
  *   4. Otherwise, build the prompt from retrieved context and call the model.
- *   5. Return `{ response, sources }`.
+ *   5. Return `{ response }` (citations are not exposed to the client).
  *
  * Runs on Node (default). Uses only fetch / OpenAI SDK / Supabase SDK, so it
  * works unmodified on Vercel serverless.
@@ -19,11 +19,8 @@ import { CHAT_MODEL, getOpenAI } from "@/lib/ai/client";
 import { buildPrompt } from "@/lib/ai/prompt";
 import { getProject } from "@/lib/config/project";
 import { retrieveRelevantChunks } from "@/lib/rag/retrieve";
-import type {
-  ChatRequestBody,
-  ChatResponseBody,
-  SourceCitation,
-} from "@/types";
+import { userWantsSimplifiedSection } from "@/lib/rag/simplifyIntent";
+import type { ChatRequestBody, ChatResponseBody } from "@/types";
 
 export const runtime = "nodejs";
 // Chat completions can take a few seconds; bump the default serverless budget.
@@ -38,6 +35,7 @@ function parseBody(raw: unknown): ChatRequestBody | { error: string } {
   const body = raw as Record<string, unknown>;
   const projectId = body.project_id;
   const message = body.message;
+  const langRaw = body.lang;
   if (typeof projectId !== "string" || projectId.trim().length === 0) {
     return { error: "project_id is required and must be a non-empty string" };
   }
@@ -49,7 +47,9 @@ function parseBody(raw: unknown): ChatRequestBody | { error: string } {
       error: `message exceeds max length of ${MAX_MESSAGE_LENGTH} characters`,
     };
   }
-  return { project_id: projectId.trim(), message: message.trim() };
+  const lang =
+    langRaw === "en" || langRaw === "it" ? (langRaw as "en" | "it") : undefined;
+  return { project_id: projectId.trim(), message: message.trim(), lang };
 }
 
 export async function POST(request: Request): Promise<NextResponse> {
@@ -93,15 +93,16 @@ export async function POST(request: Request): Promise<NextResponse> {
       }
       const body: ChatResponseBody = {
         response: project.fallbackNoKnowledge,
-        sources: [],
       };
       return NextResponse.json(body);
     }
 
+    const wantsSimplified = userWantsSimplifiedSection(project, parsed.message);
     const { system, user } = buildPrompt(
       project.systemPrompt,
       chunks,
       parsed.message,
+      { wantsSimplified, lang: parsed.lang },
     );
 
     const openai = getOpenAI();
@@ -118,15 +119,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       completion.choices[0]?.message?.content?.trim() ??
       project.fallbackNoKnowledge;
 
-    const sources: SourceCitation[] = chunks.map((c) => ({
-      id: c.id,
-      section: c.section,
-      category: c.category,
-      question: c.question,
-      similarity: Number(c.similarity.toFixed(4)),
-    }));
-
-    const body: ChatResponseBody = { response: answer, sources };
+    const body: ChatResponseBody = { response: answer };
     return NextResponse.json(body);
   } catch (err) {
     console.error("[/api/chat] failure:", err);

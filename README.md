@@ -9,17 +9,22 @@ A production-quality, modular RAG (retrieval-augmented generation) chatbot answe
 ## 1. Overview
 
 ```
-┌─────────────┐   POST /api/chat    ┌────────────────────┐   embed + search    ┌───────────────┐
-│  Chat UI    │ ──────────────────▶ │  Next.js API Route │ ──────────────────▶ │  Supabase     │
-│ (app/page)  │ ◀────────────────── │  (RAG orchestrator)│ ◀────────────────── │  pgvector     │
-└─────────────┘   { response,       └─────────┬──────────┘                     └───────────────┘
-    │               sources }                  │
-    │ Web Speech API                           │ grounded prompt
-    │ (mic → text, client-only)                ▼
-    ▼                                  ┌───────────────┐
-                                       │   OpenAI      │
-                                       │ chat + embed  │
-                                       └───────────────┘
+┌─────────────┐  POST /api/dictation       ┌──────────────┐
+│  Chat UI    │ ──▶ audio Blob (FormData) ─▶│  OpenAI      │
+│ (app/page)  │  ◀─ transcript text     ◀──│  Whisper     │
+└──────┬──────┘                            └──────────────┘
+       │  POST /api/chat
+       ▼
+┌────────────────────┐   embed + search    ┌───────────────┐
+│  Next.js API Route │ ──────────────────▶ │  Supabase     │
+│  (RAG orchestrator)│ ◀────────────────── │  pgvector     │
+└─────────┬──────────┘                     └───────────────┘
+          │ grounded prompt
+          ▼
+┌───────────────┐
+│   OpenAI      │
+│ chat + embed  │
+└───────────────┘
 ```
 
 Key design principles:
@@ -27,9 +32,10 @@ Key design principles:
 - **One chunk = one Q&A pair.** We never dump the full FAQ into the prompt. Each FAQ entry becomes one row with its own embedding.
 - **Grounded only.** The system prompt forces the model to answer from retrieved context or say "I don't know." No retrieval hits ⇒ no LLM call, just the fallback string.
 - **Gated categories.** Business / advertising content (Section 1.6 of the KB) is only surfaced when the user's query signals intent (e.g., mentions "advertise", "partnership", etc.). Configured in `lib/config/project.ts`.
+- **Simplified section gating.** A plain-English "Simplified:" block is only included when the user's message matches intent tokens (e.g. "clarify", "I don't understand"). See `simplifyIntentTokens` and `userWantsSimplifiedSection` in the project config and `lib/rag/simplifyIntent.ts`.
 - **Multi-project ready.** Everything is keyed by `project_id`. To add a second KB, add one entry to `PROJECTS` in `lib/config/project.ts` and a new FAQ JSON file.
 - **Two Supabase clients.** Runtime uses the anon key; the ingest script uses the service-role key. The table has RLS enabled with no direct read/write policies — reads happen via the `match_documents` RPC (SECURITY DEFINER).
-- **Speech-to-text** uses the **browser Web Speech API** (`lib/speech/`) — no extra npm packages, no server audio, no API keys. Dictation runs entirely in the client after the user grants microphone permission.
+- **Speech-to-text** uses **OpenAI Whisper** (`whisper-1`) with **automatic language detection** (English + Italian). The browser records audio with `MediaRecorder` + `getUserMedia` and POSTs the Blob as multipart `FormData` to `POST /api/dictation`, which forwards it to OpenAI and returns the transcript. The client then submits it like a typed message.
 
 ---
 
@@ -37,16 +43,21 @@ Key design principles:
 
 ```
 app/
-  api/chat/route.ts     # POST /api/chat — RAG orchestrator
+  api/
+    chat/route.ts       # POST /api/chat — RAG orchestrator
+    dictation/route.ts  # POST /api/dictation — OpenAI Whisper transcription
   layout.tsx
   page.tsx              # Chat UI shell
   globals.css           # Theme tokens + message / typing animations
 components/
-  ChatWindow.tsx        # Client chat UI (composer, mic, messages)
+  ChatWindow.tsx            # Client chat UI (EN/IT, mic, composer)
+  FormattedAssistantText.tsx # Markdown rendering for assistant replies
 lib/
   ai/
     client.ts           # OpenAI client + model constants
     prompt.ts           # Prompt assembly
+  chat/
+    assistantMessageMarkdown.ts  # Answer:/Simplified: → Markdown for the UI
   rag/
     embed.ts            # Embedding + chunk text builder
     retrieve.ts         # Vector search + category gating
@@ -54,10 +65,6 @@ lib/
     client.ts           # Supabase clients (runtime + admin)
   config/
     project.ts          # Per-project config registry
-  speech/
-    getSpeechRecognition.ts  # Feature-detect + construct recognition
-    useSpeechToText.ts       # React hook (start/stop, interim + final)
-    web-speech.d.ts          # TS declarations for SpeechRecognition
 data/
   italian_immigration.faq.json   # Source FAQ data
 scripts/
@@ -139,26 +146,22 @@ If you previously ran an older schema, re-running [`supabase/schema.sql`](./supa
 ```json
 {
   "project_id": "italian_immigration",
-  "message": "How do I apply from the US?"
+  "message": "How do I apply from the US?",
+  "lang": "en"
 }
 ```
+
+`lang` is optional (`"en"` | `"it"`). When sent (as in the web UI), the assistant answers in that language even if the user typed or dictated in another language.
 
 **Response — 200**
 
 ```json
 {
-  "response": "Answer:\n...\n\nSimplified:\n...",
-  "sources": [
-    {
-      "id": "uuid",
-      "section": "1.3",
-      "category": "acquisition",
-      "question": "How do I get an official codice fiscale?",
-      "similarity": 0.8421
-    }
-  ]
+  "response": "Answer:\n..."
 }
 ```
+
+When the user message matches `simplifyIntentTokens` in `lib/config/project.ts`, the model may also include a `Simplified:` block in the `response` string; otherwise the API instructs the model to return only the `Answer:` section.
 
 **Response — 400** (validation error)
 
@@ -174,28 +177,44 @@ If you previously ran an older schema, re-running [`supabase/schema.sql`](./supa
 
 Behavior notes:
 
-- If retrieval returns no chunks, the route returns the project's fallback string with `sources: []` — **no LLM call is made**.
+- If retrieval returns no chunks, the route returns the project's fallback string only — **no LLM call is made**.
 - Model output uses `temperature: 0.2`.
 - Maximum message length is 2000 chars.
+
+### `POST /api/dictation`
+
+**Request:** `multipart/form-data`
+
+| Field | Type | Notes |
+| ----- | ---- | ----- |
+| `audio` | `Blob` / `File` | Recorded audio (e.g. `audio/webm;codecs=opus`). Required. |
+
+**Response — 200**
+
+```json
+{ "transcript": "transcript text" }
+```
+
+**Response — 400** if the multipart body is missing or `audio` is empty.
+**Response — 502** if the OpenAI Whisper call fails.
+
+**Environment:** uses `OPENAI_API_KEY` (already required by `/api/chat`). No additional env vars.
+
+**Runtime:** Node.js. The route forwards the audio to OpenAI's transcription endpoint (`https://api.openai.com/v1/audio/transcriptions`) using the `whisper-1` model with **no `language` field**, so English and Italian are auto-detected.
 
 ---
 
 ## 6. Speech-to-text (dictation)
 
-The chat composer includes a **microphone** control that turns speech into text using the **Web Speech API** (see `lib/speech/`).
+The composer **microphone** records audio in the browser using `MediaRecorder` + `getUserMedia`, then POSTs the Blob to **`/api/dictation`**, which forwards it to **OpenAI Whisper** and returns the transcript.
 
 | Topic | Detail |
 | ----- | ------ |
-| **Dependencies** | None — no Whisper, no third-party STT SDK in this repo |
-| **Where it runs** | 100% in the user's browser |
-| **Configuration** | Default language is `en-US` in `useSpeechToText` (change `lang` in `ChatWindow.tsx` or pass from config later) |
-| **HTTPS** | Microphone access requires a **secure context** (`https://` or `http://localhost`) |
-| **Browsers** | **Chrome / Edge:** best support. **Safari:** partial. **Firefox:** often limited or behind flags |
-| **Privacy** | Audio is processed by the browser/OS speech service, not by your Next.js server |
-
-**UX:** Click the mic to start; speak; interim text appears in the field; finalized phrases are appended. Click again while listening to stop. If the browser blocks the mic, an inline error message is shown.
-
-To **swap** for a hosted STT API later, replace `useSpeechToText` with a hook that streams audio to your provider — the rest of the chat flow is unchanged.
+| **Stack** | Native `MediaRecorder` + `getUserMedia` on the client → `fetch` to `/api/dictation` → server-side `fetch` to OpenAI Whisper |
+| **Auth** | Reuses `OPENAI_API_KEY` (server only) |
+| **UX** | Click mic to start recording → click again to stop → server transcribes → transcript is inserted into the input and auto-submitted |
+| **Language** | Whisper auto-detects speech language; the UI **EN/IT flag** sets reply language and clears the session when switched |
+| **Browser support** | Any browser with `MediaRecorder` + `getUserMedia` (HTTPS or `localhost`) |
 
 ---
 
@@ -203,7 +222,7 @@ To **swap** for a hosted STT API later, replace `useSpeechToText` with a hook th
 
 - **Layout:** Minimal chat on a soft gray page (`neutral-100`); the whole thread + composer lives in a **floating** white panel (`rounded-2xl`, light border, soft shadow, capped height) so it reads as one component, not a full-bleed app.
 - **Motion:** Short **fade-up** on new messages (`app/globals.css`); respects `prefers-reduced-motion`.
-- **Composer:** Single rounded field (neutral border), mic (when supported) + send; one-line legal disclaimer.
+- **Composer:** Single rounded field (neutral border), mic + send; placeholders and ARIA follow the selected UI language; one-line legal disclaimer.
 
 ---
 
@@ -229,7 +248,7 @@ To **swap** for a hosted STT API later, replace `useSpeechToText` with a hook th
    | `SUPABASE_ANON_KEY` | Yes | Used by `/api/chat` for `match_documents`. |
    | `SUPABASE_SERVICE_ROLE_KEY` | **No** | Only for local/CI `npm run ingest`. Do **not** add to Vercel unless you have a dedicated ingest job there. |
 
-4. **Deploy.** The site is served over **HTTPS** (required for microphone dictation in the browser).
+4. **Deploy.** The site is served over **HTTPS**, which is required for browser microphone access. Dictation calls `/api/dictation`, which forwards audio to OpenAI Whisper using `OPENAI_API_KEY` — no extra configuration is needed.
 
 ### 8.3 After the first deploy
 
@@ -268,10 +287,11 @@ To **swap** for a hosted STT API later, replace `useSpeechToText` with a hook th
 
 All prompt rules and retrieval knobs live in `lib/config/project.ts`:
 
-- `systemPrompt` — the rules, tone, and output format.
+- `systemPrompt` — the rules and tone; response structure (Answer-only vs Answer+Simplified) is appended in `lib/ai/prompt.ts` from `buildPrompt`.
 - `retrieval.topK` — how many chunks to retrieve.
 - `retrieval.minSimilarity` — cosine similarity floor (0..1). Default `0` favors recall.
 - `gatedCategories` + `gatedCategoryIntentTokens` — hide categories unless the user's query contains one of the listed tokens.
+- `simplifyIntentTokens` — if the user's message matches any token, the model may include a `Simplified:` section; otherwise only `Answer:` is requested.
 
 ### 9.3 Add a new project (different knowledge base)
 
@@ -283,10 +303,6 @@ All prompt rules and retrieval knobs live in `lib/config/project.ts`:
 ### 9.4 Swap embedding or chat models
 
 Change `EMBEDDING_MODEL` and/or `CHAT_MODEL` in `lib/ai/client.ts`. If the embedding model has a different dimensionality, update the `vector(1536)` column in `supabase/schema.sql` accordingly and re-ingest.
-
-### 9.5 Change dictation language
-
-In `components/ChatWindow.tsx`, the `useSpeechToText({ lang: "en-US", ... })` option accepts any BCP 47 tag supported by the browser (e.g. `it-IT`).
 
 ---
 
@@ -309,5 +325,5 @@ In `components/ChatWindow.tsx`, the `useSpeechToText({ lang: "en-US", ... })` op
 - [x] Service-role key never shipped to the client bundle (only used in `scripts/ingest.ts`).
 - [x] RLS enabled; anon role can only call `match_documents`.
 - [x] Message length is capped server-side.
-- [x] Sources are returned with every answer for auditability.
-- [x] Dictation is client-only; no audio is sent to your API.
+- [x] Chat API returns only the answer text; retrieval citations are not exposed to the client.
+- [x] Dictation forwards browser-recorded audio to OpenAI Whisper from the server (`/api/dictation`); no browser `SpeechRecognition`, no third-party MCP.

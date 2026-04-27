@@ -50,23 +50,18 @@ export interface RetrievedChunk {
   similarity: number;
 }
 
-/** Minimal citation surfaced back to the UI. */
-export interface SourceCitation {
-  id: string;
-  section: string;
-  category: string;
-  question: string;
-  similarity: number;
-}
-
 /** Request body for POST /api/chat. */
 export interface ChatRequestBody {
   project_id: string;
   message: string;
+  /**
+   * Preferred language for the assistant's reply (UI-selected).
+   * When omitted, the model mirrors the language of the user message.
+   */
+  lang?: "en" | "it";
 }
 
 /** Response body for POST /api/chat. */
 export interface ChatResponseBody {
   response: string;
-  sources: SourceCitation[];
 }

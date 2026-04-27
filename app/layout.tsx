@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
+import { Source_Sans_3 } from "next/font/google";
+
 import "./globals.css";
+
+const fontSans = Source_Sans_3({
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-sans-official",
+});
 
 export const metadata: Metadata = {
   title: "CodiceFiscale.ai — Assistant",
@@ -13,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className={fontSans.variable}>
+      <body className="min-h-dvh font-sans">{children}</body>
     </html>
   );
 }
