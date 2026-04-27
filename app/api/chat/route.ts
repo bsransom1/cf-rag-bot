@@ -124,8 +124,70 @@ export async function POST(request: Request): Promise<NextResponse> {
   } catch (err) {
     console.error("[/api/chat] failure:", err);
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: chatRouteClientMessage(err) },
+      { status: chatRouteStatus(err) },
     );
   }
+}
+
+function openAiHttpStatus(err: unknown): number | undefined {
+  if (typeof err !== "object" || err === null) return undefined;
+  if (!("status" in err)) return undefined;
+  const s = (err as { status?: unknown }).status;
+  return typeof s === "number" ? s : undefined;
+}
+
+function chatRouteStatus(err: unknown): number {
+  const http = openAiHttpStatus(err);
+  if (http === 401) return 401;
+  const msg = err instanceof Error ? err.message : String(err);
+  if (
+    msg.includes("Missing required environment") ||
+    msg.includes("Missing OPENAI_API_KEY")
+  ) {
+    return 503;
+  }
+  if (msg.includes("match_documents RPC failed")) {
+    return 502;
+  }
+  if (msg.includes("401") || msg.toLowerCase().includes("invalid api key")) {
+    return 401;
+  }
+  return 500;
+}
+
+/**
+ * Keep messages safe for the browser: no stack traces, no secrets.
+ * Enough for deployers to fix Vercel env or Supabase without reading logs only.
+ */
+function chatRouteClientMessage(err: unknown): string {
+  const http = openAiHttpStatus(err);
+  const msg = err instanceof Error ? err.message : String(err);
+  if (http === 401 || msg.toLowerCase().includes("invalid api key")) {
+    return (
+      "OpenAI rejected the API key. Regenerate the key in the OpenAI dashboard and " +
+      "update OPENAI_API_KEY in Vercel, then redeploy."
+    );
+  }
+  if (
+    msg.includes("Missing required environment") ||
+    msg.includes("Missing OPENAI_API_KEY")
+  ) {
+    return (
+      "Server is missing configuration. In Vercel: Project → Settings → Environment " +
+      "Variables, set OPENAI_API_KEY, SUPABASE_URL, and SUPABASE_ANON_KEY for Production " +
+      "(and Preview if you use preview URLs), then redeploy."
+    );
+  }
+  if (msg.includes("match_documents RPC failed")) {
+    return (
+      "Database lookup failed. Confirm SUPABASE_URL and SUPABASE_ANON_KEY match your " +
+      "project, the schema in supabase/schema.sql is applied, and `npm run ingest` has " +
+      "loaded rows. Check Vercel function logs for the RPC error detail."
+    );
+  }
+  if (process.env.NODE_ENV === "development") {
+    return `Internal error (dev): ${msg}`;
+  }
+  return "Internal server error. Check Vercel function logs for this request.";
 }

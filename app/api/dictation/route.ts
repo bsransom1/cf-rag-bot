@@ -21,8 +21,11 @@ export async function POST(request: Request): Promise<NextResponse> {
   if (!apiKey) {
     console.error("[/api/dictation] OPENAI_API_KEY is not set");
     return NextResponse.json(
-      { error: "Transcription failed" },
-      { status: 502 },
+      {
+        error:
+          "OpenAI is not configured. Set OPENAI_API_KEY in Vercel (Production / Preview) and redeploy.",
+      },
+      { status: 503 },
     );
   }
 
@@ -66,10 +69,13 @@ export async function POST(request: Request): Promise<NextResponse> {
         upstream.status,
         detail,
       );
-      return NextResponse.json(
-        { error: "Transcription failed" },
-        { status: 502 },
-      );
+      const userMsg =
+        upstream.status === 401
+          ? "OpenAI rejected the API key. Update OPENAI_API_KEY in Vercel and redeploy."
+          : upstream.status === 429
+            ? "OpenAI rate limit. Try again in a moment."
+            : "Transcription failed. Check Vercel logs for the OpenAI response.";
+      return NextResponse.json({ error: userMsg }, { status: 502 });
     }
 
     const data = (await upstream.json()) as { text?: string };

@@ -260,6 +260,17 @@ The composer **microphone** records audio in the browser using `MediaRecorder` +
 - `/api/chat` uses the **Node.js** runtime (`export const runtime = "nodejs"`).
 - No Edge-only APIs; OpenAI and Supabase run in Node as usual on Vercel.
 
+### 8.5 Hosted chat or dictation returns an error (most often env)
+
+Vercel does **not** use your laptop’s `.env.local`. You must set **the same three variables** on the Vercel project for **each** environment you use (**Production** and **Preview** are separate—preview deployments and production URLs can differ).
+
+1. **Vercel** → your project → **Settings** → **Environment Variables** → confirm `OPENAI_API_KEY`, `SUPABASE_URL`, and `SUPABASE_ANON_KEY` for **Production** (and **Preview** if you test on `*.vercel.app` preview URLs). Save, then **Redeploy** (Deployments → ⋮ → Redeploy) so new values apply to running functions.
+2. If chat works locally but not on Vercel, 99% of the time a variable is missing, mistyped, or only set for one environment.
+3. **Function logs:** Vercel → project → **Logs** (or a specific deployment → **Functions** / **Runtime Logs**). Errors from `/api/chat` and `/api/dictation` are printed there with more detail.
+4. **Ingest** runs against your Supabase `documents` table from your machine or CI. If the hosted app returns fallback “no information” for every question, the production Supabase may have no rows for that `project_id`—run `npm run ingest` with keys pointing at the **same** Supabase project you configured in Vercel.
+
+The app does **not** use a separate “Whisper API key.” Dictation and chat both use `OPENAI_API_KEY` (Whisper is `v1/audio/transcriptions` on the same OpenAI account).
+
 ---
 
 ## 9. How to extend
