@@ -514,10 +514,14 @@ export default function ChatWindow({ projectId }: ChatWindowProps) {
                   <svg
                     className="h-5 w-5"
                     viewBox="0 0 24 24"
-                    fill="currentColor"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     aria-hidden
                   >
-                    <path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-.414 0-.82-.036-1.215-.106a8.75 8.75 0 01-10.493-10.493A9.744 9.744 0 013.493 7.005 7.502 7.502 0 0012 21.001a7.508 7.508 0 007.752-8.998z" />
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
                   </svg>
                 )}
               </button>
