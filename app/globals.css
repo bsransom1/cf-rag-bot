@@ -2,8 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Light (FAQ / CodiceFiscale.ai light) */
 :root {
   color-scheme: light;
+  --cf-page: #f9f6f1;
+  --cf-surface: #ffffff;
+  --cf-surface-muted: #ebe8e3;
+  --cf-input: #ffffff;
+  --cf-border: #e5e1da;
+  --cf-muted: #8e8e8e;
+  --cf-body: #6b7280;
+  --cf-ink: #2d2d2d;
+  --cf-accent: #1d4e89;
+  --cf-accent-hover: #174673;
+  --cf-quote-bg: #f4f2ed;
+  --cf-code-bg: #f3f1ec;
+  --cf-scrollbar-thumb: rgba(0, 0, 0, 0.12);
+}
+
+/* Dark (existing assistant panel) */
+html.dark {
+  color-scheme: dark;
+  --cf-page: #0b111b;
+  --cf-surface: #16202c;
+  --cf-surface-muted: #121a24;
+  --cf-input: #0f1620;
+  --cf-border: #2d3748;
+  --cf-muted: #94a3b8;
+  --cf-body: #9ca3af;
+  --cf-ink: #f8fafc;
+  --cf-accent: #3b82f6;
+  --cf-accent-hover: #2563eb;
+  --cf-quote-bg: #0f141c;
+  --cf-code-bg: #0f1620;
+  --cf-scrollbar-thumb: rgba(148, 163, 184, 0.25);
 }
 
 html,
@@ -12,14 +44,14 @@ body {
 }
 
 body {
-  @apply bg-neutral-100 text-neutral-900 antialiased;
+  @apply bg-cf-page text-cf-body antialiased;
 }
 
 .chat-scroll::-webkit-scrollbar {
   width: 6px;
 }
 .chat-scroll::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.12);
+  background: var(--cf-scrollbar-thumb);
   border-radius: 3px;
 }
 
