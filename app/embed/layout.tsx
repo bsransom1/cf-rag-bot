@@ -1,27 +1,5 @@
 import { EmbedTransparentPaint } from "./embed-transparent-paint";
 
-/**
- * Inline script runs synchronously during HTML parse — before Tailwind's
- * `body { background-color: var(--cf-page) }` is applied from the stylesheet.
- * `strategy="beforeInteractive"` is root-layout-only in Next.js App Router, so
- * we use a plain <script> tag here instead.
- */
-const TRANSPARENT_SCRIPT = `(function(){
-  var h=document.documentElement,b=document.body;
-  function pin(){
-    h.classList.add("cf-embed-root");
-    h.style.setProperty("background","transparent","important");
-    h.style.setProperty("background-color","transparent","important");
-    if(b){
-      b.style.setProperty("background","transparent","important");
-      b.style.setProperty("background-color","transparent","important");
-    }
-  }
-  pin();
-  // re-run after body exists if needed
-  if(!b){document.addEventListener("DOMContentLoaded",function(){b=document.body;pin();},{once:true});}
-})();`;
-
 export default function EmbedLayout({
   children,
 }: {
@@ -29,14 +7,22 @@ export default function EmbedLayout({
 }) {
   return (
     <>
-      {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-      <script dangerouslySetInnerHTML={{ __html: TRANSPARENT_SCRIPT }} />
+      {/*
+       * `color-scheme: light` on :root makes browsers paint the iframe viewport
+       * a non-transparent light color even when html/body backgrounds are
+       * transparent. Neutralise it only for the /embed route.
+       *
+       * `background: transparent` belt + suspenders via class + inline style.
+       * The real fix is postMessage-driven iframe resize (ChatWindow sends
+       * CF_EMBED_RESIZE so the host collapses the iframe to 72×72 when closed).
+       */}
       <style>{`
-        html, html.dark, html.cf-embed-root, html.cf-embed-root.dark {
+        :root { color-scheme: none !important; }
+        html, html.dark {
           background: transparent !important;
           background-color: transparent !important;
         }
-        html body, html.dark body, html.cf-embed-root body {
+        body {
           background: transparent !important;
           background-color: transparent !important;
         }

@@ -172,6 +172,23 @@ export default function ChatWindow({
 
   const isDictating = dictationStatus !== "idle";
 
+  /**
+   * Resize the host iframe via postMessage.
+   * Collapsed → 72×72px circle (only the FAB, no background visible).
+   * Expanded  → full chat rectangle.
+   */
+  useEffect(() => {
+    if (!isEmbed) return;
+    try {
+      window.parent.postMessage(
+        { type: "CF_EMBED_RESIZE", open: embedPanelOpen },
+        "*",
+      );
+    } catch {
+      /* sandboxed iframe or same-origin restriction — safe to ignore */
+    }
+  }, [isEmbed, embedPanelOpen]);
+
   useEffect(() => {
     scrollRef.current?.scrollTo({
       top: scrollRef.current.scrollHeight,
@@ -476,27 +493,31 @@ export default function ChatWindow({
     <div
       className={
         embedShowLauncher
-          ? "relative box-border h-full min-h-0 w-full overflow-hidden bg-transparent"
+          ? "relative box-border h-full w-full overflow-hidden rounded-full bg-transparent"
           : isEmbed
-            ? "box-border flex h-full min-h-0 w-full flex-col overflow-hidden bg-cf-page p-2"
+            ? "box-border flex h-full min-h-0 w-full flex-col overflow-hidden bg-cf-page"
             : "min-h-screen bg-cf-page px-4 py-6 sm:px-6 sm:py-10"
       }
     >
       {embedShowLauncher ? (
+        /*
+         * The iframe is resized to 72×72 (circle) via postMessage so this button
+         * fills the entire frame — no background visible behind it.
+         */
         <button
           type="button"
           onClick={() => {
             setEmbedPanelOpen(true);
             queueMicrotask(() => textareaRef.current?.focus());
           }}
-          className="absolute bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-cf-brand-cta text-white shadow-lg ring-4 ring-black/[0.08] transition-transform hover:scale-[1.06] hover:bg-cf-brand-cta-hover hover:shadow-xl active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          className="absolute inset-0 flex items-center justify-center rounded-full bg-cf-brand-cta text-white shadow-lg transition-all hover:bg-cf-brand-cta-hover hover:shadow-xl active:scale-[0.95] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           aria-expanded={false}
           aria-controls="cf-embed-chat-panel"
           aria-label={s.ariaOpenAssistant}
           title={s.ariaOpenAssistant}
         >
           <svg
-            className="h-[1.625rem] w-[1.625rem]"
+            className="h-7 w-7"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -505,8 +526,7 @@ export default function ChatWindow({
             strokeLinejoin="round"
             aria-hidden
           >
-            <rect x="3" y="5" width="12" height="10" rx="2" ry="2" />
-            <rect x="9" y="9" width="12" height="10" rx="2" ry="2" />
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
         </button>
       ) : null}
@@ -523,7 +543,7 @@ export default function ChatWindow({
           id={isEmbed ? "cf-embed-chat-panel" : undefined}
           className={
             isEmbed
-              ? "relative flex min-h-0 flex-1 w-full flex-col overflow-hidden rounded-2xl border border-cf-border bg-cf-surface shadow-[0_8px_30px_rgba(10,22,40,0.12)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+              ? "relative flex min-h-0 flex-1 w-full flex-col overflow-hidden rounded-xl border border-cf-border bg-cf-surface shadow-[0_8px_30px_rgba(10,22,40,0.14)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.45)]"
               : "relative flex h-[min(680px,calc(100dvh-3rem))] w-full flex-col overflow-hidden rounded-2xl border border-cf-border bg-cf-surface shadow-[0_1px_3px_rgba(0,0,0,0.06)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset]"
           }
           role="region"
@@ -534,7 +554,7 @@ export default function ChatWindow({
             <div
               className={
                 isEmbed
-                  ? "flex shrink-0 items-center justify-between gap-2 border-b border-white/[0.12] bg-cf-brand-nav px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3"
+                  ? "flex shrink-0 items-center justify-between gap-2 border-b border-white/[0.12] bg-cf-brand-nav px-3 py-2"
                   : "flex shrink-0 items-center justify-between gap-3 border-b border-cf-border px-3 py-2.5 sm:px-4"
               }
             >
@@ -674,7 +694,7 @@ export default function ChatWindow({
               </div>
             </div>
 
-            <div className="flex min-h-0 flex-1 flex-col px-3 pt-1 sm:px-4 sm:pt-2">
+            <div className="flex min-h-0 flex-1 flex-col px-3 pt-1">
               <div
                 ref={scrollRef}
                 className="chat-scroll min-h-0 flex-1 overflow-y-auto pb-4"
