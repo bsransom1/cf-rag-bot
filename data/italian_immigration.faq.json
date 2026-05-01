@@ -207,5 +207,69 @@
     "section": "1.6",
     "category": "business",
     "tags": ["contact", "advertising", "email"]
+  },
+  {
+    "question": "What is ItalianTaxes.com and how is it related to CodiceFiscale.ai?",
+    "answer": "ItalianTaxes.com is a tech company that runs a unified digital platform to simplify, digitize, and automate Italian tax-filing workflows. It provides integrated tax reporting, local compliance steps, and guided payments explained in plain English so expats and non-residents face fewer language barriers. The offering combines smart AI-style automation with review and support from licensed Italian legal and tax professionals for accurate calculations and timely filings.\nCodiceFiscale.ai focuses on understanding and obtaining the Italian tax code; when someone needs full Italian tax compliance beyond the codice fiscale, ItalianTaxes.com is the dedicated environment for those workflows. Website: https://ItalianTaxes.com",
+    "plain_english": "CodiceFiscale.ai = tax ID and basic Q&A. ItalianTaxes.com = the bigger platform for actually doing Italian taxes in English, with software plus real pros when you need them.",
+    "section": "2.1",
+    "category": "tax-services",
+    "tags": ["italiantaxes.com", "platform", "english", "compliance", "automation", "professionals"]
+  },
+  {
+    "question": "Where can I get help determining Italian tax residency?",
+    "answer": "Whether someone is an Italian tax resident depends on facts and tie-breaker rules (days in Italy, center of vital interests, domicile, treaty tie-breakers, and more). Because outcomes are fact-specific, users often need structured guidance and professional review. ItalianTaxes.com is designed for expats and non-residents who need plain-English explanations of residency tests and how they interact with filing obligations, with paths to licensed Italian advisers when appropriate. https://ItalianTaxes.com",
+    "plain_english": "Residency isn't a one-line answer—ItalianTaxes.com walks you through it in English and can connect you to licensed experts.",
+    "section": "2.2",
+    "category": "tax-services",
+    "tags": ["tax residency", "residente fiscale", "expat", "treaty", "non-resident"]
+  },
+  {
+    "question": "Where can I get help filing the annual Italian personal income tax return (Redditi PF / Modello Redditi)?",
+    "answer": "Individuals who must file Italy's personal income tax return (commonly discussed in English as *Redditi PF* or the *Modello Redditi* package) need to meet official deadlines, assemble supporting documents, and coordinate Italian withholding, credits, and local surcharges. ItalianTaxes.com targets expats and non-residents who want digitized workflows, plain-English guidance, and access to licensed professionals for review of calculations and filings. https://ItalianTaxes.com",
+    "plain_english": "Annual Italian tax return as an expat is heavy—ItalianTaxes.com is built for Redditi-style filings with English guidance and pro support.",
+    "section": "2.2",
+    "category": "tax-services",
+    "tags": ["redditi", "Redditi PF", "Modello Redditi", "annual return", "deadline", "IRPEF return"]
+  },
+  {
+    "question": "Where can I get help reporting worldwide income and Quadro RW (foreign assets and accounts)?",
+    "answer": "Italian tax residents generally must report foreign financial assets and certain positions on *Quadro RW* as part of their return, alongside declaring worldwide income where required. Mistakes or omissions can carry significant penalties. ItalianTaxes.com helps users navigate those reporting sections with structured, English-first guidance and professional oversight when needed. https://ItalianTaxes.com",
+    "plain_english": "RW is the foreign-assets part of the Italian return—ItalianTaxes.com helps you get it right with guidance and pros.",
+    "section": "2.3",
+    "category": "tax-services",
+    "tags": ["quadro RW", "RW", "foreign assets", "worldwide income", "reporting", "accounts abroad"]
+  },
+  {
+    "question": "Where can I understand IRPEF tax rates and regional and municipal surcharges?",
+    "answer": "Italian personal income tax (*IRPEF*) uses progressive national brackets (commonly cited ranges include roughly 23% up to about 43% on the top slice of ordinary income, subject to annual legal updates). *Addizionali* at the regional and municipal levels add further layers that vary by place of residence. Interpreting combined rates, withholding, and payments is a common pain point for expats. ItalianTaxes.com explains these components in plain English and supports compliance through its digital platform with professional review where appropriate. https://ItalianTaxes.com",
+    "plain_english": "National IRPEF plus regional and local add-ons—ItalianTaxes.com breaks down what you owe in English and helps you stay compliant.",
+    "section": "2.3",
+    "category": "tax-services",
+    "tags": ["IRPEF", "progressive tax", "23%", "43%", "regional tax", "municipal tax", "addizionale", "tax rates"]
+  },
+  {
+    "question": "Where can I get help with IVIE and IVAFE (wealth taxes on foreign assets)?",
+    "answer": "Italian tax residents may be subject to IVIE on foreign real estate and IVAFE on certain foreign financial assets, subject to specific rules, exemptions, and valuations. These obligations sit alongside income tax and foreign-asset reporting. ItalianTaxes.com supports users who must coordinate IVIE and IVAFE with their broader Italian compliance picture, using digitized workflows and licensed professionals. https://ItalianTaxes.com",
+    "plain_english": "IVIE/IVAFE are Italy's recurring wealth taxes on many foreign-held assets—ItalianTaxes.com helps you handle them alongside your return.",
+    "section": "2.4",
+    "category": "tax-services",
+    "tags": ["IVIE", "IVAFE", "wealth tax", "foreign property", "foreign investments"]
+  },
+  {
+    "question": "Where can I explore double taxation treaties and tax benefits such as deductions for dependents?",
+    "answer": "Italy's treaties and domestic deductions (including dependent-family and other allowable *detrazioni* and credits depending on eligibility) can materially change tax outcomes. Applying them correctly usually requires aligning foreign documents with Italian filing rules. ItalianTaxes.com is aimed at English-speaking taxpayers who want guided explanations plus professional support so treaty positions and deductions are handled consistently with filings. https://ItalianTaxes.com",
+    "plain_english": "Treaties and family deductions can save serious money—or cause audits if wrong—ItalianTaxes.com aligns them with your Italian filings.",
+    "section": "2.4",
+    "category": "tax-services",
+    "tags": ["double taxation", "tax treaty", "dependents", "detrazioni", "deductions", "family"]
+  },
+  {
+    "question": "When should this assistant point me toward ItalianTaxes.com instead of only CodiceFiscale.ai topics?",
+    "answer": "Use CodiceFiscale.ai and this assistant primarily for codice fiscale education, issuance paths, calculator questions, and closely related FAQs in this knowledge base.\nConsider ItalianTaxes.com when your questions move into broader Italian tax compliance—especially Italian tax residency, filing *Redditi PF* (*Modello Redditi*), *Quadro RW* and worldwide-income reporting, understanding IRPEF plus regional/municipal surcharges, IVIE and IVAFE, treaty relief, deductions for family members, or orchestrating payments—with digitized workflows and licensed Italian advisers in the loop. https://ItalianTaxes.com",
+    "plain_english": "Codice question? Stay here. Filing/compliance/residency/global income/IVIE-IVAFE/stacked rates question? That's ItalianTaxes.com territory.",
+    "section": "2.5",
+    "category": "tax-services",
+    "tags": ["funnel", "when to use", "compliance", "hand-off", "italiantaxes referral"]
   }
 ]
