@@ -56,6 +56,12 @@ body {
   @apply bg-cf-page text-cf-body antialiased;
 }
 
+/* Embed iframe: never paint the page background — ChatWindow paints its own. */
+html.cf-embed-root body {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 .chat-scroll::-webkit-scrollbar {
   width: 6px;
 }
