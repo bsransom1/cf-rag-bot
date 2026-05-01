@@ -1,3 +1,6 @@
+import { EmbedTransparentBeforeInteractive } from "./embed-before-interactive";
+import { EmbedTransparentPaint } from "./embed-transparent-paint";
+
 export default function EmbedLayout({
   children,
 }: {
@@ -5,13 +8,15 @@ export default function EmbedLayout({
 }) {
   return (
     <>
+      <EmbedTransparentBeforeInteractive />
       {/*
-       * Strip the root layout's bg-cf-page from html/body so only the
-       * ChatWindow paints its own background — the iframe is transparent
-       * in the FAB (launcher) state and opaque only when the panel is open.
+       * Strip the root layout's bg-cf-page from html/body so only ChatWindow
+       * paints opaque chrome. Redundant with script + globals + client hook —
+       * each defeats a different timing / cascade ordering issue across browsers.
        */}
-      <style>{`html,body{background:transparent!important}`}</style>
-      <div className="box-border h-dvh min-h-0 w-full overflow-hidden overscroll-none">
+      <style>{`html,body{background:transparent!important;background-color:transparent!important}`}</style>
+      <EmbedTransparentPaint />
+      <div className="cf-embed-frame box-border h-dvh min-h-0 w-full overflow-hidden overscroll-none bg-transparent">
         {children}
       </div>
     </>

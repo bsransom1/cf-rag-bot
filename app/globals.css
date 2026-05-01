@@ -87,3 +87,19 @@ body {
     transform: none;
   }
 }
+
+/*
+ * Iframe `/embed`: kill root layout bg-cf-page bleed (light + html.dark vars).
+ * Class `cf-embed-root` is set by app/embed/layout (script + client hook).
+ * Must live outside @tailwind layers so utilities don't win the cascade fight.
+ */
+html.cf-embed-root,
+html.cf-embed-root.dark {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+html.cf-embed-root body {
+  background: transparent !important;
+  background-color: transparent !important;
+}
