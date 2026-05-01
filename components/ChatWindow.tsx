@@ -50,6 +50,8 @@ const UI_COPY: Record<
     transcribeFail: string;
     ariaThemeLight: string;
     ariaThemeDark: string;
+    ariaOpenAssistant: string;
+    ariaCloseAssistant: string;
   }
 > = {
   en: {
@@ -84,6 +86,8 @@ const UI_COPY: Record<
     transcribeFail: "Transcription failed",
     ariaThemeLight: "Switch to light mode",
     ariaThemeDark: "Switch to dark mode",
+    ariaOpenAssistant: "Open CodiceFiscale.ai assistant",
+    ariaCloseAssistant: "Close assistant",
   },
   it: {
     emptyPrompt:
@@ -118,6 +122,8 @@ const UI_COPY: Record<
     transcribeFail: "Trascrizione non riuscita",
     ariaThemeLight: "Passa alla modalità chiara",
     ariaThemeDark: "Passa alla modalità scura",
+    ariaOpenAssistant: "Apri l’assistente CodiceFiscale.ai",
+    ariaCloseAssistant: "Chiudi assistente",
   },
 };
 
@@ -143,6 +149,8 @@ export default function ChatWindow({
   variant = "default",
 }: ChatWindowProps) {
   const isEmbed = variant === "embed";
+  /** Embed iframe: FAB first; expands to full panel until closed */
+  const [embedPanelOpen, setEmbedPanelOpen] = useState(false);
   const [uiLang, setUiLang] = useState<UiLang>("en");
   const s = UI_COPY[uiLang];
   const isDark = useDomDark();
@@ -456,14 +464,54 @@ export default function ChatWindow({
   const empty = messages.length === 0 && !isLoading;
   const formLocked = isLoading || isDictating;
 
+  function closeEmbedPanel() {
+    chatAbortRef.current?.abort();
+    chatAbortRef.current = null;
+    setEmbedPanelOpen(false);
+  }
+
+  const embedShowLauncher = isEmbed && !embedPanelOpen;
+
   return (
     <div
       className={
-        isEmbed
-          ? "box-border flex h-full min-h-0 w-full flex-col overflow-hidden bg-cf-page p-2"
-          : "min-h-screen bg-cf-page px-4 py-6 sm:px-6 sm:py-10"
+        embedShowLauncher
+          ? "relative box-border h-full min-h-0 w-full overflow-hidden bg-transparent"
+          : isEmbed
+            ? "box-border flex h-full min-h-0 w-full flex-col overflow-hidden bg-cf-page p-2"
+            : "min-h-screen bg-cf-page px-4 py-6 sm:px-6 sm:py-10"
       }
     >
+      {embedShowLauncher ? (
+        <button
+          type="button"
+          onClick={() => {
+            setEmbedPanelOpen(true);
+            queueMicrotask(() => textareaRef.current?.focus());
+          }}
+          className="absolute bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-cf-brand-cta text-white shadow-lg ring-4 ring-black/[0.08] transition-transform hover:scale-[1.06] hover:bg-cf-brand-cta-hover hover:shadow-xl active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          aria-expanded={false}
+          aria-controls="cf-embed-chat-panel"
+          aria-label={s.ariaOpenAssistant}
+          title={s.ariaOpenAssistant}
+        >
+          <svg
+            className="h-[1.625rem] w-[1.625rem]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <rect x="3" y="5" width="12" height="10" rx="2" ry="2" />
+            <rect x="9" y="9" width="12" height="10" rx="2" ry="2" />
+          </svg>
+        </button>
+      ) : null}
+
+      {isEmbed && !embedPanelOpen ? null : (
       <div
         className={
           isEmbed
@@ -472,6 +520,7 @@ export default function ChatWindow({
         }
       >
         <div
+          id={isEmbed ? "cf-embed-chat-panel" : undefined}
           className={
             isEmbed
               ? "relative flex min-h-0 flex-1 w-full flex-col overflow-hidden rounded-2xl border border-cf-border bg-cf-surface shadow-[0_8px_30px_rgba(10,22,40,0.12)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
@@ -544,7 +593,29 @@ export default function ChatWindow({
                 </div>
               </div>
 
-              <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+              <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+                {isEmbed ? (
+                  <button
+                    type="button"
+                    onClick={closeEmbedPanel}
+                    className="rounded-lg p-1.5 text-white/85 transition-colors hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    aria-label={s.ariaCloseAssistant}
+                    title={s.ariaCloseAssistant}
+                  >
+                    <svg
+                      className="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                    >
+                      <path d="M18 6 6 18M6 6l12 12" />
+                    </svg>
+                  </button>
+                ) : null}
                 <button
                   type="button"
                   onClick={() => toggleTheme()}
@@ -754,6 +825,7 @@ export default function ChatWindow({
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }
