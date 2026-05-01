@@ -15,6 +15,7 @@ export default function EmbedPreviewPage() {
         src="/embed"
         className="rounded-lg border-4 border-emerald-600 shadow-lg"
         style={{
+          background: "transparent",
           width: "min(420px, calc(100vw - 3rem))",
           height: "min(640px, calc(100dvh - 8rem))",
         }}
