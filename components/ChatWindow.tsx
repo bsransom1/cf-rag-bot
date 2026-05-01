@@ -8,6 +8,8 @@ import type { ChatResponseBody } from "@/types";
 
 interface ChatWindowProps {
   projectId: string;
+  /** Default: full standalone page; `embed`: fills iframe, marketing chrome */
+  variant?: "default" | "embed";
 }
 
 interface ChatMessage {
@@ -123,9 +125,24 @@ function makeId(): string {
   return Math.random().toString(36).slice(2) + Date.now().toString(36);
 }
 
+function langSegClass(embed: boolean, active: boolean): string {
+  if (embed) {
+    return active
+      ? "flex h-7 w-9 items-center justify-center rounded-md bg-white text-xs font-semibold text-cf-brand-nav shadow-sm ring-1 ring-black/10"
+      : "flex h-7 w-9 items-center justify-center rounded-md text-xs font-medium text-white/85 transition-colors hover:bg-white/10";
+  }
+  return active
+    ? "flex h-7 w-9 items-center justify-center rounded-md bg-cf-surface text-xs font-medium text-cf-ink shadow-sm ring-1 ring-black/[0.08] transition-colors dark:bg-white/[0.14] dark:shadow-[0_1px_2px_rgba(0,0,0,0.35)] dark:ring-1 dark:ring-white/25"
+    : "flex h-7 w-9 items-center justify-center rounded-md text-xs font-medium text-cf-muted transition-colors hover:text-cf-body dark:hover:bg-white/[0.05]";
+}
+
 type DictationStatus = "idle" | "recording" | "transcribing";
 
-export default function ChatWindow({ projectId }: ChatWindowProps) {
+export default function ChatWindow({
+  projectId,
+  variant = "default",
+}: ChatWindowProps) {
+  const isEmbed = variant === "embed";
   const [uiLang, setUiLang] = useState<UiLang>("en");
   const s = UI_COPY[uiLang];
   const isDark = useDomDark();
@@ -440,236 +457,303 @@ export default function ChatWindow({ projectId }: ChatWindowProps) {
   const formLocked = isLoading || isDictating;
 
   return (
-    <div className="min-h-screen bg-cf-page px-4 py-6 sm:px-6 sm:py-10">
-      <div className="relative mx-auto w-full max-w-2xl">
+    <div
+      className={
+        isEmbed
+          ? "box-border flex h-full min-h-0 w-full flex-col overflow-hidden bg-cf-page p-2"
+          : "min-h-screen bg-cf-page px-4 py-6 sm:px-6 sm:py-10"
+      }
+    >
+      <div
+        className={
+          isEmbed
+            ? "flex min-h-0 flex-1 flex-col"
+            : "relative mx-auto w-full max-w-2xl"
+        }
+      >
         <div
-          className="relative flex h-[min(680px,calc(100dvh-3rem))] w-full flex-col overflow-hidden rounded-2xl border border-cf-border bg-cf-surface shadow-[0_1px_3px_rgba(0,0,0,0.06)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset]"
+          className={
+            isEmbed
+              ? "relative flex min-h-0 flex-1 w-full flex-col overflow-hidden rounded-2xl border border-cf-border bg-cf-surface shadow-[0_8px_30px_rgba(10,22,40,0.12)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+              : "relative flex h-[min(680px,calc(100dvh-3rem))] w-full flex-col overflow-hidden rounded-2xl border border-cf-border bg-cf-surface shadow-[0_1px_3px_rgba(0,0,0,0.06)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset]"
+          }
           role="region"
           aria-label={s.ariaRegion}
           title={s.infoTitle}
         >
-        <div className="flex min-h-0 flex-1 flex-col">
-          <div className="flex shrink-0 items-center justify-between gap-3 border-b border-cf-border px-3 py-2.5 sm:px-4">
+          <div className="flex min-h-0 flex-1 flex-col">
             <div
-              className="inline-flex shrink-0 items-center rounded-lg border border-cf-border bg-cf-surface-muted p-0.5"
-              role="group"
-              aria-label={s.ariaLang}
+              className={
+                isEmbed
+                  ? "flex shrink-0 items-center justify-between gap-2 border-b border-white/[0.12] bg-cf-brand-nav px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3"
+                  : "flex shrink-0 items-center justify-between gap-3 border-b border-cf-border px-3 py-2.5 sm:px-4"
+              }
             >
-              <button
-                type="button"
-                onClick={() => changeLang("en")}
-                className={
-                  uiLang === "en"
-                    ? "flex h-7 w-9 items-center justify-center rounded-md bg-cf-surface text-xs font-medium text-cf-ink shadow-sm ring-1 ring-black/[0.08] transition-colors dark:bg-white/[0.14] dark:shadow-[0_1px_2px_rgba(0,0,0,0.35)] dark:ring-1 dark:ring-white/25"
-                    : "flex h-7 w-9 items-center justify-center rounded-md text-xs font-medium text-cf-muted transition-colors hover:text-cf-body dark:hover:bg-white/[0.05]"
-                }
-                aria-pressed={uiLang === "en"}
-                title={s.langEn}
-                aria-label={s.langEn}
-              >
-                <span className="text-[1.05rem] leading-none" role="img" aria-hidden>
-                  🇺🇸
-                </span>
-              </button>
-              <button
-                type="button"
-                onClick={() => changeLang("it")}
-                className={
-                  uiLang === "it"
-                    ? "flex h-7 w-9 items-center justify-center rounded-md bg-cf-surface text-xs font-medium text-cf-ink shadow-sm ring-1 ring-black/[0.08] transition-colors dark:bg-white/[0.14] dark:shadow-[0_1px_2px_rgba(0,0,0,0.35)] dark:ring-1 dark:ring-white/25"
-                    : "flex h-7 w-9 items-center justify-center rounded-md text-xs font-medium text-cf-muted transition-colors hover:text-cf-body dark:hover:bg-white/[0.05]"
-                }
-                aria-pressed={uiLang === "it"}
-                title={s.langIt}
-                aria-label={s.langIt}
-              >
-                <span className="text-[1.05rem] leading-none" role="img" aria-hidden>
-                  🇮🇹
-                </span>
-              </button>
-            </div>
-
-            <div className="flex shrink-0 items-center gap-3">
-              <button
-                type="button"
-                onClick={() => toggleTheme()}
-                className="rounded-lg p-1.5 text-cf-muted transition-colors hover:bg-cf-page hover:text-cf-ink dark:hover:bg-white/5"
-                aria-label={isDark ? s.ariaThemeLight : s.ariaThemeDark}
-                title={isDark ? s.ariaThemeLight : s.ariaThemeDark}
-              >
-                {isDark ? (
-                  <svg
-                    className="h-5 w-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    aria-hidden
-                  >
-                    <circle cx="12" cy="12" r="4" />
-                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-                  </svg>
-                ) : (
-                  <svg
-                    className="h-5 w-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden
-                  >
-                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                  </svg>
-                )}
-              </button>
-              <button
-                type="button"
-                onClick={newChat}
-                className="shrink-0 text-sm text-cf-muted transition-colors hover:text-cf-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-cf-accent"
-                aria-label={s.ariaNewChat}
-              >
-                {s.newChat}
-              </button>
-            </div>
-          </div>
-
-        <div className="flex min-h-0 flex-1 flex-col px-3 pt-1 sm:px-4 sm:pt-2">
-
-          <div
-            ref={scrollRef}
-            className="chat-scroll min-h-0 flex-1 overflow-y-auto pb-4"
-          >
-          {empty ? (
-            <div className="flex flex-col items-center justify-center px-2 pt-6 text-center sm:pt-12">
-              <p className="max-w-sm font-sans text-[15px] leading-relaxed text-cf-muted">
-                {s.emptyPrompt}
-              </p>
-              <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center">
-                {s.starters.map((starter) => (
-                  <button
-                    key={starter}
-                    type="button"
-                    onClick={() => void send(starter)}
-                    className="rounded-lg border border-cf-border bg-cf-surface-muted px-4 py-2.5 text-sm text-cf-ink shadow-sm transition-colors duration-200 hover:border-cf-accent/40 hover:bg-cf-page"
-                  >
-                    {starter}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {messages.map((m) => (
-                <Message key={m.id} message={m} />
-              ))}
-              {isLoading && (
-                <div className="msg-in flex gap-1 pt-1">
-                  <span className="inline-block h-1 w-1 animate-pulse rounded-full bg-cf-muted" />
-                  <span
-                    className="inline-block h-1 w-1 animate-pulse rounded-full bg-cf-muted"
-                    style={{ animationDelay: "150ms" }}
-                  />
-                  <span
-                    className="inline-block h-1 w-1 animate-pulse rounded-full bg-cf-muted"
-                    style={{ animationDelay: "300ms" }}
-                  />
-                </div>
-              )}
-            </div>
-          )}
-          </div>
-
-          <div className="shrink-0 border-t border-cf-border bg-cf-surface py-3">
-            <form onSubmit={handleSubmit} className="space-y-2">
-              <div className="flex items-end gap-2 rounded-xl border border-cf-border bg-cf-input px-3 py-2 shadow-sm transition-shadow duration-200 focus-within:border-cf-accent/45 focus-within:bg-cf-surface-muted focus-within:ring-1 focus-within:ring-cf-accent/25">
-              <textarea
-                ref={textareaRef}
-                value={input}
-                onChange={(e) => {
-                  setInput(e.target.value);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    void send(input);
+              <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
+                {isEmbed ? (
+                  <div className="min-w-0 shrink">
+                    <p className="truncate font-display text-sm font-semibold tracking-tight text-white">
+                      CodiceFiscale.ai
+                    </p>
+                    <p className="truncate text-[11px] text-white/65">
+                      Assistant
+                    </p>
+                  </div>
+                ) : null}
+                <div
+                  className={
+                    isEmbed
+                      ? "inline-flex shrink-0 items-center rounded-lg border border-white/20 bg-black/25 p-0.5"
+                      : "inline-flex shrink-0 items-center rounded-lg border border-cf-border bg-cf-surface-muted p-0.5"
                   }
-                }}
-                placeholder={s.msgPlaceholder}
-                rows={1}
-                className="max-h-40 min-h-[44px] w-full resize-none bg-transparent py-2.5 text-[15px] leading-snug text-cf-ink placeholder:text-cf-muted/80 focus:outline-none disabled:opacity-50"
-                disabled={formLocked}
-                aria-label={s.ariaMsg}
-              />
-              <button
-                type="button"
-                onClick={toggleDictation}
-                disabled={
-                  isLoading || dictationStatus === "transcribing"
-                }
-                className={
-                  dictationStatus === "recording"
-                    ? "mb-1 rounded-lg bg-red-100 p-2 text-red-700 ring-1 ring-red-300/80 shadow-sm transition-all duration-200 hover:bg-red-200/90 dark:bg-red-950/60 dark:text-red-400 dark:ring-red-500/40 dark:hover:bg-red-950/80"
-                    : dictationStatus === "transcribing"
-                      ? "mb-1 rounded-lg bg-amber-50 p-2 text-amber-800 ring-1 ring-amber-200/90 shadow-sm dark:bg-transparent dark:p-2 dark:text-amber-400/95 dark:ring-amber-500/35"
-                      : "mb-1 rounded-lg p-2 text-cf-muted shadow-sm transition-all duration-200 hover:bg-black/[0.05] hover:text-cf-ink hover:shadow dark:hover:bg-white/5 disabled:opacity-50"
-                }
-                aria-label={
-                  dictationStatus === "recording"
-                    ? s.ariaMicStop
-                    : dictationStatus === "transcribing"
-                      ? s.ariaMicTranscribing
-                      : s.ariaMicStart
-                }
-                aria-pressed={dictationStatus === "recording"}
-                aria-busy={dictationStatus === "transcribing"}
-                title={
-                  dictationStatus === "recording"
-                    ? s.ariaMicStop
-                    : dictationStatus === "transcribing"
-                      ? s.ariaMicTranscribing
-                      : s.ariaMicStart
-                }
-              >
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden
+                  role="group"
+                  aria-label={s.ariaLang}
                 >
-                  <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 1 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2Z" />
-                </svg>
-              </button>
-              <button
-                type="submit"
-                disabled={isLoading || !input.trim() || isDictating}
-                className="mb-1 rounded-lg bg-cf-accent p-2 text-white shadow-sm transition-all duration-200 enabled:hover:-translate-y-px enabled:hover:bg-cf-accent-hover enabled:hover:shadow-md active:translate-y-0 active:shadow-sm disabled:bg-neutral-200 disabled:text-neutral-400 dark:disabled:bg-cf-border dark:disabled:text-cf-muted"
-                aria-label={s.ariaSend}
-              >
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden
-                >
-                  <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.588.75.75 0 0 0 0-1.284A60.517 60.517 0 0 0 3.478 2.404Z" />
-                </svg>
-              </button>
+                  <button
+                    type="button"
+                    onClick={() => changeLang("en")}
+                    className={langSegClass(isEmbed, uiLang === "en")}
+                    aria-pressed={uiLang === "en"}
+                    title={s.langEn}
+                    aria-label={s.langEn}
+                  >
+                    <span
+                      className="text-[1.05rem] leading-none"
+                      role="img"
+                      aria-hidden
+                    >
+                      🇺🇸
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => changeLang("it")}
+                    className={langSegClass(isEmbed, uiLang === "it")}
+                    aria-pressed={uiLang === "it"}
+                    title={s.langIt}
+                    aria-label={s.langIt}
+                  >
+                    <span
+                      className="text-[1.05rem] leading-none"
+                      role="img"
+                      aria-hidden
+                    >
+                      🇮🇹
+                    </span>
+                  </button>
+                </div>
               </div>
-              {dictationError && (
-                <p className="text-center text-xs text-red-600 dark:text-red-400">
-                  {dictationError}
-                </p>
-              )}
-              <p className="text-center text-xs text-cf-muted">{s.notLegal}</p>
-            </form>
+
+              <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={() => toggleTheme()}
+                  className={
+                    isEmbed
+                      ? "rounded-lg p-1.5 text-white/80 transition-colors hover:bg-white/10"
+                      : "rounded-lg p-1.5 text-cf-muted transition-colors hover:bg-cf-page hover:text-cf-ink dark:hover:bg-white/5"
+                  }
+                  aria-label={
+                    isDark ? s.ariaThemeLight : s.ariaThemeDark
+                  }
+                  title={
+                    isDark ? s.ariaThemeLight : s.ariaThemeDark
+                  }
+                >
+                  {isDark ? (
+                    <svg
+                      className="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      aria-hidden
+                    >
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                    >
+                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={newChat}
+                  className={
+                    isEmbed
+                      ? "shrink-0 text-sm text-white/90 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                      : "shrink-0 text-sm text-cf-muted transition-colors hover:text-cf-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-cf-accent"
+                  }
+                  aria-label={s.ariaNewChat}
+                >
+                  {s.newChat}
+                </button>
+              </div>
+            </div>
+
+            <div className="flex min-h-0 flex-1 flex-col px-3 pt-1 sm:px-4 sm:pt-2">
+              <div
+                ref={scrollRef}
+                className="chat-scroll min-h-0 flex-1 overflow-y-auto pb-4"
+              >
+                {empty ? (
+                  <div className="flex flex-col items-center justify-center px-2 pt-6 text-center sm:pt-12">
+                    <p className="max-w-sm font-sans text-[15px] leading-relaxed text-cf-muted">
+                      {s.emptyPrompt}
+                    </p>
+                    <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center">
+                      {s.starters.map((starter) => (
+                        <button
+                          key={starter}
+                          type="button"
+                          onClick={() => void send(starter)}
+                          className={
+                            isEmbed
+                              ? "rounded-lg border border-cf-border bg-cf-surface-muted px-4 py-2.5 text-sm text-cf-ink shadow-sm transition-colors duration-200 hover:border-cf-brand-cta/45 hover:bg-cf-page"
+                              : "rounded-lg border border-cf-border bg-cf-surface-muted px-4 py-2.5 text-sm text-cf-ink shadow-sm transition-colors duration-200 hover:border-cf-accent/40 hover:bg-cf-page"
+                          }
+                        >
+                          {starter}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {messages.map((m) => (
+                      <Message key={m.id} message={m} />
+                    ))}
+                    {isLoading && (
+                      <div className="msg-in flex gap-1 pt-1">
+                        <span className="inline-block h-1 w-1 animate-pulse rounded-full bg-cf-muted" />
+                        <span
+                          className="inline-block h-1 w-1 animate-pulse rounded-full bg-cf-muted"
+                          style={{ animationDelay: "150ms" }}
+                        />
+                        <span
+                          className="inline-block h-1 w-1 animate-pulse rounded-full bg-cf-muted"
+                          style={{ animationDelay: "300ms" }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <div className="shrink-0 border-t border-cf-border bg-cf-surface py-3">
+                <form onSubmit={handleSubmit} className="space-y-2">
+                  <div
+                    className={
+                      isEmbed
+                        ? "flex items-end gap-2 rounded-xl border border-cf-border bg-cf-input px-3 py-2 shadow-sm transition-shadow duration-200 focus-within:border-cf-brand-cta/50 focus-within:bg-cf-surface-muted focus-within:ring-1 focus-within:ring-cf-brand-cta/25"
+                        : "flex items-end gap-2 rounded-xl border border-cf-border bg-cf-input px-3 py-2 shadow-sm transition-shadow duration-200 focus-within:border-cf-accent/45 focus-within:bg-cf-surface-muted focus-within:ring-1 focus-within:ring-cf-accent/25"
+                    }
+                  >
+                    <textarea
+                      ref={textareaRef}
+                      value={input}
+                      onChange={(e) => {
+                        setInput(e.target.value);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
+                          void send(input);
+                        }
+                      }}
+                      placeholder={s.msgPlaceholder}
+                      rows={1}
+                      className="max-h-40 min-h-[44px] w-full resize-none bg-transparent py-2.5 text-[15px] leading-snug text-cf-ink placeholder:text-cf-muted/80 focus:outline-none disabled:opacity-50"
+                      disabled={formLocked}
+                      aria-label={s.ariaMsg}
+                    />
+                    <button
+                      type="button"
+                      onClick={toggleDictation}
+                      disabled={
+                        isLoading || dictationStatus === "transcribing"
+                      }
+                      className={
+                        dictationStatus === "recording"
+                          ? "mb-1 rounded-lg bg-red-100 p-2 text-red-700 ring-1 ring-red-300/80 shadow-sm transition-all duration-200 hover:bg-red-200/90 dark:bg-red-950/60 dark:text-red-400 dark:ring-red-500/40 dark:hover:bg-red-950/80"
+                            : dictationStatus === "transcribing"
+                            ? "mb-1 rounded-lg bg-amber-50 p-2 text-amber-800 ring-1 ring-amber-200/90 shadow-sm dark:bg-transparent dark:p-2 dark:text-amber-400/95 dark:ring-amber-500/35"
+                            : "mb-1 rounded-lg p-2 text-cf-muted shadow-sm transition-all duration-200 hover:bg-black/[0.05] hover:text-cf-ink hover:shadow dark:hover:bg-white/5 disabled:opacity-50"
+                      }
+                      aria-label={
+                        dictationStatus === "recording"
+                          ? s.ariaMicStop
+                          : dictationStatus === "transcribing"
+                            ? s.ariaMicTranscribing
+                            : s.ariaMicStart
+                      }
+                      aria-pressed={dictationStatus === "recording"}
+                      aria-busy={dictationStatus === "transcribing"}
+                      title={
+                        dictationStatus === "recording"
+                          ? s.ariaMicStop
+                          : dictationStatus === "transcribing"
+                            ? s.ariaMicTranscribing
+                            : s.ariaMicStart
+                      }
+                    >
+                      <svg
+                        className="h-5 w-5"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden
+                      >
+                        <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 1 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2Z" />
+                      </svg>
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={
+                        isLoading || !input.trim() || isDictating
+                      }
+                      className={
+                        isEmbed
+                          ? "mb-1 rounded-lg bg-cf-brand-cta p-2 text-white shadow-sm transition-all duration-200 enabled:hover:-translate-y-px enabled:hover:bg-cf-brand-cta-hover enabled:hover:shadow-md active:translate-y-0 active:shadow-sm disabled:bg-neutral-200 disabled:text-neutral-400 dark:disabled:bg-cf-border dark:disabled:text-cf-muted"
+                          : "mb-1 rounded-lg bg-cf-accent p-2 text-white shadow-sm transition-all duration-200 enabled:hover:-translate-y-px enabled:hover:bg-cf-accent-hover enabled:hover:shadow-md active:translate-y-0 active:shadow-sm disabled:bg-neutral-200 disabled:text-neutral-400 dark:disabled:bg-cf-border dark:disabled:text-cf-muted"
+                      }
+                      aria-label={s.ariaSend}
+                    >
+                      <svg
+                        className="h-5 w-5"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden
+                      >
+                        <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.588.75.75 0 0 0 0-1.284A60.517 60.517 0 0 0 3.478 2.404Z" />
+                      </svg>
+                    </button>
+                  </div>
+                  {dictationError && (
+                    <p className="text-center text-xs text-red-600 dark:text-red-400">
+                      {dictationError}
+                    </p>
+                  )}
+                  <p className="text-center text-xs text-cf-muted">
+                    {s.notLegal}
+                  </p>
+                </form>
+              </div>
+            </div>
           </div>
-        </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

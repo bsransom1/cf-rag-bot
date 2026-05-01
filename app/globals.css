@@ -15,6 +15,10 @@
   --cf-ink: #2d2d2d;
   --cf-accent: #1d4e89;
   --cf-accent-hover: #174673;
+  /* Marketing / iframe embed chrome (CodiceFiscale.ai) */
+  --cf-brand-nav: #0a1628;
+  --cf-brand-cta: #00a652;
+  --cf-brand-cta-hover: #008a47;
   --cf-quote-bg: #f4f2ed;
   --cf-code-bg: #f3f1ec;
   --cf-scrollbar-thumb: rgba(0, 0, 0, 0.12);
@@ -41,6 +45,11 @@ html.dark {
 html,
 body {
   height: 100%;
+}
+
+/* Let /embed fill the iframe when the host uses height: 100% */
+body:has(> div.h-dvh) {
+  overflow: hidden;
 }
 
 body {
