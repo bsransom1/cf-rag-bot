@@ -9,6 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "clean": "rm -rf .next .turbo tsconfig.tsbuildinfo .eslintcache",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "ingest": "tsx scripts/ingest.ts",
