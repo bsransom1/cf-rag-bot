@@ -2,12 +2,13 @@
  * POST /api/chat
  *
  * RAG flow:
- *   1. Validate body (`project_id` + `message`).
- *   2. Retrieve the top-K relevant FAQ chunks via pgvector.
- *   3. If nothing passes the similarity threshold, short-circuit with the
+ *   1. Validate body (`project_id` + `message` + `session_id`).
+ *   2. Log user message to Supabase (service role) when logging is configured.
+ *   3. Retrieve the top-K relevant FAQ chunks via pgvector.
+ *   4. If nothing passes the similarity threshold, short-circuit with the
  *      project's "I don't know" fallback — no LLM call, no hallucination.
- *   4. Otherwise, build the prompt from retrieved context and call the model.
- *   5. Return `{ response }` (citations are not exposed to the client).
+ *   5. Otherwise, build the prompt from retrieved context and call the model.
+ *   6. Log assistant message; return `{ response }`.
  *
  * Runs on Node (default). Uses only fetch / OpenAI SDK / Supabase SDK, so it
  * works unmodified on Vercel serverless.
@@ -17,7 +18,13 @@ import { NextResponse } from "next/server";
 
 import { CHAT_MODEL, getOpenAI } from "@/lib/ai/client";
 import { buildPrompt } from "@/lib/ai/prompt";
+import {
+  persistAssistantMessageSafe,
+  persistSessionAndUserMessageSafe,
+} from "@/lib/chat/persist";
+import { isUuidString } from "@/lib/chat/id";
 import { getProject } from "@/lib/config/project";
+import { getSupabaseAdminClientForProject } from "@/lib/db/client";
 import { retrieveRelevantChunks } from "@/lib/rag/retrieve";
 import { userWantsSimplifiedSection } from "@/lib/rag/simplifyIntent";
 import type { ChatRequestBody, ChatResponseBody } from "@/types";
@@ -27,6 +34,7 @@ export const runtime = "nodejs";
 export const maxDuration = 30;
 
 const MAX_MESSAGE_LENGTH = 2000;
+const MAX_CLIENT_MESSAGE_ID_LENGTH = 128;
 
 function parseBody(raw: unknown): ChatRequestBody | { error: string } {
   if (typeof raw !== "object" || raw === null) {
@@ -35,7 +43,10 @@ function parseBody(raw: unknown): ChatRequestBody | { error: string } {
   const body = raw as Record<string, unknown>;
   const projectId = body.project_id;
   const message = body.message;
+  const sessionIdRaw = body.session_id;
   const langRaw = body.lang;
+  const clientMessageIdRaw = body.client_message_id;
+
   if (typeof projectId !== "string" || projectId.trim().length === 0) {
     return { error: "project_id is required and must be a non-empty string" };
   }
@@ -47,9 +58,35 @@ function parseBody(raw: unknown): ChatRequestBody | { error: string } {
       error: `message exceeds max length of ${MAX_MESSAGE_LENGTH} characters`,
     };
   }
+  if (typeof sessionIdRaw !== "string" || !isUuidString(sessionIdRaw)) {
+    return {
+      error: "session_id is required and must be a valid UUID string",
+    };
+  }
+
+  let client_message_id: string | undefined;
+  if (clientMessageIdRaw !== undefined && clientMessageIdRaw !== null) {
+    if (
+      typeof clientMessageIdRaw !== "string" ||
+      clientMessageIdRaw.length > MAX_CLIENT_MESSAGE_ID_LENGTH
+    ) {
+      return { error: "client_message_id must be a short string when set" };
+    }
+    const trimmed = clientMessageIdRaw.trim();
+    if (trimmed.length > 0) {
+      client_message_id = trimmed;
+    }
+  }
+
   const lang =
     langRaw === "en" || langRaw === "it" ? (langRaw as "en" | "it") : undefined;
-  return { project_id: projectId.trim(), message: message.trim(), lang };
+  return {
+    project_id: projectId.trim(),
+    message: message.trim(),
+    session_id: sessionIdRaw.trim(),
+    client_message_id,
+    lang,
+  };
 }
 
 export async function POST(request: Request): Promise<NextResponse> {
@@ -78,6 +115,14 @@ export async function POST(request: Request): Promise<NextResponse> {
     );
   }
 
+  const logClient = getSupabaseAdminClientForProject(project.id);
+  const userLogged = await persistSessionAndUserMessageSafe(logClient, {
+    sessionId: parsed.session_id,
+    projectId: project.id,
+    userMessage: parsed.message,
+    clientMessageId: parsed.client_message_id,
+  });
+
   try {
     const chunks = await retrieveRelevantChunks({
       projectId: project.id,
@@ -91,9 +136,15 @@ export async function POST(request: Request): Promise<NextResponse> {
             "(2) `project_id` in DB matches config, (3) Supabase schema uses match_documents(jsonb) with search_path including extensions.",
         );
       }
-      const body: ChatResponseBody = {
-        response: project.fallbackNoKnowledge,
-      };
+      const answer = project.fallbackNoKnowledge;
+      if (userLogged) {
+        await persistAssistantMessageSafe(logClient, {
+          sessionId: parsed.session_id,
+          projectId: project.id,
+          content: answer,
+        });
+      }
+      const body: ChatResponseBody = { response: answer };
       return NextResponse.json(body);
     }
 
@@ -119,12 +170,30 @@ export async function POST(request: Request): Promise<NextResponse> {
       completion.choices[0]?.message?.content?.trim() ??
       project.fallbackNoKnowledge;
 
+    if (userLogged) {
+      await persistAssistantMessageSafe(logClient, {
+        sessionId: parsed.session_id,
+        projectId: project.id,
+        content: answer,
+      });
+    }
+
     const body: ChatResponseBody = { response: answer };
     return NextResponse.json(body);
   } catch (err) {
     console.error("[/api/chat] failure:", err);
+    const clientMsg = chatRouteClientMessage(err);
+
+    if (userLogged) {
+      await persistAssistantMessageSafe(logClient, {
+        sessionId: parsed.session_id,
+        projectId: project.id,
+        content: `[request failed] ${clientMsg}`,
+      });
+    }
+
     return NextResponse.json(
-      { error: chatRouteClientMessage(err) },
+      { error: clientMsg },
       { status: chatRouteStatus(err) },
     );
   }

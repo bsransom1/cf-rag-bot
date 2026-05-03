@@ -9,7 +9,7 @@
  *   4. Return a small, ranked list of chunks the prompt builder can consume.
  */
 
-import { getSupabaseRuntimeClient } from "@/lib/db/client";
+import { getSupabaseRuntimeClientForProject } from "@/lib/db/client";
 import { embedText } from "@/lib/rag/embed";
 import { getProject, type ProjectConfig } from "@/lib/config/project";
 import type { RetrievedChunk } from "@/types";
@@ -55,7 +55,7 @@ export async function retrieveRelevantChunks(
 
   const queryEmbedding = await embedText(options.query);
 
-  const supabase = getSupabaseRuntimeClient();
+  const supabase = getSupabaseRuntimeClientForProject(project.id);
   // NOTE: we request a few extra candidates so the gated-category filter
   // still has room to return `topK` results after filtering.
   const candidateCount = topK + (project.gatedCategories?.length ? 3 : 0);

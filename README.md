@@ -92,7 +92,8 @@ README.md
 ```bash
 npm install
 cp .env.example .env.local
-# fill in OPENAI_API_KEY, SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY
+# fill in OPENAI_API_KEY, SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY,
+# and NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY (same URL + anon as above)
 ```
 
 ### 3.3 Supabase schema
@@ -135,6 +136,15 @@ Important: `match_documents` is defined as **`match_documents(p_match_args jsonb
 
 If you previously ran an older schema, re-running [`supabase/schema.sql`](./supabase/schema.sql) will drop conflicting `public.match_documents(...)` overloads and recreate the table/indexes/RPC.
 
+### Chat transcripts & dashboard (first-time)
+
+1. Re-run or append the **`chat_*`** / **`dashboard_users`** section from [`supabase/schema.sql`](./supabase/schema.sql) in the Supabase SQL editor.
+2. In **Authentication → URL configuration**, set **Site URL** to your production origin and add **`https://<your-domain>/auth/callback`** to **Redirect URLs**.
+3. Create a dashboard user (invite by email or sign up), then allowlist them:
+   `insert into public.dashboard_users (user_id) values ('<uuid-from-auth.users>');`
+4. Set **`NEXT_PUBLIC_SUPABASE_URL`** and **`NEXT_PUBLIC_SUPABASE_ANON_KEY`** (same as `SUPABASE_URL` / `SUPABASE_ANON_KEY`) so `/login` and `/dashboard` work.
+5. Open **`/dashboard`** (internal reviewers only; not linked from the public chat).
+
 ---
 
 ## 5. API contract
@@ -147,11 +157,17 @@ If you previously ran an older schema, re-running [`supabase/schema.sql`](./supa
 {
   "project_id": "italian_immigration",
   "message": "How do I apply from the US?",
-  "lang": "en"
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "lang": "en",
+  "client_message_id": "optional-uuid-for-logging-dedup"
 }
 ```
 
+`session_id` is required: a UUID generated once per browser thread (`localStorage`, keyed by `project_id`). `client_message_id` is optional metadata stored on the user row.
+
 `lang` is optional (`"en"` | `"it"`). When sent (as in the web UI), the assistant answers in that language even if the user typed or dictated in another language.
+
+**Transcript logging:** when `SUPABASE_SERVICE_ROLE_KEY` is set and the chat tables from `supabase/schema.sql` exist, each turn is written to `chat_sessions` / `chat_messages` using the service-role client. Logging failures are suppressed so the widget still replies; check server logs if transcripts are empty.
 
 **Response — 200**
 
@@ -232,7 +248,7 @@ The composer **microphone** records audio in the browser using `MediaRecorder` +
 
 - Repo on GitHub (or GitLab / Bitbucket connected to Vercel).
 - Supabase project with [`supabase/schema.sql`](./supabase/schema.sql) applied.
-- FAQ rows loaded: run `npm run ingest` **locally** (or in CI) using `SUPABASE_SERVICE_ROLE_KEY` pointed at the **same** Supabase project Vercel will use. The hosted app never needs the service-role key at runtime.
+- FAQ rows loaded: run `npm run ingest` **locally** (or in CI) using `SUPABASE_SERVICE_ROLE_KEY` pointed at the **same** Supabase project Vercel will use. **Production** also needs this key if you want `/api/chat` to **persist transcripts** (server-side only — never expose it to the browser).
 
 ### 8.2 New project on Vercel
 
@@ -246,7 +262,9 @@ The composer **microphone** records audio in the browser using `MediaRecorder` +
    | `OPENAI_API_KEY` | Yes | Server only; never expose to the client. |
    | `SUPABASE_URL` | Yes | Same project you ingested into. |
    | `SUPABASE_ANON_KEY` | Yes | Used by `/api/chat` for `match_documents`. |
-   | `SUPABASE_SERVICE_ROLE_KEY` | **No** | Only for local/CI `npm run ingest`. Do **not** add to Vercel unless you have a dedicated ingest job there. |
+   | `SUPABASE_SERVICE_ROLE_KEY` | Yes* | *Required for **transcript logging** and for `npm run ingest`. Server only. |
+   | `NEXT_PUBLIC_SUPABASE_URL` | Yes* | *Same value as `SUPABASE_URL` — used by `/login` and `/dashboard` (Supabase Auth). |
+   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes* | *Same value as `SUPABASE_ANON_KEY`. Safe for the browser. |
 
 4. **Deploy.** The site is served over **HTTPS**, which is required for browser microphone access. Dictation calls `/api/dictation`, which forwards audio to OpenAI Whisper using `OPENAI_API_KEY` — no extra configuration is needed.
 
@@ -264,7 +282,7 @@ The composer **microphone** records audio in the browser using `MediaRecorder` +
 
 Vercel does **not** use your laptop’s `.env.local`. You must set **the same three variables** on the Vercel project for **each** environment you use (**Production** and **Preview** are separate—preview deployments and production URLs can differ).
 
-1. **Vercel** → your project → **Settings** → **Environment Variables** → confirm `OPENAI_API_KEY`, `SUPABASE_URL`, and `SUPABASE_ANON_KEY` for **Production** (and **Preview** if you test on `*.vercel.app` preview URLs). Save, then **Redeploy** (Deployments → ⋮ → Redeploy) so new values apply to running functions.
+1. **Vercel** → your project → **Settings** → **Environment Variables** → confirm `OPENAI_API_KEY`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and (if you use the dashboard/transcripts) `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, and `NEXT_PUBLIC_SUPABASE_ANON_KEY` for **Production** (and **Preview** if you test on `*.vercel.app` preview URLs). Save, then **Redeploy** (Deployments → ⋮ → Redeploy) so new values apply to running functions.
 2. If chat works locally but not on Vercel, 99% of the time a variable is missing, mistyped, or only set for one environment.
 3. **Function logs:** Vercel → project → **Logs** (or a specific deployment → **Functions** / **Runtime Logs**). Errors from `/api/chat` and `/api/dictation` are printed there with more detail.
 4. **Ingest** runs against your Supabase `documents` table from your machine or CI. If the hosted app returns fallback “no information” for every question, the production Supabase may have no rows for that `project_id`—run `npm run ingest` with keys pointing at the **same** Supabase project you configured in Vercel.

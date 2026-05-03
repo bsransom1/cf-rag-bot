@@ -13,8 +13,8 @@
  *   5. Batch-embeds via OpenAI.
  *   6. Wipes existing rows for that project and inserts fresh ones.
  *
- * The ingest script is the ONLY place that uses the Supabase service-role
- * key. It must be run locally by an operator — never from a server handler.
+ * The ingest script is the ONLY place that uses Supabase service-role keys.
+ * It must be run locally by an operator — never from a server handler.
  */
 
 import { config as loadEnv } from "dotenv";
@@ -24,7 +24,7 @@ loadEnv();
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-import { getSupabaseAdminClient } from "@/lib/db/client";
+import { getSupabaseAdminClientForProject } from "@/lib/db/client";
 import { buildEmbeddingText, embedBatch } from "@/lib/rag/embed";
 import { getProject } from "@/lib/config/project";
 import type { FaqEntry } from "@/types";
@@ -116,7 +116,7 @@ async function main(): Promise<void> {
     embedding: embeddings[i],
   }));
 
-  const supabase = getSupabaseAdminClient();
+  const supabase = getSupabaseAdminClientForProject(project.id);
 
   console.log(`→ Clearing existing rows for project=${project.id}...`);
   const { error: deleteError } = await supabase

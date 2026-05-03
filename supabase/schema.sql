@@ -126,3 +126,136 @@ $$;
 
 grant execute on function public.match_documents(jsonb)
   to anon, authenticated, service_role;
+
+-- -----------------------------------------------------------------------------
+-- Chat logging & dashboard (transcripts)
+--
+-- Inserts use the Supabase service-role key from /api/chat (bypasses RLS).
+-- Dashboard users (rows in dashboard_users) may read/delete transcripts via
+-- the anon key + logged-in JWT.
+--
+-- First-time setup: after Auth is enabled, invite Sarah (or create the user),
+-- copy her uuid from auth.users, then:
+--   insert into public.dashboard_users (user_id) values ('<uuid>');
+--
+-- App routes: /login, /auth/callback, /dashboard (see README § Chat dashboard).
+-- -----------------------------------------------------------------------------
+
+create table if not exists public.chat_sessions (
+  id            uuid primary key,
+  project_id    text not null,
+  started_at    timestamptz not null default now(),
+  last_message_at timestamptz not null default now()
+);
+
+create index if not exists chat_sessions_project_idx
+  on public.chat_sessions (project_id);
+
+create index if not exists chat_sessions_last_message_idx
+  on public.chat_sessions (last_message_at desc);
+
+create table if not exists public.chat_messages (
+  id            uuid primary key default gen_random_uuid(),
+  session_id    uuid not null references public.chat_sessions (id) on delete cascade,
+  project_id    text not null,
+  role          text not null check (role in ('user', 'assistant')),
+  content       text not null,
+  created_at    timestamptz not null default now(),
+  client_message_id text
+);
+
+create index if not exists chat_messages_session_idx
+  on public.chat_messages (session_id, created_at);
+
+create index if not exists chat_messages_project_idx
+  on public.chat_messages (project_id, created_at desc);
+
+create unique index if not exists chat_messages_session_client_id_unique
+  on public.chat_messages (session_id, client_message_id)
+  where client_message_id is not null;
+
+create table if not exists public.dashboard_users (
+  user_id       uuid primary key references auth.users (id) on delete cascade,
+  created_at    timestamptz not null default now()
+);
+
+alter table public.chat_sessions enable row level security;
+alter table public.chat_messages enable row level security;
+alter table public.dashboard_users enable row level security;
+
+-- Dashboard operators can see that their own uid is allowlisted.
+create policy "dashboard_users_select_own"
+  on public.dashboard_users
+  for select
+  to authenticated
+  using (auth.uid() = user_id);
+
+create policy "dashboard_select_sessions"
+  on public.chat_sessions
+  for select
+  to authenticated
+  using (
+    exists (
+      select 1 from public.dashboard_users du
+      where du.user_id = auth.uid()
+    )
+  );
+
+create policy "dashboard_delete_sessions"
+  on public.chat_sessions
+  for delete
+  to authenticated
+  using (
+    exists (
+      select 1 from public.dashboard_users du
+      where du.user_id = auth.uid()
+    )
+  );
+
+create policy "dashboard_select_messages"
+  on public.chat_messages
+  for select
+  to authenticated
+  using (
+    exists (
+      select 1 from public.dashboard_users du
+      where du.user_id = auth.uid()
+    )
+  );
+
+create policy "dashboard_delete_messages"
+  on public.chat_messages
+  for delete
+  to authenticated
+  using (
+    exists (
+      select 1 from public.dashboard_users du
+      where du.user_id = auth.uid()
+    )
+  );
+
+grant select, delete on table public.chat_sessions to authenticated;
+grant select, delete on table public.chat_messages to authenticated;
+grant select on table public.dashboard_users to authenticated;
+
+-- Called from Next.js with the service-role key only.
+create or replace function public.upsert_chat_session(
+  p_session_id uuid,
+  p_project_id text
+)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  insert into public.chat_sessions (id, project_id, started_at, last_message_at)
+  values (p_session_id, p_project_id, now(), now())
+  on conflict (id) do update
+    set last_message_at = excluded.last_message_at,
+        project_id      = excluded.project_id;
+end;
+$$;
+
+revoke all on function public.upsert_chat_session(uuid, text) from public;
+grant execute on function public.upsert_chat_session(uuid, text) to service_role;

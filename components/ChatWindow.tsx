@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 
 import { FormattedAssistantText } from "@/components/FormattedAssistantText";
+import { isUuidString } from "@/lib/chat/id";
 import { toggleTheme, useDomDark } from "@/hooks/useDomDark";
 import type { ChatResponseBody } from "@/types";
 
@@ -131,6 +132,21 @@ function makeId(): string {
   return Math.random().toString(36).slice(2) + Date.now().toString(36);
 }
 
+function sessionStorageKey(pid: string): string {
+  return `cf_rag_chat_session_${pid}`;
+}
+
+/** Load-or-create stable chat thread id for logging (`POST /api/chat`). */
+function readOrCreateSessionId(projectId: string): string {
+  const key = sessionStorageKey(projectId);
+  let id = localStorage.getItem(key);
+  if (!id || !isUuidString(id)) {
+    id = crypto.randomUUID();
+    localStorage.setItem(key, id);
+  }
+  return id;
+}
+
 function langSegClass(embed: boolean, active: boolean): string {
   if (embed) {
     return active
@@ -157,6 +173,7 @@ export default function ChatWindow({
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [dictationStatus, setDictationStatus] = useState<DictationStatus>("idle");
   const [dictationError, setDictationError] = useState<string | null>(null);
@@ -171,6 +188,17 @@ export default function ChatWindow({
   const dictationAbortRef = useRef<AbortController | null>(null);
 
   const isDictating = dictationStatus !== "idle";
+
+  useEffect(() => {
+    setSessionId(readOrCreateSessionId(projectId));
+  }, [projectId]);
+
+  function refreshSessionId(): void {
+    const key = sessionStorageKey(projectId);
+    const id = crypto.randomUUID();
+    localStorage.setItem(key, id);
+    setSessionId(id);
+  }
 
   /**
    * Resize the host iframe via postMessage.
@@ -386,18 +414,20 @@ export default function ChatWindow({
 
   function newChat() {
     resetSession();
+    refreshSessionId();
     textareaRef.current?.focus();
   }
 
   function changeLang(next: UiLang) {
     if (next === uiLang) return;
     resetSession();
+    refreshSessionId();
     setUiLang(next);
   }
 
   async function send(message: string) {
     const trimmed = message.trim();
-    if (!trimmed || isLoading) return;
+    if (!trimmed || isLoading || !sessionId) return;
 
     setMessages((prev) => [
       ...prev,
@@ -412,6 +442,7 @@ export default function ChatWindow({
     const langAtSend = uiLangRef.current;
 
     try {
+      const clientMessageId = crypto.randomUUID();
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -419,6 +450,8 @@ export default function ChatWindow({
           project_id: projectId,
           message: trimmed,
           lang: langAtSend,
+          session_id: sessionId,
+          client_message_id: clientMessageId,
         }),
         signal: controller.signal,
       });
@@ -479,7 +512,7 @@ export default function ChatWindow({
   }
 
   const empty = messages.length === 0 && !isLoading;
-  const formLocked = isLoading || isDictating;
+  const formLocked = isLoading || isDictating || sessionId === null;
 
   function closeEmbedPanel() {
     chatAbortRef.current?.abort();

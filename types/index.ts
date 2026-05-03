@@ -54,6 +54,10 @@ export interface RetrievedChunk {
 export interface ChatRequestBody {
   project_id: string;
   message: string;
+  /** Stable thread id from the browser (localStorage) — required for logging. */
+  session_id: string;
+  /** Optional idempotency hint for the user turn (stored when logging). */
+  client_message_id?: string;
   /**
    * Preferred language for the assistant's reply (UI-selected).
    * When omitted, the model mirrors the language of the user message.

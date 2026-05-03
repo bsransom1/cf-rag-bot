@@ -10,6 +10,14 @@
 export interface ProjectConfig {
   /** Stable slug stored in the DB and sent in API requests. */
   id: string;
+  /**
+   * Which Supabase credential bundle backs this project's vector index.
+   * Omit or `"default"` → `SUPABASE_URL`, `SUPABASE_ANON_KEY`,
+   * `SUPABASE_SERVICE_ROLE_KEY`. Any other value uses `SUPABASE_*_<SUFFIX>`
+   * (see `lib/db/profiles.ts`). Keeps today's single-DB deploys and `/embed`
+   * unchanged when unset.
+   */
+  databaseProfileId?: string;
   /** Human-friendly name for logs / UI. */
   name: string;
   /** Path (relative to repo root) to the FAQ JSON file used by the ingest script. */
