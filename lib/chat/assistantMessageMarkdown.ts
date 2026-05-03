@@ -1,3 +1,5 @@
+import { linkifyAllowlistedDomains } from "@/lib/chat/linkifyAllowlistedMarkdown";
+
 /**
  * Map bot output that uses the Answer:/Simplified: convention into
  * markdown headings and a visual divider, so the UI can style hierarchy and
@@ -12,5 +14,5 @@ export function prepareAssistantMessageMarkdown(raw: string): string {
     /(?:\n\n|\n)Simplified:\s*\n?/i,
     "\n\n---\n\n## Simplified\n\n",
   );
-  return t;
+  return linkifyAllowlistedDomains(t);
 }

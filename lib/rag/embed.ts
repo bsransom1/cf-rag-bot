@@ -22,6 +22,9 @@ export function buildEmbeddingText(entry: FaqEntry): string {
   if (entry.plain_english && entry.plain_english.trim().length > 0) {
     parts.push(`Plain English: ${entry.plain_english.trim()}`);
   }
+  if (entry.tags.length > 0) {
+    parts.push(`Keywords: ${entry.tags.join(", ")}`);
+  }
   return parts.join("\n\n");
 }
 

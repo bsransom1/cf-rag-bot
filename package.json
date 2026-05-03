@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "ingest": "tsx scripts/ingest.ts"
+    "ingest": "tsx scripts/ingest.ts",
+    "test:chat-scenarios": "tsx scripts/chat-scenarios.ts"
   },
   "dependencies": {
     "@supabase/ssr": "0.5.2",

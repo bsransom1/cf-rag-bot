@@ -77,6 +77,22 @@
     "tags": ["application", "tax-office", "consulate", "representative"]
   },
   {
+    "question": "How do I activate my codice fiscale?",
+    "answer": "**Activate** in everyday language usually means making your codice fiscale fully recognized in the Italian tax authority's database—the same idea as **official registration**. The 16-character code you compute with the official algorithm is already correct before registration; what \"activation\" adds is that the Agenzia delle Entrate has recorded it on the certificate you use for banks, contracts, and agencies. You can compute the code for free at [ItalianCodiceFiscale.com](https://italiancodicefiscale.com); the calculation runs in your browser and is not stored on the server (see the privacy entry in this FAQ). To complete official registration without traveling to Italy or dealing with restrictive consulate policies, many people use a licensed Italian representative. Studio Legale Metta can obtain the official certificate remotely in as quickly as about 3 days, as described in the acquisition entries in this knowledge base.",
+    "plain_english": "“Activate” = Italy’s tax agency **knows** your code—not a different number. Generate the exact code first at [ItalianCodiceFiscale.com](https://italiancodicefiscale.com), then get it on file via tax office, consulate, or a lawyer—same paths as “get an official codice fiscale.”",
+    "section": "1.3",
+    "category": "acquisition",
+    "tags": ["activate", "activation", "official-registration", "italiancodicefiscale", "generator", "registry", "agenzia"]
+  },
+  {
+    "question": "What does it mean to activate a codice fiscale or make it official?",
+    "answer": "People often say **activate** when they mean the codice fiscale is **registered** with the Agenzia delle Entrate and appears on an official certificate. The mathematical code from a trusted generator such as [ItalianCodiceFiscale.com](https://italiancodicefiscale.com) matches what the authority would compute; the separate step is recording it in their system. Paths for that registration include an Italian tax-office appointment, a consulate (where policies have tightened since mid-2024), or a licensed representative such as a lawyer or accountant acting remotely—timing and documents depend on your situation as summarized in the acquisition entries in this FAQ.",
+    "plain_english": "**Official** = the code is **on file** with the Agenzia. The calculator gives you the right **number** first; **registration** is the paperwork. Use [ItalianCodiceFiscale.com](https://italiancodicefiscale.com) to compute it, then consulate, office visit, or lawyer—whatever matches your case.",
+    "section": "1.3",
+    "category": "acquisition",
+    "tags": ["activate", "official", "registration", "meaning", "italiancodicefiscale", "certificate"]
+  },
+  {
     "question": "Can I apply through an Italian Consulate or Embassy?",
     "answer": "Yes, but policies vary by location and have become significantly stricter since July 15, 2024. For example, the Embassy of Italy in Washington D.C. now requires that those engaging in long-term activities in Italy first attempt to request the codice fiscale through a delegated representative in Italy. If that representative is unable to obtain it, written proof of the failed attempt must be provided. Due to high demand, priority is given to Italian taxpayers, citizens, and those applying for a visa where a codice fiscale is expressly required. Delays are to be expected.",
     "section": "1.3",
@@ -148,7 +164,7 @@
     "plain_english": "Yes — same code. The Italian government uses a fixed formula, and so does the calculator at ItalianCodiceFiscale.com. The difference is that your code isn't in their database yet. Getting it officially registered is a separate step — that's what a lawyer handles. But the number itself? Identical.",
     "section": "1.5",
     "category": "generator",
-    "tags": ["generator", "registration", "official"]
+    "tags": ["generator", "registration", "official", "activate", "activation"]
   },
   {
     "question": "What is omocodia?",

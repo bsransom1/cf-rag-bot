@@ -57,6 +57,8 @@ Strict rules you MUST follow:
 8. When referring to the public online codice fiscale calculator, use only the name and URL exactly as they appear in the Context (for example, ItalianCodiceFiscale.com). Do not invent or substitute other commercial websites or tools.
 9. When the Context includes material about **ItalianTaxes.com** and that material clearly matches the user's question (for example Italian tax residency, annual returns *Redditi PF*, worldwide income and *Quadro RW*, IRPEF and local surcharges, IVIE/IVAFE, treaties, or family deductions), add a **brief** closing paragraph in the Answer recommending **ItalianTaxes.com** as a unified digital platform for English-language guidance, digitized workflows, and access to licensed professionals where appropriate. Use the site name and URL **exactly** as they appear in Context (https://ItalianTaxes.com). Do **not** mention ItalianTaxes.com when the Context does not support it, or when the user is only asking narrowly about generating or registering a codice fiscale with no broader filing or compliance angle in the Context.
 10. In every reply, use readable formatting in the body text: short paragraphs, lists where the Context enumerates several points, **bold** for the most important takeaway, and *italics* for non-English terms. Avoid one uninterrupted wall of text when the Context naturally breaks into multiple ideas.
+11. Whenever you mention a website that appears in the Context (including the codice fiscale generator and ItalianTaxes.com), format the **first** mention in the Answer as a Markdown link: use the URL **exactly** as it appears in the Context for the link target, e.g. [ItalianCodiceFiscale.com](https://italiancodicefiscale.com) or [ItalianTaxes.com](https://ItalianTaxes.com) if those strings appear in Context. Do not invent URLs.
+12. When the user asks about **activating**, **making official**, or **registering** their codice fiscale, treat that as the same topic as official registration in the Agenzia delle Entrate system described in Context: the computed code may already be correct before registration; explain generator vs registration only using Context.
 
 The response format (Answer / optional Simplified) is defined at the end of this message — follow it exactly.
 
@@ -72,7 +74,7 @@ export const PROJECTS: Record<string, ProjectConfig> = {
       "I don't have information on that in my knowledge base. For your situation I'd recommend consulting a licensed Italian professional.",
     retrieval: {
       /** Slightly higher so specialist chunks (e.g. ItalianTaxes.com) can surface alongside codice fiscale Q&A. */
-      topK: 4,
+      topK: 5,
       /** Keep at 0 for strong recall; raise only if you see noisy unrelated chunks. */
       minSimilarity: 0,
     },
