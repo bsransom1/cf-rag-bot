@@ -25,13 +25,23 @@ type LinkRule = { re: RegExp; href: string; label: string };
 
 const RULES: LinkRule[] = [
   {
+    re: /\bhttps:\/\/CodiceFiscale\.ai\b/i,
+    href: "https://CodiceFiscale.ai",
+    label: "CodiceFiscale.ai",
+  },
+  {
+    re: /\bCodiceFiscale\.ai\b/i,
+    href: "https://CodiceFiscale.ai",
+    label: "CodiceFiscale.ai",
+  },
+  {
     re: /\bhttps:\/\/italiancodicefiscale\.com\b/i,
-    href: "https://italiancodicefiscale.com",
+    href: "https://ItalianCodiceFiscale.com",
     label: "ItalianCodiceFiscale.com",
   },
   {
     re: /\bItalianCodiceFiscale\.com\b/i,
-    href: "https://italiancodicefiscale.com",
+    href: "https://ItalianCodiceFiscale.com",
     label: "ItalianCodiceFiscale.com",
   },
   {

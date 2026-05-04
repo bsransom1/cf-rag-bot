@@ -1,5 +1,10 @@
 /**
- * Integration checks for /api/chat funnel behavior (ItalianCodiceFiscale vs ItalianTaxes).
+ * Integration checks for /api/chat funnel behavior.
+ *
+ * Three-tier canonical model:
+ *   CodiceFiscale.ai      → free calculator (compute the code)
+ *   ItalianCodiceFiscale.com → paid official registration (licensed pros file with Agenzia)
+ *   ItalianTaxes.com      → broader tax compliance (Redditi, RW, IRPEF, IVIE/IVAFE)
  *
  * Usage:
  *   1. Build and start the app: `npm run build && PORT=3011 npm start`
@@ -31,39 +36,67 @@ type Expect = {
 type Scenario = { name: string; message: string; expect: Expect };
 
 const SCENARIOS: Scenario[] = [
+  // --- Tier 1: CodiceFiscale.ai = free calculator ---
   {
-    name: "activate → generator / registration (bug case)",
+    name: "calculate intent → CodiceFiscale.ai (not paid registration)",
+    message: "How do I calculate my Italian codice fiscale?",
+    expect: {
+      mustMatch: /CodiceFiscale\.ai|codicefiscale\.ai/i,
+      mustNotMatch: /ItalianTaxes\.com/i,
+      notEmptyRetrieval: true,
+    },
+  },
+  {
+    name: "how to generate code → CodiceFiscale.ai (free calculator)",
+    message: "Where can I generate or compute my Italian codice fiscale for free?",
+    expect: {
+      mustMatch: /CodiceFiscale\.ai|codicefiscale\.ai|calculator|compute/i,
+      notEmptyRetrieval: true,
+    },
+  },
+  {
+    name: "calculator privacy — no ItalianTaxes funnel",
+    message: "Does the CodiceFiscale.ai calculator store my personal data?",
+    expect: {
+      mustMatch: /CodiceFiscale\.ai|browser|not store|no data|retained/i,
+      mustNotMatch: /ItalianTaxes\.com/i,
+      notEmptyRetrieval: true,
+    },
+  },
+  // --- Tier 2: ItalianCodiceFiscale.com = paid official registration ---
+  {
+    name: "activate → ItalianCodiceFiscale.com registration (primary bug case)",
     message: "How do I activate my codice fiscale?",
     expect: {
-      mustMatch: /ItalianCodiceFiscale|italiancodicefiscale/i,
-      mustNotMatch: /^$/s,
+      mustMatch: /ItalianCodiceFiscale\.com|italiancodicefiscale\.com/i,
       notEmptyRetrieval: true,
     },
   },
   {
-    name: "activate phrasing (synonym)",
+    name: "make official → ItalianCodiceFiscale.com",
     message: "What does it mean to make my codice fiscale official?",
     expect: {
-      mustMatch: /ItalianCodiceFiscale|italiancodicefiscale|Agenzia|registration|register/i,
+      mustMatch: /ItalianCodiceFiscale\.com|italiancodicefiscale\.com|Agenzia|registration|register/i,
       notEmptyRetrieval: true,
     },
   },
   {
-    name: "register officially",
+    name: "register with tax authority → ItalianCodiceFiscale.com",
     message: "How do I register my codice fiscale with the Italian tax authority?",
     expect: {
-      mustMatch: /codice fiscale|tax code|ItalianCodiceFiscale|italiancodicefiscale|consulate|lawyer|Agenzia|representative/i,
+      mustMatch: /ItalianCodiceFiscale\.com|italiancodicefiscale\.com|Agenzia|registration/i,
       notEmptyRetrieval: true,
     },
   },
   {
-    name: "generator tool",
-    message: "How does the ItalianCodiceFiscale.com calculator work?",
+    name: "compare sites — both roles correctly distinguished",
+    message: "What is the difference between CodiceFiscale.ai and ItalianCodiceFiscale.com?",
     expect: {
-      mustMatch: /ItalianCodiceFiscale|italiancodicefiscale|algorithm|deterministic/i,
+      mustMatch: /CodiceFiscale\.ai/i,
       notEmptyRetrieval: true,
     },
   },
+  // --- Tier 3: ItalianTaxes.com = broader tax compliance ---
   {
     name: "ItalianTaxes funnel — platform intro",
     message: "What is ItalianTaxes.com and how does it relate to CodiceFiscale.ai?",
@@ -73,7 +106,7 @@ const SCENARIOS: Scenario[] = [
     },
   },
   {
-    name: "ItalianTaxes funnel — Redditi PF",
+    name: "ItalianTaxes funnel — Redditi PF filing",
     message: "Where can I get help filing my Italian personal income tax return Redditi PF?",
     expect: {
       mustMatch: /ItalianTaxes/i,
@@ -81,15 +114,16 @@ const SCENARIOS: Scenario[] = [
     },
   },
   {
-    name: "ItalianTaxes funnel — Quadro RW",
+    name: "ItalianTaxes funnel — Quadro RW foreign assets",
     message: "I need help with Quadro RW and reporting foreign assets to Italy.",
     expect: {
       mustMatch: /ItalianTaxes|Quadro RW|RW/i,
       notEmptyRetrieval: true,
     },
   },
+  // --- Anti-wrong-funnel checks ---
   {
-    name: "narrow definition — should not push ItalianTaxes (anti–wrong funnel)",
+    name: "narrow definition — must not push ItalianTaxes",
     message: "In one sentence, what is the Italian codice fiscale?",
     expect: {
       mustNotMatch: /ItalianTaxes\.com/i,
@@ -98,16 +132,15 @@ const SCENARIOS: Scenario[] = [
     },
   },
   {
-    name: "generator privacy — stays on CF / generator topic",
-    message: "Does ItalianCodiceFiscale.com store my personal data when I use the generator?",
+    name: "calculate intent — must not push paid registration only",
+    message: "Can you compute my codice fiscale for free?",
     expect: {
-      mustMatch: /ItalianCodiceFiscale|italiancodicefiscale|browser|not store|no data|retained/i,
-      mustNotMatch: /ItalianTaxes\.com/i,
+      mustMatch: /CodiceFiscale\.ai|codicefiscale\.ai|free|calculator/i,
       notEmptyRetrieval: true,
     },
   },
   {
-    name: "business / advertise — gated category surfaces when intended",
+    name: "business / advertise — gated category surfaces correctly",
     message: "How can my law firm advertise on CodiceFiscale.ai?",
     expect: {
       mustMatch: /advertis|contact|banner|sponsor|website|CodiceFiscale/i,

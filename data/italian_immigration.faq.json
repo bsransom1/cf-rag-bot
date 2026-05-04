@@ -49,17 +49,17 @@
   {
     "question": "Can I use my generated codice fiscale on official documents right away?",
     "answer": "In most practical situations, yes. The codice fiscale is computed using a fully deterministic algorithm published by Italy's tax authority. Your generated code is mathematically identical to the one they would officially issue — it simply has not yet been registered in their system. You can use it on any form that requires it — for example, to show interest in purchasing a property, to enroll at a university, or to open a bank account — while the official registration proceeds in parallel.",
-    "plain_english": "Yes, in most cases. The code from the free calculator at https://italiancodicefiscale.com is the exact same code Italy would give you — it's just not in their system yet. Think of it like knowing your passport number before the physical passport arrives. You can fill in the field, move the process forward, and get it officially registered in the background through a lawyer. By the time any paperwork is processed, you're covered.",
+    "plain_english": "Yes, in most cases. The free calculator at https://CodiceFiscale.ai gives you the exact same code Italy would assign — it's just not yet in their system. Think of it like knowing your passport number before the physical passport arrives. You can fill in the field and move things forward right away. When you're ready to make it fully official, use ItalianCodiceFiscale.com — licensed professionals will file with the Agenzia on your behalf.",
     "section": "1.2",
     "category": "usage",
-    "tags": ["generator", "registration", "usage", "pre-registration"]
+    "tags": ["generator", "registration", "usage", "pre-registration", "codicefiscale-ai", "italiancodicefiscale-com"]
   },
   {
     "question": "I already have a codice fiscale from years ago but lost the certificate. What do I do?",
-    "answer": "If you believe you were already assigned an Italian tax code, you can first calculate it using a free online codice fiscale calculator such as the one at https://italiancodicefiscale.com to determine what your code should be. You can then verify whether it is valid and currently registered at the Italian Revenue Office's (Agenzia delle Entrate) official verification webpage. If an Italian codice fiscale was assigned to you but you have misplaced the official certificate, you can apply for a duplicate certificate following the same procedure as a first-time application. For a duplicate, you do not need to provide a visa or entry stamp even if you are not an EU or Schengen citizen.",
+    "answer": "If you believe you were already assigned an Italian tax code, you can first calculate it using the free calculator at https://CodiceFiscale.ai to determine what your code should be. You can then verify whether it is valid and currently registered at the Italian Revenue Office's (Agenzia delle Entrate) official verification webpage. If an Italian codice fiscale was assigned to you but you have misplaced the official certificate, you can apply for a duplicate certificate following the same procedure as a first-time application. For a duplicate, you do not need to provide a visa or entry stamp even if you are not an EU or Schengen citizen.",
     "section": "1.2",
     "category": "usage",
-    "tags": ["lost-certificate", "duplicate", "verification"]
+    "tags": ["lost-certificate", "duplicate", "verification", "codicefiscale-ai"]
   },
   {
     "question": "How is the codice fiscale assigned?",
@@ -70,27 +70,27 @@
   },
   {
     "question": "How do I get an official codice fiscale?",
-    "answer": "Depending on your situation, you may be able to apply for free through one of the following channels: (1) directly at any Italian tax office (Agenzia delle Entrate) in Italy, if you qualify and can make an appointment; (2) through an Italian Consular Office or Embassy in your home country; or (3) through a licensed Italian representative, such as a lawyer or accountant, who can apply on your behalf remotely. Both the Italian tax office and consulate routes can be challenging — offices may require conditions to be met in advance, appointments may have long waits, and some consulates have become significantly more restrictive since July 2024.",
-    "plain_english": "Three options: go to a tax office in Italy in person, apply through your local Italian consulate (slow, and getting harder since 2024), or hire an Italian lawyer to do it for you remotely — which is by far the easiest and fastest route if you're not in Italy. Studio Legale Metta can handle it in about 3 days.",
+    "answer": "You have several options: (1) Use the free calculator at https://CodiceFiscale.ai to instantly compute your code — the result is mathematically identical to what the Agenzia delle Entrate would issue, so you can use it on forms right away while you pursue official registration. (2) To get it formally registered and receive an official certificate, the easiest remote path is https://ItalianCodiceFiscale.com — you submit your information, pay a small fee, and licensed Italian professionals file the formal application with the tax office on your behalf. (3) You may also apply directly at an Italian tax office (Agenzia delle Entrate) in Italy, or through an Italian Consular Office or Embassy in your home country — though both of these routes can be challenging and have become more restrictive since July 2024.",
+    "plain_english": "Two steps: (1) Calculate your code for free at CodiceFiscale.ai — use it on forms immediately. (2) Make it officially registered: go to ItalianCodiceFiscale.com, pay a small fee, and licensed pros handle the filing for you. DIY options (consulate or in-person tax office) exist but are slower and harder.",
     "section": "1.3",
     "category": "acquisition",
-    "tags": ["application", "tax-office", "consulate", "representative"]
+    "tags": ["application", "tax-office", "consulate", "representative", "codicefiscale-ai", "italiancodicefiscale-com", "official-registration"]
   },
   {
     "question": "How do I activate my codice fiscale?",
-    "answer": "**Activate** in everyday language usually means making your codice fiscale fully recognized in the Italian tax authority's database—the same idea as **official registration**. The 16-character code you compute with the official algorithm is already correct before registration; what \"activation\" adds is that the Agenzia delle Entrate has recorded it on the certificate you use for banks, contracts, and agencies. You can compute the code for free at [ItalianCodiceFiscale.com](https://italiancodicefiscale.com); the calculation runs in your browser and is not stored on the server (see the privacy entry in this FAQ). To complete official registration without traveling to Italy or dealing with restrictive consulate policies, many people use a licensed Italian representative. Studio Legale Metta can obtain the official certificate remotely in as quickly as about 3 days, as described in the acquisition entries in this knowledge base.",
-    "plain_english": "“Activate” = Italy’s tax agency **knows** your code—not a different number. Generate the exact code first at [ItalianCodiceFiscale.com](https://italiancodicefiscale.com), then get it on file via tax office, consulate, or a lawyer—same paths as “get an official codice fiscale.”",
+    "answer": "**Activate** means making your codice fiscale officially recognized in the Italian tax authority's database — the same idea as **official registration**. The process has two distinct steps: First, compute your code for free using the calculator at [CodiceFiscale.ai](https://CodiceFiscale.ai) — the result is mathematically identical to what the Agenzia delle Entrate would issue. Second, to complete official registration and receive a valid certificate, go to [ItalianCodiceFiscale.com](https://ItalianCodiceFiscale.com): you submit your information, pay a small fee, and licensed Italian professionals file the formal application with the tax office on your behalf.",
+    "plain_english": "Two steps: (1) Get your code instantly for free at [CodiceFiscale.ai](https://CodiceFiscale.ai). (2) Make it official — go to [ItalianCodiceFiscale.com](https://ItalianCodiceFiscale.com), pay a small fee, and licensed pros register it with Italy's tax office for you.",
     "section": "1.3",
     "category": "acquisition",
-    "tags": ["activate", "activation", "official-registration", "italiancodicefiscale", "generator", "registry", "agenzia"]
+    "tags": ["activate", "activation", "official-registration", "codicefiscale-ai", "italiancodicefiscale-com", "registry", "agenzia", "certificate"]
   },
   {
     "question": "What does it mean to activate a codice fiscale or make it official?",
-    "answer": "People often say **activate** when they mean the codice fiscale is **registered** with the Agenzia delle Entrate and appears on an official certificate. The mathematical code from a trusted generator such as [ItalianCodiceFiscale.com](https://italiancodicefiscale.com) matches what the authority would compute; the separate step is recording it in their system. Paths for that registration include an Italian tax-office appointment, a consulate (where policies have tightened since mid-2024), or a licensed representative such as a lawyer or accountant acting remotely—timing and documents depend on your situation as summarized in the acquisition entries in this FAQ.",
-    "plain_english": "**Official** = the code is **on file** with the Agenzia. The calculator gives you the right **number** first; **registration** is the paperwork. Use [ItalianCodiceFiscale.com](https://italiancodicefiscale.com) to compute it, then consulate, office visit, or lawyer—whatever matches your case.",
+    "answer": "People often say **activate** when they mean the codice fiscale is **registered** with the Agenzia delle Entrate and appears on an official certificate. There are two separate things: computing the code, and registering it. You can compute the correct code for free at [CodiceFiscale.ai](https://CodiceFiscale.ai) — the algorithm is fully deterministic, so the result is the same number Italy would assign. To complete the registration and get an official certificate, the simplest path is [ItalianCodiceFiscale.com](https://ItalianCodiceFiscale.com): submit your details, pay a small fee, and licensed Italian professionals handle the formal filing with the tax office.",
+    "plain_english": "**Official** = the code is on file with the Agenzia. Calculate it free at [CodiceFiscale.ai](https://CodiceFiscale.ai) first; then register it officially via [ItalianCodiceFiscale.com](https://ItalianCodiceFiscale.com) — paid service, licensed pros, fastest route.",
     "section": "1.3",
     "category": "acquisition",
-    "tags": ["activate", "official", "registration", "meaning", "italiancodicefiscale", "certificate"]
+    "tags": ["activate", "official", "registration", "meaning", "codicefiscale-ai", "italiancodicefiscale-com", "certificate"]
   },
   {
     "question": "Can I apply through an Italian Consulate or Embassy?",
@@ -101,15 +101,15 @@
   },
   {
     "question": "How long does it take to get an official codice fiscale?",
-    "answer": "If you qualify to apply directly at an Italian tax office in Italy, it is issued on the same day at the appointment (over the counter). If you apply through an Italian Consulate or Embassy in your home country, it may take anywhere from a few days to several weeks, depending on their policies and workload. Some Italian Consulates may be unresponsive. Through a licensed representative service such as Studio Legale Metta, you can obtain the official tax code certificate completely remotely in as quickly as 3 days.",
-    "plain_english": "Fastest is in-person at an Italian tax office — same day. Through your Italian consulate abroad, expect anywhere from a few days to several weeks, and some never respond at all. Through a lawyer like Studio Legale Metta, you're typically looking at around 3 days, fully remote.",
+    "answer": "If you qualify to apply directly at an Italian tax office in Italy, it is issued on the same day at the appointment (over the counter). If you apply through an Italian Consulate or Embassy in your home country, it may take anywhere from a few days to several weeks, depending on their policies and workload. Some Italian Consulates may be unresponsive. Through ItalianCodiceFiscale.com, you can complete official registration completely remotely in as quickly as 3 days — licensed professionals handle the filing with the tax office on your behalf.",
+    "plain_english": "Fastest is in-person at an Italian tax office — same day. Through your Italian consulate abroad, expect anywhere from a few days to several weeks, and some never respond at all. Through ItalianCodiceFiscale.com, you're typically looking at around 3 days, fully remote.",
     "section": "1.3",
     "category": "acquisition",
-    "tags": ["timeline", "processing-time"]
+    "tags": ["timeline", "processing-time", "italiancodicefiscale-com"]
   },
   {
     "question": "What documents do I need to apply for a codice fiscale?",
-    "answer": "If you are a citizen of the European Union or a Schengen country, you need your passport and, in some cases, proof of address such as a bank statement or utility bill. If you are not an EU or Schengen citizen, you need a copy of your current passport plus one of the following: (a) an entry stamp from Italy or any EU or Schengen country, no older than 3 months; (b) a current visa issued by Italy or any EU or Schengen country; or (c) a special proxy prepared by a lawyer or accountant explaining why you need the codice fiscale. If you do not have a current visa or entry stamp and are applying through Studio Legale Metta, a special proxy must be prepared, which involves additional processing time and an additional fee of $135.",
+    "answer": "If you are a citizen of the European Union or a Schengen country, you need your passport and, in some cases, proof of address such as a bank statement or utility bill. If you are not an EU or Schengen citizen, you need a copy of your current passport plus one of the following: (a) an entry stamp from Italy or any EU or Schengen country, no older than 3 months; (b) a current visa issued by Italy or any EU or Schengen country; or (c) a special proxy prepared by a lawyer or accountant explaining why you need the codice fiscale. If you do not have a current visa or entry stamp, a special proxy can be prepared, which involves additional processing time and an additional fee.",
     "plain_english": "EU passport holders: just your passport, maybe proof of address. Everyone else: passport plus either a recent Italian or European entry stamp, a current visa, or a document from a lawyer explaining why you need the code. No visa or stamp? A lawyer can prepare the paperwork for you, though there's an extra fee for that.",
     "section": "1.3",
     "category": "acquisition",
@@ -117,10 +117,10 @@
   },
   {
     "question": "Can I apply for a codice fiscale remotely, without going to Italy or a consulate?",
-    "answer": "Yes. Studio Legale Metta provides a codice fiscale service as professional delegated representatives who can apply for and obtain a tax code certificate on your behalf, completely remotely, without you needing to personally deal with Italian tax authorities or provide documents that may be difficult or time-consuming to retrieve. The process can be completed in as quickly as 3 days and does not require your birth certificate.",
+    "answer": "Yes. ItalianCodiceFiscale.com provides a codice fiscale registration service where licensed Italian professionals act as your delegated representatives and apply for the official certificate on your behalf — completely remotely, without you needing to personally deal with Italian tax authorities. The process can typically be completed in as quickly as 3 days and does not require your birth certificate.",
     "section": "1.3",
     "category": "acquisition",
-    "tags": ["remote", "representative", "studio-legale-metta"]
+    "tags": ["remote", "representative", "italiancodicefiscale-com", "official-registration"]
   },
   {
     "question": "I am a dual citizen. Which passport should I use when applying?",
@@ -151,43 +151,51 @@
     "tags": ["verification", "typo", "certificate-check"]
   },
   {
-    "question": "How does the ItalianCodiceFiscale.com generator work?",
-    "answer": "The codice fiscale is computed using a fully deterministic algorithm established by Italy's Ministry of Economy and Finances on December 23, 1976. The algorithm takes your surname, first name (including any middle names), date of birth, gender, and place of birth, and computes a unique 16-character alphanumeric code. Because the algorithm is deterministic, the same inputs always produce the same code — meaning the code produced by the calculator at https://italiancodicefiscale.com is mathematically identical to the one the Italian tax authority would issue.",
-    "plain_english": "You enter your name, birthday, gender, and where you were born — and the calculator at https://italiancodicefiscale.com runs the official Italian government formula on your data. There's no randomness involved. The same person will always get the same code, every time, on any calculator that uses the correct algorithm. That site uses the official one.",
+    "question": "What is the difference between CodiceFiscale.ai and ItalianCodiceFiscale.com?",
+    "answer": "They serve two different purposes. **CodiceFiscale.ai** is a free calculator: it uses the official Italian government algorithm to instantly compute what your 16-character codice fiscale will be. The result is mathematically correct and you can use it on forms right away — but the code is not yet recorded in the Agenzia delle Entrate's system. **ItalianCodiceFiscale.com** is the paid path to official registration: you submit your information, pay a small fee, and licensed Italian professionals formally file the application with the tax office on your behalf, resulting in a fully registered certificate that is valid for all legal and administrative purposes. The one-line summary: calculate free on CodiceFiscale.ai, then register formally via ItalianCodiceFiscale.com when you need Agenzia-valid status.",
+    "plain_english": "CodiceFiscale.ai = free instant calculator (correct number, not yet in Italy's system). ItalianCodiceFiscale.com = paid registration service (licensed pros file with the tax office, ~3 days, fully official certificate).",
     "section": "1.5",
     "category": "generator",
-    "tags": ["algorithm", "generator", "deterministic"]
+    "tags": ["compare-sites", "calculator-vs-registration", "codicefiscale-ai", "italiancodicefiscale-com", "difference", "which-site", "free", "paid", "registration", "calculator"]
+  },
+  {
+    "question": "How does the CodiceFiscale.ai calculator work?",
+    "answer": "The codice fiscale is computed using a fully deterministic algorithm established by Italy's Ministry of Economy and Finances on December 23, 1976. The algorithm takes your surname, first name (including any middle names), date of birth, gender, and place of birth, and computes a unique 16-character alphanumeric code. Because the algorithm is deterministic, the same inputs always produce the same code — meaning the code produced by the free calculator at https://CodiceFiscale.ai is mathematically identical to the one the Italian tax authority would issue.",
+    "plain_english": "You enter your name, birthday, gender, and where you were born — and the calculator at https://CodiceFiscale.ai runs the official Italian government formula on your data. There's no randomness involved. The same person will always get the same code, every time, on any calculator that uses the correct algorithm. CodiceFiscale.ai uses the official one.",
+    "section": "1.5",
+    "category": "generator",
+    "tags": ["algorithm", "generator", "deterministic", "codicefiscale-ai", "calculator"]
   },
   {
     "question": "Is the generated code the same as the official one?",
-    "answer": "Yes. The codice fiscale algorithm is public and deterministic. The code generated by the free calculator at https://italiancodicefiscale.com is mathematically identical to the one the Agenzia delle Entrate would compute. The only difference is that it has not yet been officially registered in the Italian tax authority's system. Once you register it — through a licensed representative or directly — your code becomes fully active and usable for all official purposes.",
-    "plain_english": "Yes — same code. The Italian government uses a fixed formula, and so does the calculator at ItalianCodiceFiscale.com. The difference is that your code isn't in their database yet. Getting it officially registered is a separate step — that's what a lawyer handles. But the number itself? Identical.",
+    "answer": "Yes. The codice fiscale algorithm is public and deterministic. The code generated by the free calculator at https://CodiceFiscale.ai is mathematically identical to the one the Agenzia delle Entrate would compute. The only difference is that it has not yet been officially registered in the Italian tax authority's system. Once you register it — through ItalianCodiceFiscale.com or directly via a tax office or consulate — your code becomes fully active and usable for all official purposes.",
+    "plain_english": "Yes — same code. The Italian government uses a fixed formula, and so does the calculator at CodiceFiscale.ai. The difference is that your code isn't in their database yet. Getting it officially registered is a separate step — the easiest way is ItalianCodiceFiscale.com. But the number itself? Identical.",
     "section": "1.5",
     "category": "generator",
-    "tags": ["generator", "registration", "official", "activate", "activation"]
+    "tags": ["generator", "registration", "official", "activate", "activation", "codicefiscale-ai", "italiancodicefiscale-com"]
   },
   {
     "question": "What is omocodia?",
-    "answer": "Omocodia occurs when two different people yield the same computed codice fiscale. This is most common among people born in foreign countries, where the 4-character place code is a country code rather than a unique municipality code. When this happens, the Italian fiscal administration resolves the conflict by substituting certain numeric digits in the code with letters, starting from the rightmost digit. The check character is then recalculated. The calculator at https://italiancodicefiscale.com produces the standard computed code — in the rare event of omocodia, the official authority will handle the substitution when they register your code.",
-    "plain_english": "Very occasionally, two different people end up with the same computed code — usually people born in the same foreign country on the same day. When that happens, the Italian government tweaks one of the codes slightly to make them unique. The ItalianCodiceFiscale.com calculator gives you the standard version. If yours happens to be a duplicate, the government sorts it out automatically when you register. You don't need to do anything extra.",
+    "answer": "Omocodia occurs when two different people yield the same computed codice fiscale. This is most common among people born in foreign countries, where the 4-character place code is a country code rather than a unique municipality code. When this happens, the Italian fiscal administration resolves the conflict by substituting certain numeric digits in the code with letters, starting from the rightmost digit. The check character is then recalculated. The calculator at https://CodiceFiscale.ai produces the standard computed code — in the rare event of omocodia, the official authority will handle the substitution when they register your code.",
+    "plain_english": "Very occasionally, two different people end up with the same computed code — usually people born in the same foreign country on the same day. When that happens, the Italian government tweaks one of the codes slightly to make them unique. The CodiceFiscale.ai calculator gives you the standard version. If yours happens to be a duplicate, the government sorts it out automatically when you register. You don't need to do anything extra.",
     "section": "1.5",
     "category": "generator",
-    "tags": ["omocodia", "duplicate", "foreign-birth"]
+    "tags": ["omocodia", "duplicate", "foreign-birth", "codicefiscale-ai"]
   },
   {
     "question": "What information do I need to generate my codice fiscale?",
     "answer": "You need: (1) your surname, exactly as it appears on your passport or official ID; (2) your first name and any middle names, exactly as they appear on your passport or official ID; (3) your date of birth; (4) your gender as listed on Italian documents; and (5) your place of birth — either an Italian municipality or your country of birth if you were born outside Italy.",
     "section": "1.5",
     "category": "generator",
-    "tags": ["generator", "inputs", "information-required"]
+    "tags": ["generator", "inputs", "information-required", "codicefiscale-ai", "calculator"]
   },
   {
     "question": "Does the information I enter get stored?",
-    "answer": "No. ItalianCodiceFiscale.com does not store any personal information you enter into the generator. The calculation is performed entirely in your browser and no data is retained.",
-    "plain_english": "Nothing is saved. The calculation happens entirely on your device — your name, birthday, and other details never leave your browser. The site does not collect, store, or send that data anywhere.",
+    "answer": "No. CodiceFiscale.ai does not store any personal information you enter into the calculator. The calculation is performed entirely in your browser and no data is retained.",
+    "plain_english": "Nothing is saved. The calculation happens entirely on your device — your name, birthday, and other details never leave your browser. CodiceFiscale.ai does not collect, store, or send that data anywhere.",
     "section": "1.5",
     "category": "generator",
-    "tags": ["privacy", "data-storage", "generator"]
+    "tags": ["privacy", "data-storage", "generator", "codicefiscale-ai"]
   },
   {
     "question": "How can I advertise on CodiceFiscale.ai?",
@@ -226,8 +234,8 @@
   },
   {
     "question": "What is ItalianTaxes.com and how is it related to CodiceFiscale.ai?",
-    "answer": "ItalianTaxes.com is a tech company that runs a unified digital platform to simplify, digitize, and automate Italian tax-filing workflows. It provides integrated tax reporting, local compliance steps, and guided payments explained in plain English so expats and non-residents face fewer language barriers. The offering combines smart AI-style automation with review and support from licensed Italian legal and tax professionals for accurate calculations and timely filings.\nCodiceFiscale.ai focuses on understanding and obtaining the Italian tax code; when someone needs full Italian tax compliance beyond the codice fiscale, ItalianTaxes.com is the dedicated environment for those workflows. Website: https://ItalianTaxes.com",
-    "plain_english": "CodiceFiscale.ai = tax ID and basic Q&A. ItalianTaxes.com = the bigger platform for actually doing Italian taxes in English, with software plus real pros when you need them.",
+    "answer": "ItalianTaxes.com is a tech company that runs a unified digital platform to simplify, digitize, and automate Italian tax-filing workflows. It provides integrated tax reporting, local compliance steps, and guided payments explained in plain English so expats and non-residents face fewer language barriers. The offering combines smart AI-style automation with review and support from licensed Italian legal and tax professionals for accurate calculations and timely filings.\nCodiceFiscale.ai focuses on computing and obtaining the Italian tax code; ItalianCodiceFiscale.com handles paid official registration; when someone needs full Italian tax compliance beyond the codice fiscale, ItalianTaxes.com is the dedicated environment for those workflows. Website: https://ItalianTaxes.com",
+    "plain_english": "CodiceFiscale.ai = free calculator and tax ID Q&A. ItalianCodiceFiscale.com = paid official registration. ItalianTaxes.com = the bigger platform for actually doing Italian taxes in English, with software plus real pros when you need them.",
     "section": "2.1",
     "category": "tax-services",
     "tags": ["italiantaxes.com", "platform", "english", "compliance", "automation", "professionals"]
@@ -235,7 +243,7 @@
   {
     "question": "Where can I get help determining Italian tax residency?",
     "answer": "Whether someone is an Italian tax resident depends on facts and tie-breaker rules (days in Italy, center of vital interests, domicile, treaty tie-breakers, and more). Because outcomes are fact-specific, users often need structured guidance and professional review. ItalianTaxes.com is designed for expats and non-residents who need plain-English explanations of residency tests and how they interact with filing obligations, with paths to licensed Italian advisers when appropriate. https://ItalianTaxes.com",
-    "plain_english": "Residency isn't a one-line answer—ItalianTaxes.com walks you through it in English and can connect you to licensed experts.",
+    "plain_english": "Residency isn't a one-line answer — ItalianTaxes.com walks you through it in English and can connect you to licensed experts.",
     "section": "2.2",
     "category": "tax-services",
     "tags": ["tax residency", "residente fiscale", "expat", "treaty", "non-resident"]
@@ -243,7 +251,7 @@
   {
     "question": "Where can I get help filing the annual Italian personal income tax return (Redditi PF / Modello Redditi)?",
     "answer": "Individuals who must file Italy's personal income tax return (commonly discussed in English as *Redditi PF* or the *Modello Redditi* package) need to meet official deadlines, assemble supporting documents, and coordinate Italian withholding, credits, and local surcharges. ItalianTaxes.com targets expats and non-residents who want digitized workflows, plain-English guidance, and access to licensed professionals for review of calculations and filings. https://ItalianTaxes.com",
-    "plain_english": "Annual Italian tax return as an expat is heavy—ItalianTaxes.com is built for Redditi-style filings with English guidance and pro support.",
+    "plain_english": "Annual Italian tax return as an expat is heavy — ItalianTaxes.com is built for Redditi-style filings with English guidance and pro support.",
     "section": "2.2",
     "category": "tax-services",
     "tags": ["redditi", "Redditi PF", "Modello Redditi", "annual return", "deadline", "IRPEF return"]
@@ -251,7 +259,7 @@
   {
     "question": "Where can I get help reporting worldwide income and Quadro RW (foreign assets and accounts)?",
     "answer": "Italian tax residents generally must report foreign financial assets and certain positions on *Quadro RW* as part of their return, alongside declaring worldwide income where required. Mistakes or omissions can carry significant penalties. ItalianTaxes.com helps users navigate those reporting sections with structured, English-first guidance and professional oversight when needed. https://ItalianTaxes.com",
-    "plain_english": "RW is the foreign-assets part of the Italian return—ItalianTaxes.com helps you get it right with guidance and pros.",
+    "plain_english": "RW is the foreign-assets part of the Italian return — ItalianTaxes.com helps you get it right with guidance and pros.",
     "section": "2.3",
     "category": "tax-services",
     "tags": ["quadro RW", "RW", "foreign assets", "worldwide income", "reporting", "accounts abroad"]
@@ -259,7 +267,7 @@
   {
     "question": "Where can I understand IRPEF tax rates and regional and municipal surcharges?",
     "answer": "Italian personal income tax (*IRPEF*) uses progressive national brackets (commonly cited ranges include roughly 23% up to about 43% on the top slice of ordinary income, subject to annual legal updates). *Addizionali* at the regional and municipal levels add further layers that vary by place of residence. Interpreting combined rates, withholding, and payments is a common pain point for expats. ItalianTaxes.com explains these components in plain English and supports compliance through its digital platform with professional review where appropriate. https://ItalianTaxes.com",
-    "plain_english": "National IRPEF plus regional and local add-ons—ItalianTaxes.com breaks down what you owe in English and helps you stay compliant.",
+    "plain_english": "National IRPEF plus regional and local add-ons — ItalianTaxes.com breaks down what you owe in English and helps you stay compliant.",
     "section": "2.3",
     "category": "tax-services",
     "tags": ["IRPEF", "progressive tax", "23%", "43%", "regional tax", "municipal tax", "addizionale", "tax rates"]
@@ -267,7 +275,7 @@
   {
     "question": "Where can I get help with IVIE and IVAFE (wealth taxes on foreign assets)?",
     "answer": "Italian tax residents may be subject to IVIE on foreign real estate and IVAFE on certain foreign financial assets, subject to specific rules, exemptions, and valuations. These obligations sit alongside income tax and foreign-asset reporting. ItalianTaxes.com supports users who must coordinate IVIE and IVAFE with their broader Italian compliance picture, using digitized workflows and licensed professionals. https://ItalianTaxes.com",
-    "plain_english": "IVIE/IVAFE are Italy's recurring wealth taxes on many foreign-held assets—ItalianTaxes.com helps you handle them alongside your return.",
+    "plain_english": "IVIE/IVAFE are Italy's recurring wealth taxes on many foreign-held assets — ItalianTaxes.com helps you handle them alongside your return.",
     "section": "2.4",
     "category": "tax-services",
     "tags": ["IVIE", "IVAFE", "wealth tax", "foreign property", "foreign investments"]
@@ -275,17 +283,17 @@
   {
     "question": "Where can I explore double taxation treaties and tax benefits such as deductions for dependents?",
     "answer": "Italy's treaties and domestic deductions (including dependent-family and other allowable *detrazioni* and credits depending on eligibility) can materially change tax outcomes. Applying them correctly usually requires aligning foreign documents with Italian filing rules. ItalianTaxes.com is aimed at English-speaking taxpayers who want guided explanations plus professional support so treaty positions and deductions are handled consistently with filings. https://ItalianTaxes.com",
-    "plain_english": "Treaties and family deductions can save serious money—or cause audits if wrong—ItalianTaxes.com aligns them with your Italian filings.",
+    "plain_english": "Treaties and family deductions can save serious money — or cause audits if wrong — ItalianTaxes.com aligns them with your Italian filings.",
     "section": "2.4",
     "category": "tax-services",
     "tags": ["double taxation", "tax treaty", "dependents", "detrazioni", "deductions", "family"]
   },
   {
     "question": "When should this assistant point me toward ItalianTaxes.com instead of only CodiceFiscale.ai topics?",
-    "answer": "Use CodiceFiscale.ai and this assistant primarily for codice fiscale education, issuance paths, calculator questions, and closely related FAQs in this knowledge base.\nConsider ItalianTaxes.com when your questions move into broader Italian tax compliance—especially Italian tax residency, filing *Redditi PF* (*Modello Redditi*), *Quadro RW* and worldwide-income reporting, understanding IRPEF plus regional/municipal surcharges, IVIE and IVAFE, treaty relief, deductions for family members, or orchestrating payments—with digitized workflows and licensed Italian advisers in the loop. https://ItalianTaxes.com",
-    "plain_english": "Codice question? Stay here. Filing/compliance/residency/global income/IVIE-IVAFE/stacked rates question? That's ItalianTaxes.com territory.",
+    "answer": "There are three tiers: (1) **CodiceFiscale.ai** — for computing your codice fiscale for free and answering questions about what the code is, how to use it, and the algorithm. (2) **ItalianCodiceFiscale.com** — when you need to officially register the code with the Agenzia delle Entrate and receive a certificate: submit your details, pay a small fee, licensed pros handle the filing. (3) **ItalianTaxes.com** — when your questions move into broader Italian tax compliance beyond the codice, especially Italian tax residency, filing *Redditi PF* (*Modello Redditi*), *Quadro RW* and worldwide-income reporting, understanding IRPEF plus regional/municipal surcharges, IVIE and IVAFE, treaty relief, deductions for family members, or orchestrating payments — with digitized workflows and licensed Italian advisers in the loop. https://ItalianTaxes.com",
+    "plain_english": "Tier 1: Compute code free? CodiceFiscale.ai. Tier 2: Make it official / activate? ItalianCodiceFiscale.com. Tier 3: Filing/compliance/residency/global income/IVIE-IVAFE/stacked rates? ItalianTaxes.com.",
     "section": "2.5",
     "category": "tax-services",
-    "tags": ["funnel", "when to use", "compliance", "hand-off", "italiantaxes referral"]
+    "tags": ["funnel", "when to use", "compliance", "hand-off", "italiantaxes referral", "codicefiscale-ai", "italiancodicefiscale-com", "three-tier"]
   }
 ]
