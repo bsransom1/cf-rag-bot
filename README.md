@@ -232,6 +232,25 @@ The composer **microphone** records audio in the browser using `MediaRecorder` +
 | **Language** | Whisper auto-detects speech language; the UI **EN/IT flag** sets reply language and clears the session when switched |
 | **Browser support** | Any browser with `MediaRecorder` + `getUserMedia` (HTTPS or `localhost`) |
 
+### 6.1 Embedded widget (`/embed`) and microphone
+
+Dictation calls `getUserMedia({ audio: true })`. If the chat is shown inside **another site’s `<iframe>`** (for example CodiceFiscale.ai embedding the Vercel `/embed` URL), the **parent page must delegate** the microphone feature to the iframe, or the browser will block access and you will see “Microphone access was blocked.”
+
+**Fix on the host site (CodiceFiscale.ai, WordPress, etc.):** add `allow="microphone"` to the iframe tag:
+
+```html
+<iframe
+  src="https://YOUR-APP.vercel.app/embed"
+  allow="microphone"
+  title="CodiceFiscale assistant"
+  …
+></iframe>
+```
+
+Reload the page after saving. Users must still click **Allow** if the browser shows a permission prompt.
+
+**Also check:** the page must be served over **HTTPS** (or `localhost`); mixed content or `http://` embeds cannot use the microphone. Site-wide `Permissions-Policy` headers on the **parent** must not disable `microphone` for that document (for example avoid `Permissions-Policy: microphone=()` on pages that host the widget).
+
 ---
 
 ## 7. Frontend (chat UI)

@@ -47,6 +47,11 @@ const UI_COPY: Record<
     noSpeech: string;
     noRecSupport: string;
     micBlocked: string;
+    micInsecure: string;
+    micNotFound: string;
+    micBusy: string;
+    micDeniedEmbed: string;
+    micDeniedStandalone: string;
     noAudioCap: string;
     transcribeFail: string;
     ariaThemeLight: string;
@@ -83,6 +88,16 @@ const UI_COPY: Record<
     noSpeech: "No speech detected.",
     noRecSupport: "Recording is not supported in this browser.",
     micBlocked: "Microphone access was blocked.",
+    micInsecure:
+      "Microphone only works on a secure page (https:// or localhost), not on plain http://.",
+    micNotFound:
+      "No microphone was detected. Connect or enable a microphone in system settings.",
+    micBusy:
+      "The microphone could not be opened. It may be in use by another app or tab.",
+    micDeniedEmbed:
+      "Microphone was blocked inside this embedded chat. The host page must add allow=\"microphone\" to the iframe (for example: <iframe … allow=\"microphone\" src=\"…/embed\"></iframe>), then reload. If your browser asked for permission, choose Allow.",
+    micDeniedStandalone:
+      "Microphone permission was denied. Use the lock or site-settings icon in the address bar, set Microphone to Allow for this site, then try again.",
     noAudioCap: "No audio captured.",
     transcribeFail: "Transcription failed",
     ariaThemeLight: "Switch to light mode",
@@ -119,6 +134,16 @@ const UI_COPY: Record<
     noSpeech: "Nessun audio rilevato.",
     noRecSupport: "La registrazione non è supportata in questo browser.",
     micBlocked: "Accesso al microfono negato.",
+    micInsecure:
+      "Il microfono funziona solo su una pagina sicura (https:// o localhost), non su http://.",
+    micNotFound:
+      "Nessun microfono rilevato. Collega o abilita un microfono nelle impostazioni di sistema.",
+    micBusy:
+      "Impossibile aprire il microfono. Potrebbe essere in uso da un’altra app o scheda.",
+    micDeniedEmbed:
+      "Microfono bloccato nella chat incorporata. La pagina ospite deve aggiungere allow=\"microphone\" all’iframe (es.: <iframe … allow=\"microphone\" src=\"…/embed\"></iframe>), poi ricaricare. Se il browser chiede il permesso, scegli Consenti.",
+    micDeniedStandalone:
+      "Permesso microfono negato. Usa l’icona del lucchetto o le impostazioni del sito nella barra degli indirizzi, imposta Microfono su Consenti, poi riprova.",
     noAudioCap: "Nessun audio acquisito.",
     transcribeFail: "Trascrizione non riuscita",
     ariaThemeLight: "Passa alla modalità chiara",
@@ -127,6 +152,28 @@ const UI_COPY: Record<
     ariaCloseAssistant: "Chiudi assistente",
   },
 };
+
+function micAccessErrorMessage(
+  err: unknown,
+  lang: UiLang,
+  embed: boolean,
+): string {
+  const t = UI_COPY[lang];
+  if (typeof window !== "undefined" && window.isSecureContext === false) {
+    return t.micInsecure;
+  }
+
+  const dom = err instanceof DOMException ? err : null;
+  const name = dom?.name ?? "";
+
+  if (name === "SecurityError") return t.micInsecure;
+  if (name === "NotFoundError") return t.micNotFound;
+  if (name === "NotReadableError") return t.micBusy;
+  if (name === "NotAllowedError" || name === "PermissionDeniedError") {
+    return embed ? t.micDeniedEmbed : t.micDeniedStandalone;
+  }
+  return t.micBlocked;
+}
 
 function makeId(): string {
   return Math.random().toString(36).slice(2) + Date.now().toString(36);
@@ -331,8 +378,8 @@ export default function ChatWindow({
     let stream: MediaStream;
     try {
       stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    } catch {
-      setDictationError(UI_COPY[uiLangRef.current].micBlocked);
+    } catch (e) {
+      setDictationError(micAccessErrorMessage(e, uiLangRef.current, isEmbed));
       return;
     }
 

@@ -43,6 +43,7 @@ export default function EmbedPreviewPage() {
         ref={iframeRef}
         title="Embed preview"
         src="/embed"
+        allow="microphone"
         style={{
           border: 0,
           background: "transparent",
