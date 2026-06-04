@@ -115,13 +115,25 @@ export async function POST(request: Request): Promise<NextResponse> {
     );
   }
 
-  const logClient = getSupabaseAdminClientForProject(project.id);
-  const userLogged = await persistSessionAndUserMessageSafe(logClient, {
-    sessionId: parsed.session_id,
-    projectId: project.id,
-    userMessage: parsed.message,
-    clientMessageId: parsed.client_message_id,
-  });
+  let logClient: ReturnType<typeof getSupabaseAdminClientForProject> | null =
+    null;
+  try {
+    logClient = getSupabaseAdminClientForProject(project.id);
+  } catch (err) {
+    console.warn(
+      "[/api/chat] transcript logging disabled for this project:",
+      err,
+    );
+  }
+
+  const userLogged = logClient
+    ? await persistSessionAndUserMessageSafe(logClient, {
+        sessionId: parsed.session_id,
+        projectId: project.id,
+        userMessage: parsed.message,
+        clientMessageId: parsed.client_message_id,
+      })
+    : false;
 
   try {
     const chunks = await retrieveRelevantChunks({
@@ -137,7 +149,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         );
       }
       const answer = project.fallbackNoKnowledge;
-      if (userLogged) {
+      if (userLogged && logClient) {
         await persistAssistantMessageSafe(logClient, {
           sessionId: parsed.session_id,
           projectId: project.id,
@@ -170,7 +182,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       completion.choices[0]?.message?.content?.trim() ??
       project.fallbackNoKnowledge;
 
-    if (userLogged) {
+    if (userLogged && logClient) {
       await persistAssistantMessageSafe(logClient, {
         sessionId: parsed.session_id,
         projectId: project.id,
@@ -184,7 +196,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     console.error("[/api/chat] failure:", err);
     const clientMsg = chatRouteClientMessage(err);
 
-    if (userLogged) {
+    if (userLogged && logClient) {
       await persistAssistantMessageSafe(logClient, {
         sessionId: parsed.session_id,
         projectId: project.id,
@@ -242,10 +254,14 @@ function chatRouteClientMessage(err: unknown): string {
     msg.includes("Missing required environment") ||
     msg.includes("Missing OPENAI_API_KEY")
   ) {
+    const profileHint = msg.includes("_ITALIAN_NOTARY")
+      ? "SUPABASE_URL_ITALIAN_NOTARY, SUPABASE_ANON_KEY_ITALIAN_NOTARY, and SUPABASE_SERVICE_ROLE_KEY_ITALIAN_NOTARY"
+      : msg.match(/SUPABASE_[A-Z0-9_]+/)?.[0]
+        ? `the variables named in the error (e.g. ${msg.match(/SUPABASE_[A-Z0-9_]+/)?.[0]})`
+        : "OPENAI_API_KEY, SUPABASE_URL, and SUPABASE_ANON_KEY";
     return (
-      "Server is missing configuration. In Vercel: Project → Settings → Environment " +
-      "Variables, set OPENAI_API_KEY, SUPABASE_URL, and SUPABASE_ANON_KEY for Production " +
-      "(and Preview if you use preview URLs), then redeploy."
+      "Server is missing configuration. In Vercel → Settings → Environment Variables, set " +
+      `${profileHint} for Production (and Preview if needed), then redeploy.`
     );
   }
   if (msg.includes("match_documents RPC failed")) {

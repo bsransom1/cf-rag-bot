@@ -280,6 +280,8 @@ npm run ingest -- italian_notary
 
 Listen for `postMessage` `{ type: "CF_EMBED_RESIZE", open: boolean }` to resize the iframe (same protocol as `/embed`).
 
+**Vercel (required for hosted `/embed/italian-notary`):** add the three `SUPABASE_*_ITALIAN_NOTARY` variables to the **same** Vercel project as the app (Production + Preview), then redeploy. Without them, `/api/chat` cannot reach the notary database (ingest only updates Supabase from your laptop).
+
 ---
 
 ## 7. Frontend (chat UI)
