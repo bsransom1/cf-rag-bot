@@ -11,6 +11,8 @@ interface ChatWindowProps {
   projectId: string;
   /** Default: full standalone page; `embed`: fills iframe, marketing chrome */
   variant?: "default" | "embed";
+  /** Embed/header label (defaults to CodiceFiscale.ai). */
+  brandName?: string;
 }
 
 interface ChatMessage {
@@ -102,7 +104,7 @@ const UI_COPY: Record<
     transcribeFail: "Transcription failed",
     ariaThemeLight: "Switch to light mode",
     ariaThemeDark: "Switch to dark mode",
-    ariaOpenAssistant: "Open CodiceFiscale.ai assistant",
+    ariaOpenAssistant: "Open assistant",
     ariaCloseAssistant: "Close assistant",
   },
   it: {
@@ -148,7 +150,7 @@ const UI_COPY: Record<
     transcribeFail: "Trascrizione non riuscita",
     ariaThemeLight: "Passa alla modalità chiara",
     ariaThemeDark: "Passa alla modalità scura",
-    ariaOpenAssistant: "Apri l’assistente CodiceFiscale.ai",
+    ariaOpenAssistant: "Apri assistente",
     ariaCloseAssistant: "Chiudi assistente",
   },
 };
@@ -210,6 +212,7 @@ type DictationStatus = "idle" | "recording" | "transcribing";
 export default function ChatWindow({
   projectId,
   variant = "default",
+  brandName = "CodiceFiscale.ai",
 }: ChatWindowProps) {
   const isEmbed = variant === "embed";
   /** Embed iframe: FAB first; expands to full panel until closed */
@@ -593,8 +596,8 @@ export default function ChatWindow({
           className="absolute inset-0 flex items-center justify-center rounded-full bg-cf-brand-cta text-white shadow-lg transition-all hover:bg-cf-brand-cta-hover hover:shadow-xl active:scale-[0.95] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           aria-expanded={false}
           aria-controls="cf-embed-chat-panel"
-          aria-label={s.ariaOpenAssistant}
-          title={s.ariaOpenAssistant}
+          aria-label={`${s.ariaOpenAssistant} (${brandName})`}
+          title={`${s.ariaOpenAssistant} (${brandName})`}
         >
           <svg
             className="h-7 w-7"
@@ -642,7 +645,7 @@ export default function ChatWindow({
                 {isEmbed ? (
                   <div className="min-w-0 shrink">
                     <p className="truncate font-display text-sm font-semibold tracking-tight text-white">
-                      CodiceFiscale.ai
+                      {brandName}
                     </p>
                     <p className="truncate text-[11px] text-white/65">
                       Assistant

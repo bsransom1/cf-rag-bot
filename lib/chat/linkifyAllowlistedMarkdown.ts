@@ -25,6 +25,16 @@ type LinkRule = { re: RegExp; href: string; label: string };
 
 const RULES: LinkRule[] = [
   {
+    re: /\bhttps:\/\/italiannotary\.com\b/i,
+    href: "https://italiannotary.com",
+    label: "ItalianNotary.com",
+  },
+  {
+    re: /\bItalianNotary\.com\b/i,
+    href: "https://italiannotary.com",
+    label: "ItalianNotary.com",
+  },
+  {
     re: /\bhttps:\/\/CodiceFiscale\.ai\b/i,
     href: "https://CodiceFiscale.ai",
     label: "CodiceFiscale.ai",

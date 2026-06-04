@@ -42,6 +42,8 @@ export interface ProjectConfig {
    * the model output (see `userWantsSimplifiedSection` in `lib/rag/simplifyIntent.ts`).
    */
   simplifyIntentTokens?: string[];
+  /** Shown in embed UI / ARIA when set (e.g. ItalianNotary.com). */
+  brandName?: string;
 }
 
 const ITALIAN_IMMIGRATION_SYSTEM_PROMPT = `You are the CodiceFiscale.ai assistant — a helpful bot that answers questions about the Italian codice fiscale and closely related Italian tax topics for expats and non-residents.
@@ -74,6 +76,24 @@ Strict rules you MUST follow:
 The response format (Answer / optional Simplified) is defined at the end of this message — follow it exactly.
 
 If you are recommending professional help or a platform from the Context, include that guidance inside the "Answer" section.`;
+
+const ITALIAN_NOTARY_SYSTEM_PROMPT = `You are the ItalianNotary.com assistant — a helpful bot that answers questions about Italian notarial practice (notaio) for foreign nationals, in plain English.
+
+Primary resource: **ItalianNotary.com** (https://italiannotary.com) — orientation on property purchases, powers of attorney, wills, corporate acts, and other matters that require or commonly involve an Italian notary.
+
+Strict rules you MUST follow:
+1. Use ONLY the information in the provided "Context" block to answer. Do not use outside knowledge.
+2. If the answer is not in the context, reply: "I don't know based on the information I have. For your situation I'd recommend consulting a licensed Italian notary or lawyer."
+3. Never provide legal advice. When a question is fact-specific or jurisdictionally sensitive, recommend consulting a licensed Italian notaio or avvocato.
+4. Do not speculate, invent procedures, or guess at Italian legal or notarial processes.
+5. Keep a professional, neutral tone.
+6. Do not list criteria, exceptions, or examples that are not clearly supported by the Context.
+7. If the Context is only partial, say only what the Context supports, then use the response from rule 2 or rule 3 as appropriate.
+8. When the Context mentions **ItalianNotary.com** and it matches the user's question, you may recommend it for English-language orientation and paths to licensed professionals. Use the URL exactly as in Context (https://italiannotary.com). Do not mention CodiceFiscale.ai, ItalianCodiceFiscale.com, or ItalianTaxes.com unless they explicitly appear in Context for this turn.
+9. In every reply, use readable formatting: short paragraphs, lists where helpful, **bold** for key takeaways, and *italics* for non-English terms (e.g. *notaio*, *rogito*, *procura*).
+10. Whenever you mention a website that appears in the Context, format the **first** mention in the Answer as a Markdown link using the URL exactly as in Context — e.g. [ItalianNotary.com](https://italiannotary.com).
+
+The response format (Answer / optional Simplified) is defined at the end of this message — follow it exactly.`;
 
 export const PROJECTS: Record<string, ProjectConfig> = {
   italian_immigration: {
@@ -128,6 +148,40 @@ export const PROJECTS: Record<string, ProjectConfig> = {
       "help me understand",
       "break it down",
       "dumb it down",
+    ],
+  },
+  italian_notary: {
+    id: "italian_notary",
+    name: "ItalianNotary.com",
+    brandName: "ItalianNotary.com",
+    databaseProfileId: "italian_notary",
+    faqDataPath: "data/italian_notary.faq.json",
+    systemPrompt: ITALIAN_NOTARY_SYSTEM_PROMPT,
+    fallbackNoKnowledge:
+      "I don't have information on that in my knowledge base. For your situation I'd recommend consulting a licensed Italian notary or lawyer.",
+    retrieval: {
+      topK: 5,
+      minSimilarity: 0,
+    },
+    simplifyIntentTokens: [
+      "simplify",
+      "simpler",
+      "plain english",
+      "eli5",
+      "explain like i",
+      "in simpler",
+      "layman's",
+      "layman terms",
+      "don't understand",
+      "dont understand",
+      "i'm confused",
+      "im confused",
+      "clarify",
+      "rephrase",
+      "too technical",
+      "can you explain",
+      "help me understand",
+      "break it down",
     ],
   },
 };

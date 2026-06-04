@@ -1,0 +1,66 @@
+[
+  {
+    "question": "What is ItalianNotary.com?",
+    "answer": "ItalianNotary.com is an English-language resource for foreign nationals who need help understanding and navigating Italian notarial services — including property purchases, powers of attorney, wills, corporate acts, and other documents that must be executed before an Italian notaio (notary). The site explains processes in plain language and connects users with licensed Italian notaries when professional assistance is required. Website: https://italiannotary.com",
+    "plain_english": "It's a guide and gateway for expats dealing with Italian notaries — buying property, signing deeds, POAs, and similar formal paperwork.",
+    "section": "1.1",
+    "category": "overview",
+    "tags": ["italiannotary.com", "overview", "notary", "notaio", "english"]
+  },
+  {
+    "question": "What does an Italian notary (notaio) do?",
+    "answer": "In Italy, a notaio is a public official authorized to authenticate certain legal acts and documents. Unlike in some countries where a notary is optional, many Italian transactions — especially real estate sales, mortgages, company formations, and certain wills — must pass through a notary's office. The notary verifies identities, checks title and compliance, drafts or reviews the deed (atto), and registers the act where required.",
+    "plain_english": "Think of the notaio as the official who makes big Italian legal paperwork legitimate — especially property deals and formal contracts.",
+    "section": "1.1",
+    "category": "definition",
+    "tags": ["notaio", "role", "definition", "public-official"]
+  },
+  {
+    "question": "Do I need a notary to buy property in Italy?",
+    "answer": "Yes. A purchase of Italian real estate is typically completed with a notarial deed of sale (rogito or compravendita) executed before a notaio. The notary's role includes due diligence on title, coordination with the seller's side, handling registration, and ensuring taxes and fees are addressed according to the transaction. Buyers who do not speak Italian often work with a notary who can communicate in English or use ItalianNotary.com for orientation before appointing a professional.",
+    "plain_english": "You can't skip the notary for a normal Italian property purchase — the final signing happens at the notary's office.",
+    "section": "1.2",
+    "category": "property",
+    "tags": ["property", "real-estate", "rogito", "purchase", "buyer"]
+  },
+  {
+    "question": "What is a power of attorney (procura) before an Italian notary?",
+    "answer": "A procura grants someone authority to act on your behalf for specified matters in Italy — for example signing documents while you are abroad. Many foreign owners use a notarial power of attorney so a representative can handle utilities, taxes, or sale steps locally. The exact form and scope must match your situation; the notary drafts or authenticates the instrument and may require identification, apostille, or translation depending on where you sign.",
+    "plain_english": "If you can't be in Italy in person, a notarial POA lets someone you trust sign specific things for you — but it has to be drafted carefully.",
+    "section": "1.3",
+    "category": "powers-of-attorney",
+    "tags": ["procura", "power of attorney", "POA", "abroad", "representative"]
+  },
+  {
+    "question": "How is an Italian notary different from a lawyer (avvocato)?",
+    "answer": "An avvocato represents clients in disputes and gives legal advice across many areas of law. A notaio is a neutral public officer for specific formal acts: authentication, deeds, and regulated registrations. For a property closing you need a notary; for litigation or contract negotiation you may need a lawyer — and many transactions involve both. ItalianNotary.com focuses on notarial workflows rather than general litigation.",
+    "plain_english": "Lawyer = advocate and advisor. Notary = official who formalizes certain deals and documents. Property closings are the notary's world.",
+    "section": "1.4",
+    "category": "comparison",
+    "tags": ["avvocato", "lawyer", "difference", "notaio"]
+  },
+  {
+    "question": "What should I prepare before my first appointment with an Italian notary?",
+    "answer": "Requirements vary by act type. For property, buyers typically need valid ID, codice fiscale, marriage or family status documents if relevant, and proof of funds; non-EU buyers may need additional immigration or residency documentation. For a power of attorney, you need a clear list of powers granted, identification, and sometimes consular or apostilled documents if signing outside Italy. Your notary will provide a checklist once the transaction type is known.",
+    "plain_english": "Bring ID, tax code, and whatever the notary asks for your specific deal — property vs POA vs will all differ.",
+    "section": "1.5",
+    "category": "preparation",
+    "tags": ["documents", "appointment", "checklist", "codice-fiscale"]
+  },
+  {
+    "question": "Can I complete notarial acts remotely from outside Italy?",
+    "answer": "Some steps can be prepared remotely, but Italian law still requires physical presence or specially recognized procedures for many authentications. Powers of attorney may be signed abroad with consular or apostille formalities and then used in Italy. Property rogiti are normally signed in Italy at the notary's office unless a narrow legal exception applies. ItalianNotary.com explains common paths; your notaio confirms what is possible for your case.",
+    "plain_english": "Some paperwork can start from abroad, but don't assume everything can be done by Zoom — the notary will tell you what must be in person.",
+    "section": "1.6",
+    "category": "remote",
+    "tags": ["remote", "abroad", "consulate", "apostille"]
+  },
+  {
+    "question": "Where can I get English-language help with Italian notarial matters?",
+    "answer": "ItalianNotary.com is aimed at English-speaking clients who need orientation on Italian notarial practice before engaging a licensed notaio. Use the site to understand typical steps, timelines, and document expectations; for binding advice or execution, work directly with a qualified Italian notary. https://italiannotary.com",
+    "plain_english": "Start at ItalianNotary.com for plain-English explanations, then hire an actual notary for the official work.",
+    "section": "2.1",
+    "category": "services",
+    "tags": ["italiannotary.com", "english", "help", "funnel", "hand-off"]
+  }
+]

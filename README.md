@@ -251,6 +251,35 @@ Reload the page after saving. Users must still click **Allow** if the browser sh
 
 **Also check:** the page must be served over **HTTPS** (or `localhost`); mixed content or `http://` embeds cannot use the microphone. Site-wide `Permissions-Policy` headers on the **parent** must not disable `microphone` for that document (for example avoid `Permissions-Policy: microphone=()` on pages that host the widget).
 
+### 6.2 ItalianNotary.com embed (separate project + database)
+
+| Item | Value |
+|------|--------|
+| **Embed URL** | `https://YOUR-APP.vercel.app/embed/italian-notary` |
+| **`project_id`** | `italian_notary` |
+| **Supabase** | `databaseProfileId: italian_notary` → `SUPABASE_URL_ITALIAN_NOTARY`, `SUPABASE_ANON_KEY_ITALIAN_NOTARY`, `SUPABASE_SERVICE_ROLE_KEY_ITALIAN_NOTARY` (not the CodiceFiscale default DB) |
+| **FAQ source** | `data/italian_notary.faq.json` |
+| **Local preview** | `/embed-preview/italian-notary` |
+
+**Ingest** (after creating a dedicated Supabase project and applying `supabase/schema.sql` there):
+
+```bash
+npm run ingest -- italian_notary
+```
+
+**Host snippet** for [italiannotary.com](https://italiannotary.com/):
+
+```html
+<iframe
+  src="https://YOUR-APP.vercel.app/embed/italian-notary"
+  allow="microphone"
+  title="ItalianNotary assistant"
+  style="border:0;background:transparent;position:fixed;right:16px;bottom:16px;width:72px;height:72px;border-radius:50%;z-index:9999;"
+></iframe>
+```
+
+Listen for `postMessage` `{ type: "CF_EMBED_RESIZE", open: boolean }` to resize the iframe (same protocol as `/embed`).
+
 ---
 
 ## 7. Frontend (chat UI)
