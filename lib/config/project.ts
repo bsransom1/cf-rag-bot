@@ -44,6 +44,12 @@ export interface ProjectConfig {
   simplifyIntentTokens?: string[];
   /** Shown in embed UI / ARIA when set (e.g. ItalianNotary.com). */
   brandName?: string;
+  /** Override empty-state prompt and starter chips per UI language. */
+  uiCopy?: {
+    emptyPrompt?: { en: string; it: string };
+    starters?: { en: string[]; it: string[] };
+    ariaRegion?: { en: string; it: string };
+  };
 }
 
 const ITALIAN_IMMIGRATION_SYSTEM_PROMPT = `You are the CodiceFiscale.ai assistant — a helpful bot that answers questions about the Italian codice fiscale and closely related Italian tax topics for expats and non-residents.
@@ -154,6 +160,28 @@ export const PROJECTS: Record<string, ProjectConfig> = {
     id: "italian_notary",
     name: "ItalianNotary.com",
     brandName: "ItalianNotary.com",
+    uiCopy: {
+      emptyPrompt: {
+        en: "Ask about Italian notaries (*notaio*), property, powers of attorney, and other notarial acts.",
+        it: "Chiedi di notai italiani (*notaio*), immobili, procure e altri atti notarili.",
+      },
+      starters: {
+        en: [
+          "What is ItalianNotary.com?",
+          "Do I need a notary to buy property in Italy?",
+          "What is a power of attorney before an Italian notary?",
+        ],
+        it: [
+          "Cos'è ItalianNotary.com?",
+          "Serve un notaio per comprare casa in Italia?",
+          "Cos'è una procura davanti a un notaio italiano?",
+        ],
+      },
+      ariaRegion: {
+        en: "Chat about Italian notarial services on ItalianNotary.com",
+        it: "Chat sui servizi notarili italiani su ItalianNotary.com",
+      },
+    },
     databaseProfileId: "italian_notary",
     faqDataPath: "data/italian_notary.faq.json",
     systemPrompt: ITALIAN_NOTARY_SYSTEM_PROMPT,

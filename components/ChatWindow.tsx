@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 
 import { FormattedAssistantText } from "@/components/FormattedAssistantText";
 import { isUuidString } from "@/lib/chat/id";
+import { getProject } from "@/lib/config/project";
 import { toggleTheme, useDomDark } from "@/hooks/useDomDark";
 import type { ChatResponseBody } from "@/types";
 
@@ -218,7 +219,18 @@ export default function ChatWindow({
   /** Embed iframe: FAB first; expands to full panel until closed */
   const [embedPanelOpen, setEmbedPanelOpen] = useState(false);
   const [uiLang, setUiLang] = useState<UiLang>("en");
-  const s = UI_COPY[uiLang];
+  const projectConfig = useMemo(() => getProject(projectId), [projectId]);
+  const s = useMemo(() => {
+    const base = UI_COPY[uiLang];
+    const overrides = projectConfig.uiCopy;
+    if (!overrides) return base;
+    return {
+      ...base,
+      emptyPrompt: overrides.emptyPrompt?.[uiLang] ?? base.emptyPrompt,
+      starters: overrides.starters?.[uiLang] ?? base.starters,
+      ariaRegion: overrides.ariaRegion?.[uiLang] ?? base.ariaRegion,
+    };
+  }, [uiLang, projectConfig]);
   const isDark = useDomDark();
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
