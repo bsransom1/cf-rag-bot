@@ -42,6 +42,11 @@ export interface ProjectConfig {
    * the model output (see `userWantsSimplifiedSection` in `lib/rag/simplifyIntent.ts`).
    */
   simplifyIntentTokens?: string[];
+  /**
+   * If the user message matches any token, skip retrieval and the LLM and
+   * return `fallbackNoKnowledge` (human handoff / hard rules).
+   */
+  humanHandoffIntentTokens?: string[];
   /** Shown in embed UI / ARIA when set (e.g. ItalianNotary.com). */
   brandName?: string;
   /** Override empty-state prompt and starter chips per UI language. */
@@ -83,21 +88,30 @@ The response format (Answer / optional Simplified) is defined at the end of this
 
 If you are recommending professional help or a platform from the Context, include that guidance inside the "Answer" section.`;
 
-const ITALIAN_NOTARY_SYSTEM_PROMPT = `You are the ItalianNotary.com assistant — a helpful bot that answers questions about Italian notarial practice (notaio) for foreign nationals, in plain English.
+const ITALIAN_NOTARY_FALLBACK =
+  "I don't have a specific answer to that in my knowledge base. For personalized help, please email ItalianNotary.com at info@italiannotary.com, or use the contact form at italiannotary.com/contact-us. For legal questions specific to your situation, you can schedule a consultation with partner law firm Studio Legale Metta at studiolegalemetta.com/booking_step_one/booking-step-1-other/";
 
-Primary resource: **ItalianNotary.com** (https://italiannotary.com) — orientation on property purchases, powers of attorney, wills, corporate acts, and other matters that require or commonly involve an Italian notary.
+const ITALIAN_NOTARY_SYSTEM_PROMPT = `You are the ItalianNotary.com assistant — a helpful bot that answers questions about ItalianNotary.com's US remote online notarization service (apostille, shipping, and related document support) for clients who need documents for use in Italy or the United States.
+
+Primary resource: **ItalianNotary.com** (https://italiannotary.com) — a one-stop service for legally notarized documents, apostilles, international shipping, and (when separately confirmed by a human) translations, with one point of contact.
 
 Strict rules you MUST follow:
 1. Use ONLY the information in the provided "Context" block to answer. Do not use outside knowledge.
-2. If the answer is not in the context, reply: "I don't know based on the information I have. For your situation I'd recommend consulting a licensed Italian notary or lawyer."
-3. Never provide legal advice. When a question is fact-specific or jurisdictionally sensitive, recommend consulting a licensed Italian notaio or avvocato.
-4. Do not speculate, invent procedures, or guess at Italian legal or notarial processes.
+2. If the answer is not in the context, reply with exactly this fallback (do not paraphrase): ${ITALIAN_NOTARY_FALLBACK}
+3. Never provide legal advice about a user's individual circumstances. Route those questions to a human using the fallback in rule 2.
+4. Do not speculate, invent procedures, prices, turnaround times, or Italian/US legal outcomes.
 5. Keep a professional, neutral tone.
 6. Do not list criteria, exceptions, or examples that are not clearly supported by the Context.
-7. If the Context is only partial, say only what the Context supports, then use the response from rule 2 or rule 3 as appropriate.
-8. When the Context mentions **ItalianNotary.com** and it matches the user's question, you may recommend it for English-language orientation and paths to licensed professionals. Use the URL exactly as in Context (https://italiannotary.com). Do not mention CodiceFiscale.ai, ItalianCodiceFiscale.com, or ItalianTaxes.com unless they explicitly appear in Context for this turn.
-9. In every reply, use readable formatting: short paragraphs, lists where helpful, **bold** for key takeaways, and *italics* for non-English terms (e.g. *notaio*, *rogito*, *procura*).
-10. Whenever you mention a website that appears in the Context, format the **first** mention in the Answer as a Markdown link using the URL exactly as in Context — e.g. [ItalianNotary.com](https://italiannotary.com).
+7. If the Context is only partial, say only what the Context supports, then use the fallback in rule 2.
+8. Never provide a phone number. No phone number exists in this knowledge base; do not invent or infer one.
+9. Never state or imply that a money-back guarantee exists.
+10. Do not answer translation questions (which form of translation an Italian authority will accept, sworn vs certified, whether a Comune/court/office will accept a translation). Direct the user to a human using the fallback in rule 2.
+11. Do not answer whether a specific Italian office, court, or Comune will accept a particular document. Direct the user to a human using the fallback in rule 2.
+12. If asked for a copy of a session recording, do not invent an answer — use the fallback in rule 2.
+13. A US notary public is not a substitute for an Italian *notaio*. When Context says a property title transfer or similar act must be performed before a *notaio*, keep that distinction.
+14. Use site names and URLs exactly as they appear in Context. Format the first mention of each site as a Markdown link. Do not invent URLs.
+15. In every reply, use readable formatting: short paragraphs, lists where the Context enumerates several points, **bold** for the most important takeaway, and *italics* for non-English terms (e.g. *notaio*, *procura*, *apostille*).
+16. Do not mention CodiceFiscale.ai, ItalianCodiceFiscale.com, ItalianTaxes.com, or ItalianVisa.com unless they explicitly appear in Context for this turn.
 
 The response format (Answer / optional Simplified) is defined at the end of this message — follow it exactly.`;
 
@@ -162,35 +176,67 @@ export const PROJECTS: Record<string, ProjectConfig> = {
     brandName: "ItalianNotary.com",
     uiCopy: {
       emptyPrompt: {
-        en: "Ask about Italian notaries (*notaio*), property, powers of attorney, and other notarial acts.",
-        it: "Chiedi di notai italiani (*notaio*), immobili, procure e altri atti notarili.",
+        en: "Ask about online notarization for Italy or the US, apostilles, and what to prepare for your session.",
+        it: "Chiedi della notarizzazione online per l'Italia o gli USA, delle apostille e di come prepararti alla sessione.",
       },
       starters: {
         en: [
-          "What is ItalianNotary.com?",
-          "Do I need a notary to buy property in Italy?",
-          "What is a power of attorney before an Italian notary?",
+          "What documents can you notarize online for Italy?",
+          "How does the online notarization process work?",
+          "What are the key terms I should know before getting started?",
         ],
         it: [
-          "Cos'è ItalianNotary.com?",
-          "Serve un notaio per comprare casa in Italia?",
-          "Cos'è una procura davanti a un notaio italiano?",
+          "Quali documenti potete legalizzare online per l'Italia?",
+          "Come funziona la notarizzazione online?",
+          "Quali termini chiave dovrei conoscere prima di iniziare?",
         ],
       },
       ariaRegion: {
-        en: "Chat about Italian notarial services on ItalianNotary.com",
-        it: "Chat sui servizi notarili italiani su ItalianNotary.com",
+        en: "Chat about ItalianNotary.com online notarization",
+        it: "Chat sulla notarizzazione online di ItalianNotary.com",
       },
     },
     databaseProfileId: "italian_notary",
     faqDataPath: "data/italian_notary.faq.json",
     systemPrompt: ITALIAN_NOTARY_SYSTEM_PROMPT,
-    fallbackNoKnowledge:
-      "I don't have information on that in my knowledge base. For your situation I'd recommend consulting a licensed Italian notary or lawyer.",
+    fallbackNoKnowledge: ITALIAN_NOTARY_FALLBACK,
     retrieval: {
       topK: 5,
       minSimilarity: 0,
     },
+    gatedCategories: ["advertising"],
+    gatedCategoryIntentTokens: [
+      "advertis",
+      "affiliate",
+      "partner",
+      "sponsor",
+      "placement",
+      "marketing",
+      "collaborat",
+    ],
+    humanHandoffIntentTokens: [
+      "translat",
+      "traduzion",
+      "asseverat",
+      "giurat",
+      "legalizzata",
+      "phone number",
+      "telephone number",
+      "numero di telefono",
+      "whatsapp",
+      "money-back",
+      "money back",
+      "refund guarantee",
+      "session recording",
+      "copy of the recording",
+      "copy of a session",
+      "recording of the session",
+      "questura",
+      "prefettura",
+      "tribunale",
+      "giudice di pace",
+      "comune",
+    ],
     simplifyIntentTokens: [
       "simplify",
       "simpler",

@@ -25,6 +25,7 @@ import {
 import { isUuidString } from "@/lib/chat/id";
 import { getProject } from "@/lib/config/project";
 import { getSupabaseAdminClientForProject } from "@/lib/db/client";
+import { userMustHandoffToHuman } from "@/lib/rag/humanHandoff";
 import { retrieveRelevantChunks } from "@/lib/rag/retrieve";
 import { userWantsSimplifiedSection } from "@/lib/rag/simplifyIntent";
 import type { ChatRequestBody, ChatResponseBody } from "@/types";
@@ -136,6 +137,19 @@ export async function POST(request: Request): Promise<NextResponse> {
     : false;
 
   try {
+    if (userMustHandoffToHuman(project, parsed.message)) {
+      const answer = project.fallbackNoKnowledge;
+      if (userLogged && logClient) {
+        await persistAssistantMessageSafe(logClient, {
+          sessionId: parsed.session_id,
+          projectId: project.id,
+          content: answer,
+        });
+      }
+      const body: ChatResponseBody = { response: answer };
+      return NextResponse.json(body);
+    }
+
     const chunks = await retrieveRelevantChunks({
       projectId: project.id,
       query: parsed.message,
