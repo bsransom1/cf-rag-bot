@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import Image from "next/image";
 
 import { FormattedAssistantText } from "@/components/FormattedAssistantText";
 import { isUuidString } from "@/lib/chat/id";
@@ -216,6 +217,9 @@ export default function ChatWindow({
   brandName = "CodiceFiscale.ai",
 }: ChatWindowProps) {
   const isEmbed = variant === "embed";
+  const isNotary = projectId === "italian_notary";
+  /** Dark oxblood header (embed chrome, or ItalianNotary standalone). */
+  const darkChrome = isEmbed || isNotary;
   /** Embed iframe: FAB first; expands to full panel until closed */
   const [embedPanelOpen, setEmbedPanelOpen] = useState(false);
   const [uiLang, setUiLang] = useState<UiLang>("en");
@@ -254,6 +258,13 @@ export default function ChatWindow({
   useEffect(() => {
     setSessionId(readOrCreateSessionId(projectId));
   }, [projectId]);
+
+  useEffect(() => {
+    if (!isNotary) return;
+    const root = document.documentElement;
+    root.classList.add("in-theme");
+    return () => root.classList.remove("in-theme");
+  }, [isNotary]);
 
   function refreshSessionId(): void {
     const key = sessionStorageKey(projectId);
@@ -605,12 +616,26 @@ export default function ChatWindow({
             setEmbedPanelOpen(true);
             queueMicrotask(() => textareaRef.current?.focus());
           }}
-          className="absolute inset-0 flex items-center justify-center rounded-full bg-cf-brand-cta text-white shadow-lg transition-all hover:bg-cf-brand-cta-hover hover:shadow-xl active:scale-[0.95] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          className={
+            isNotary
+              ? "absolute inset-0 flex items-center justify-center overflow-hidden rounded-full bg-black text-white shadow-lg transition-all hover:shadow-xl active:scale-[0.95] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              : "absolute inset-0 flex items-center justify-center rounded-full bg-cf-brand-cta text-white shadow-lg transition-all hover:bg-cf-brand-cta-hover hover:shadow-xl active:scale-[0.95] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          }
           aria-expanded={false}
           aria-controls="cf-embed-chat-panel"
           aria-label={`${s.ariaOpenAssistant} (${brandName})`}
           title={`${s.ariaOpenAssistant} (${brandName})`}
         >
+          {isNotary ? (
+            <Image
+              src="/italian-notary-logo.webp"
+              alt=""
+              width={72}
+              height={72}
+              className="h-full w-full object-cover"
+              priority
+            />
+          ) : (
           <svg
             className="h-7 w-7"
             viewBox="0 0 24 24"
@@ -623,6 +648,7 @@ export default function ChatWindow({
           >
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
+          )}
         </button>
       ) : null}
 
@@ -639,7 +665,9 @@ export default function ChatWindow({
           className={
             isEmbed
               ? "relative flex min-h-0 flex-1 w-full flex-col overflow-hidden rounded-xl border border-cf-border bg-cf-surface shadow-[0_8px_30px_rgba(10,22,40,0.14)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.45)]"
-              : "relative flex h-[min(680px,calc(100dvh-3rem))] w-full flex-col overflow-hidden rounded-2xl border border-cf-border bg-cf-surface shadow-[0_1px_3px_rgba(0,0,0,0.06)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset]"
+              : isNotary
+                ? "relative flex h-[min(680px,calc(100dvh-3rem))] w-full flex-col overflow-hidden rounded-2xl border border-cf-border bg-cf-surface shadow-[0_8px_32px_rgba(122,18,25,0.18)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.55)]"
+                : "relative flex h-[min(680px,calc(100dvh-3rem))] w-full flex-col overflow-hidden rounded-2xl border border-cf-border bg-cf-surface shadow-[0_1px_3px_rgba(0,0,0,0.06)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset]"
           }
           role="region"
           aria-label={s.ariaRegion}
@@ -648,25 +676,37 @@ export default function ChatWindow({
           <div className="flex min-h-0 flex-1 flex-col">
             <div
               className={
-                isEmbed
+                darkChrome
                   ? "flex shrink-0 items-center justify-between gap-2 border-b border-white/[0.12] bg-cf-brand-nav px-3 py-2"
                   : "flex shrink-0 items-center justify-between gap-3 border-b border-cf-border px-3 py-2.5 sm:px-4"
               }
             >
               <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
-                {isEmbed ? (
-                  <div className="min-w-0 shrink">
-                    <p className="truncate font-display text-sm font-semibold tracking-tight text-white">
-                      {brandName}
-                    </p>
-                    <p className="truncate text-[11px] text-white/65">
-                      Assistant
-                    </p>
+                {darkChrome ? (
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    {isNotary ? (
+                      <Image
+                        src="/italian-notary-logo.webp"
+                        alt=""
+                        width={36}
+                        height={36}
+                        className="h-9 w-9 shrink-0 rounded-md object-cover ring-1 ring-white/15"
+                        priority
+                      />
+                    ) : null}
+                    <div className="min-w-0 shrink">
+                      <p className="truncate font-display text-sm font-semibold tracking-tight text-white">
+                        {brandName}
+                      </p>
+                      <p className="truncate text-[11px] text-white/65">
+                        Assistant
+                      </p>
+                    </div>
                   </div>
                 ) : null}
                 <div
                   className={
-                    isEmbed
+                    darkChrome
                       ? "inline-flex shrink-0 items-center rounded-lg border border-white/20 bg-black/25 p-0.5"
                       : "inline-flex shrink-0 items-center rounded-lg border border-cf-border bg-cf-surface-muted p-0.5"
                   }
@@ -676,7 +716,7 @@ export default function ChatWindow({
                   <button
                     type="button"
                     onClick={() => changeLang("en")}
-                    className={langSegClass(isEmbed, uiLang === "en")}
+                    className={langSegClass(darkChrome, uiLang === "en")}
                     aria-pressed={uiLang === "en"}
                     title={s.langEn}
                     aria-label={s.langEn}
@@ -692,7 +732,7 @@ export default function ChatWindow({
                   <button
                     type="button"
                     onClick={() => changeLang("it")}
-                    className={langSegClass(isEmbed, uiLang === "it")}
+                    className={langSegClass(darkChrome, uiLang === "it")}
                     aria-pressed={uiLang === "it"}
                     title={s.langIt}
                     aria-label={s.langIt}
@@ -735,7 +775,7 @@ export default function ChatWindow({
                   type="button"
                   onClick={() => toggleTheme()}
                   className={
-                    isEmbed
+                    darkChrome
                       ? "rounded-lg p-1.5 text-white/80 transition-colors hover:bg-white/10"
                       : "rounded-lg p-1.5 text-cf-muted transition-colors hover:bg-cf-page hover:text-cf-ink dark:hover:bg-white/5"
                   }
@@ -778,7 +818,7 @@ export default function ChatWindow({
                   type="button"
                   onClick={newChat}
                   className={
-                    isEmbed
+                    darkChrome
                       ? "shrink-0 text-sm text-white/90 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                       : "shrink-0 text-sm text-cf-muted transition-colors hover:text-cf-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-cf-accent"
                   }
@@ -796,6 +836,15 @@ export default function ChatWindow({
               >
                 {empty ? (
                   <div className="flex flex-col items-center justify-center px-2 pt-6 text-center sm:pt-12">
+                    {isNotary ? (
+                      <Image
+                        src="/italian-notary-logo.webp"
+                        alt=""
+                        width={96}
+                        height={96}
+                        className="mb-5 h-24 w-24 rounded-xl object-cover ring-1 ring-[#3d1818]/40"
+                      />
+                    ) : null}
                     <p className="max-w-sm font-sans text-[15px] leading-relaxed text-cf-muted">
                       {s.emptyPrompt}
                     </p>
@@ -806,7 +855,7 @@ export default function ChatWindow({
                           type="button"
                           onClick={() => void send(starter)}
                           className={
-                            isEmbed
+                            darkChrome
                               ? "rounded-lg border border-cf-border bg-cf-surface-muted px-4 py-2.5 text-sm text-cf-ink shadow-sm transition-colors duration-200 hover:border-cf-brand-cta/45 hover:bg-cf-page"
                               : "rounded-lg border border-cf-border bg-cf-surface-muted px-4 py-2.5 text-sm text-cf-ink shadow-sm transition-colors duration-200 hover:border-cf-accent/40 hover:bg-cf-page"
                           }
@@ -842,7 +891,7 @@ export default function ChatWindow({
                 <form onSubmit={handleSubmit} className="space-y-2">
                   <div
                     className={
-                      isEmbed
+                      darkChrome
                         ? "flex items-end gap-2 rounded-xl border border-cf-border bg-cf-input px-3 py-2 shadow-sm transition-shadow duration-200 focus-within:border-cf-brand-cta/50 focus-within:bg-cf-surface-muted focus-within:ring-1 focus-within:ring-cf-brand-cta/25"
                         : "flex items-end gap-2 rounded-xl border border-cf-border bg-cf-input px-3 py-2 shadow-sm transition-shadow duration-200 focus-within:border-cf-accent/45 focus-within:bg-cf-surface-muted focus-within:ring-1 focus-within:ring-cf-accent/25"
                     }
@@ -910,7 +959,7 @@ export default function ChatWindow({
                         isLoading || !input.trim() || isDictating
                       }
                       className={
-                        isEmbed
+                        darkChrome
                           ? "mb-1 rounded-lg bg-cf-brand-cta p-2 text-white shadow-sm transition-all duration-200 enabled:hover:-translate-y-px enabled:hover:bg-cf-brand-cta-hover enabled:hover:shadow-md active:translate-y-0 active:shadow-sm disabled:bg-neutral-200 disabled:text-neutral-400 dark:disabled:bg-cf-border dark:disabled:text-cf-muted"
                           : "mb-1 rounded-lg bg-cf-accent p-2 text-white shadow-sm transition-all duration-200 enabled:hover:-translate-y-px enabled:hover:bg-cf-accent-hover enabled:hover:shadow-md active:translate-y-0 active:shadow-sm disabled:bg-neutral-200 disabled:text-neutral-400 dark:disabled:bg-cf-border dark:disabled:text-cf-muted"
                       }

@@ -51,7 +51,7 @@ const components: Partial<Components> = {
       <a
         href={href}
         {...rest}
-        className="not-prose font-medium text-cf-accent underline decoration-cf-accent/45 underline-offset-[3px] transition-all duration-200 hover:rounded-sm hover:bg-black/[0.04] hover:decoration-cf-accent-hover hover:text-cf-accent-hover dark:hover:bg-white/[0.06] dark:hover:text-blue-300"
+        className="not-prose font-medium text-cf-accent underline decoration-cf-accent/45 underline-offset-[3px] transition-all duration-200 hover:rounded-sm hover:bg-black/[0.04] hover:decoration-cf-accent-hover hover:text-cf-accent-hover dark:hover:bg-white/[0.06]"
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
       >

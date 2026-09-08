@@ -18,7 +18,7 @@ export default function ItalianNotaryEmbedPreviewPage() {
         el.style.width = "min(400px, calc(100vw - 32px))";
         el.style.height = "min(640px, calc(100dvh - 32px))";
         el.style.borderRadius = "16px";
-        el.style.boxShadow = "0 12px 40px rgba(0,0,0,0.18)";
+        el.style.boxShadow = "0 12px 40px rgba(122, 18, 25, 0.35)";
       } else {
         el.style.width = "72px";
         el.style.height = "72px";
@@ -31,16 +31,19 @@ export default function ItalianNotaryEmbedPreviewPage() {
   }, []);
 
   return (
-    <div className="min-h-dvh bg-neutral-200 p-6 font-sans text-neutral-700">
-      <p className="mb-4 max-w-xl text-sm">
+    <div className="min-h-dvh bg-[#f4ece4] p-6 font-sans text-[#5c4040]">
+      <p className="mb-4 max-w-xl text-sm leading-relaxed">
         Preview for{" "}
         <a
           href="https://italiannotary.com/"
-          className="text-cf-brand-nav underline"
+          className="font-medium text-[#7a1219] underline decoration-[#7a1219]/40 underline-offset-2 hover:text-[#9b2c2c]"
         >
           italiannotary.com
         </a>
-        . Embed URL: <code className="rounded bg-white px-1">/embed/italian-notary</code>
+        . Embed URL:{" "}
+        <code className="rounded bg-[#efe2d6] px-1.5 py-0.5 text-[#1a0808]">
+          /embed/italian-notary
+        </code>
       </p>
       <iframe
         ref={iframeRef}

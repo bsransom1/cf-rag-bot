@@ -42,6 +42,51 @@ html.dark {
   --cf-scrollbar-thumb: rgba(148, 163, 184, 0.25);
 }
 
+/* ItalianNotary.com — black + oxblood from the N / seal / quill mark */
+html.in-theme,
+html:has(.in-theme),
+.in-theme {
+  color-scheme: light;
+  --cf-page: #f4ece4;
+  --cf-surface: #fbf6f0;
+  --cf-surface-muted: #efe2d6;
+  --cf-input: #fffdf9;
+  --cf-border: #d4b4aa;
+  --cf-muted: #7a5c5c;
+  --cf-body: #5c4040;
+  --cf-ink: #1a0808;
+  --cf-accent: #7a1219;
+  --cf-accent-hover: #9b2c2c;
+  --cf-brand-nav: #000000;
+  --cf-brand-cta: #7a1219;
+  --cf-brand-cta-hover: #9b2c2c;
+  --cf-quote-bg: #f3e6dc;
+  --cf-code-bg: #efe4d8;
+  --cf-scrollbar-thumb: rgba(122, 18, 25, 0.28);
+}
+
+html.in-theme.dark,
+html.dark.in-theme,
+html.dark:has(.in-theme) {
+  color-scheme: dark;
+  --cf-page: #000000;
+  --cf-surface: #0a0505;
+  --cf-surface-muted: #140808;
+  --cf-input: #0c0606;
+  --cf-border: #3d1818;
+  --cf-muted: #b09a9a;
+  --cf-body: #cfc0c0;
+  --cf-ink: #f7f1f1;
+  --cf-accent: #c45c5c;
+  --cf-accent-hover: #d97878;
+  --cf-brand-nav: #000000;
+  --cf-brand-cta: #8b1a1a;
+  --cf-brand-cta-hover: #a52a2a;
+  --cf-quote-bg: #120808;
+  --cf-code-bg: #140a0a;
+  --cf-scrollbar-thumb: rgba(165, 42, 42, 0.45);
+}
+
 html,
 body {
   height: 100%;
