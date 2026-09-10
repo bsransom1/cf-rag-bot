@@ -1,7 +1,7 @@
 [
   {
     "question": "What is ItalianNotary.com?",
-    "answer": "ItalianNotary.com is a service that helps clients obtain legally notarized documents and, when needed, apostilles, international shipping, and translations — all through a single streamlined process with one point of contact. It is designed to eliminate the confusion and delays that typically arise when preparing documents for international use, whether for use in Italy or in the United States. Website: https://italiannotary.com",
+    "answer": "ItalianNotary.com is a service that helps clients obtain legally notarized documents and, when needed, apostilles and international shipping — all through a single streamlined process with one point of contact. It is designed to eliminate the confusion and delays that typically arise when preparing documents for international use, whether for use in Italy or in the United States. ItalianNotary.com does not currently provide translation services. Website: https://italiannotary.com",
     "section": "1.1",
     "category": "overview",
     "tags": [
@@ -11,11 +11,11 @@
       "notarization",
       "apostille"
     ],
-    "plain_english": "It's a one-stop shop for getting documents officially notarized and ready for use in Italy or the US — online, from anywhere. Instead of you having to figure out notaries, apostilles, translations, and shipping separately, ItalianNotary.com handles it all together."
+    "plain_english": "It's a one-stop shop for getting documents officially notarized and ready for use in Italy or the US — online, from anywhere. Instead of you having to figure out notaries, apostilles, and shipping separately, ItalianNotary.com handles those together. It does not currently provide translation."
   },
   {
     "question": "What is the single biggest benefit of using ItalianNotary.com?",
-    "answer": "Simplicity. Most people do not realize how many separate steps are involved in preparing a document for international use — locating a notary, scheduling appointments, determining whether an apostille or County Clerk certification is required, dealing with government offices, obtaining a translation, arranging shipping, and making sure the document will be accepted by the recipient. ItalianNotary.com brings these steps together into a single process with one point of contact, saving time, reducing mistakes, and eliminating much of the uncertainty people typically face.",
+    "answer": "Simplicity. Most people do not realize how many separate steps are involved in preparing a document for international use — locating a notary, scheduling appointments, determining whether an apostille or County Clerk certification is required, dealing with government offices, arranging shipping, and making sure the document will be accepted by the recipient. ItalianNotary.com brings notarization, apostille, and shipping together into a single process with one point of contact, saving time, reducing mistakes, and eliminating much of the uncertainty people typically face. ItalianNotary.com does not currently provide translation services.",
     "section": "1.2",
     "category": "overview",
     "tags": [
@@ -23,7 +23,7 @@
       "simplicity",
       "one point of contact"
     ],
-    "plain_english": "Most people have no idea how many hoops are involved until they're already in the middle of it. ItalianNotary.com handles everything — notary, apostille, translation, shipping — so you're not bouncing between offices, government agencies, and couriers trying to figure it out yourself."
+    "plain_english": "Most people have no idea how many hoops are involved until they're already in the middle of it. ItalianNotary.com handles the notary, apostille, and shipping so you're not bouncing between offices, government agencies, and couriers. It does not currently provide translation."
   },
   {
     "question": "Who operates ItalianNotary.com?",
@@ -65,7 +65,7 @@
   },
   {
     "question": "How do I place an order on ItalianNotary.com?",
-    "answer": "Visit italiannotary.com/order. You will first complete an eligibility check, then upload your document, configure your options (witness service, apostille, translation, shipping and turnaround), review your order, schedule a video appointment, and receive delivery. The steps are: Upload, Configure, Review, Schedule, Delivery, Summary.",
+    "answer": "Visit italiannotary.com/order. You will first complete an eligibility check, then upload your document, configure your options (witness service, apostille, shipping and turnaround), review your order, schedule a video appointment, and receive delivery. The steps are: Upload, Configure, Review, Schedule, Delivery, Summary. ItalianNotary.com does not currently provide translation services.",
     "section": "1.6",
     "category": "ordering",
     "tags": [
@@ -106,7 +106,7 @@
   },
   {
     "question": "How much does notarization from ItalianNotary.com cost?",
-    "answer": "Notarization starts from $82 per document (flat fee). Optional services — including witness service, Italian legal document preparation, apostille certification, translation, shipping and expedited turnaround — are available at additional cost. The final price depends on the combination you select. Pricing is flat and transparent, with no hidden fees.",
+    "answer": "Notarization starts from $82 per document (flat fee). Optional services — including witness service, apostille certification, shipping and expedited turnaround — are available at additional cost. More substantive Italian legal document preparation — such as drafting a procura or legal declaration — is a separate paid add-on; pricing for that add-on has not yet been finalized, so contact us if you need legal document drafting. ItalianNotary.com does not currently provide translation services. The final price depends on the combination you select. Pricing is flat and transparent, with no hidden fees.",
     "section": "2.1",
     "category": "pricing",
     "tags": [
@@ -115,23 +115,24 @@
       "$82",
       "fees"
     ],
-    "plain_english": "It starts at $82 for one document. Extras like a witness, apostille, translation, or faster turnaround cost extra. You'll see the total before you pay."
+    "plain_english": "It starts at $82 for one document. Extras like a witness, apostille, or faster turnaround cost extra. Substantive Italian legal drafting is a separate add-on without a published price yet — contact us if you need that. Translation is not currently offered. You'll see the notarization total before you pay."
   },
   {
-    "question": "Is the price per document or per order?",
-    "answer": "The flat fee is per document. If you need multiple documents notarized, each one is priced separately, and you can configure each document's options independently.",
+    "question": "Is the price per document or per order? Can I include multiple documents in one order?",
+    "answer": "Yes. A single ItalianNotary.com order can contain multiple documents. Each document is priced individually.",
     "section": "2.2",
     "category": "pricing",
     "tags": [
       "price",
       "per document",
-      "multiple documents"
+      "multiple documents",
+      "one order"
     ],
-    "plain_english": "You pay per document, not per order. Each document can have its own options."
+    "plain_english": "Yes — one order can hold several documents. You pay per document, and each one can have its own options."
   },
   {
     "question": "What does the $82 base price include?",
-    "answer": "The base fee includes document review, document preparation, a live audio-visual notarization session, one signature, the notary certificate and seal, and digital delivery (PDF). Document preparation covers reviewing the document to prepare it for notarizing, including preparing the notarial wording to follow the template for Apostille and to comply with Italian notaio requirements. Optional add-ons — witness service, Italian legal document preparation, apostille certification, translation, shipping and expedited turnaround — are priced separately.",
+    "answer": "The base fee includes document review, document preparation, a live audio-visual notarization session, one signature, the notary certificate and seal, and digital delivery (PDF). Basic document preparation is included in the $82 base fee. This covers formatting and preparation of the notarial certificate. More substantive Italian legal document preparation — such as drafting a procura or legal declaration — is a separate paid add-on. Pricing for that add-on has not yet been finalized, so if you need legal document drafting, please contact us for assistance. Optional add-ons — witness service, apostille certification, shipping and expedited turnaround — are priced separately. ItalianNotary.com does not currently provide translation services.",
     "section": "2.3",
     "category": "pricing",
     "tags": [
@@ -139,7 +140,19 @@
       "what's included",
       "base fee"
     ],
-    "plain_english": "The base $82 gets you: your document reviewed and prepared, including the correct notarial wording so it will work for an apostille and satisfy Italian requirements; a live video notarization; the notary's stamp; and a PDF sent to you. Apostille, translation, witnesses, and shipping cost extra."
+    "plain_english": "The base $82 gets you: basic document prep (formatting and the notarial certificate), a live video notarization, the notary's stamp, and a PDF sent to you. Drafting an Italian legal document such as a procura is a separate add-on with no published price yet — contact us. Apostille, witnesses, and shipping cost extra. Translation is not currently offered."
+  },
+  {
+    "question": "Do you offer translation services? What is a sworn translation?",
+    "answer": "ItalianNotary.com does not currently provide translation services. If you are preparing a document for an Italian Comune or another recipient, it is advisable to confirm directly with the intended recipient whether the document is acceptable as drafted before executing it, including any translation or formatting requirements.",
+    "section": "2.4",
+    "category": "translation",
+    "tags": [
+      "translation",
+      "sworn translation",
+      "certified translation"
+    ],
+    "plain_english": "ItalianNotary.com does not currently provide translation. Before you sign, ask the office that will receive the document whether they need a translation and in what form."
   },
   {
     "question": "Who can use this service?",
@@ -205,6 +218,22 @@
     "plain_english": "Any passport from any country works. US driver's licenses and state IDs also work. Just make sure it's not expired, and have the actual ID with you — not a photocopy or a photo of it."
   },
   {
+    "question": "I'm an Italian citizen living in Italy. I have never been to the US and have no US documents or ID. Can I use your service?",
+    "answer": "You can use ItalianNotary.com if at least one of the following is true:\n1. You are a US citizen.\n2. You have current US immigration status, such as a valid green card or a valid US visa.\n3. You hold a current US government-issued photo ID, such as a driver license.\n4. At least one other signer on the same document is a US citizen or has US immigration status.\n5. Your document completes a transaction in the US, such as opening a bank account or buying property.\n\nNot being a US citizen, never having been to the United States, and not holding US documents or a US ID does not automatically disqualify you — eligibility depends on whether at least one of the points above applies (for example a passport from any country can be used as ID for the session, but a foreign passport alone is not one of the five eligibility grounds). Complete the eligibility check at the start of the order process. If none of the above clearly applies to you, we encourage you to submit an inquiry with further details on your situation so we can better understand your request — some situations may still qualify.",
+    "section": "3.6",
+    "category": "eligibility",
+    "tags": [
+      "eligibility",
+      "italian citizen",
+      "never been to the us",
+      "no us documents",
+      "no us id",
+      "non-us",
+      "who can use"
+    ],
+    "plain_english": "Living in Italy and having no US citizenship, US visit history, or US ID does not automatically mean you cannot use the service — it depends on the eligibility list (US citizen, US immigration status, US photo ID, a co-signer who qualifies, or a US transaction). A passport from any country works as session ID, but that is not itself one of the five eligibility grounds. Start with the eligibility check on the order form, or send ItalianNotary.com the details if you are unsure."
+  },
+  {
     "question": "What do I need to prepare before my online notarization session?",
     "answer": "Before your session, make sure you have:\n1. A valid, unexpired government-issued ID — passport (any country) or US government-issued photo ID. You must have the physical ID with you.\n2. The document to be notarized, uploaded in advance through your order.\n3. A device with a working camera and microphone — phone, tablet, or laptop all work.\n4. A stable, strong Wi-Fi connection. Cellular data is not recommended, as it can be unreliable and may cause technical problems that delay or lengthen your signing session.\n5. A quiet, reasonably well-lit space where you can be seen clearly on camera.\n\nPrior to signing, the platform will conduct a brief identity verification and knowledge-based assessment. It is straightforward and easy to navigate, but you will need your valid ID available and a stable connection to complete it.\n\nBeing unprepared is the most common cause of delays or rescheduling.",
     "section": "4.1",
@@ -246,7 +275,7 @@
   },
   {
     "question": "How long does the whole process take?",
-    "answer": "You select the turnaround time that best fits your needs during ordering. Depending on the service selected, timing options generally range from approximately one week to eight weeks. Apostille processing and translation may affect overall timing depending on the options selected.",
+    "answer": "You select the turnaround time that best fits your needs during ordering. Depending on the service selected, timing options generally range from approximately one week to eight weeks. Apostille processing may affect overall timing depending on the options selected.",
     "section": "4.4",
     "category": "process",
     "tags": [
@@ -256,7 +285,7 @@
       "one week",
       "eight weeks"
     ],
-    "plain_english": "You pick your timeline when ordering — options generally run from about one week to eight weeks depending on what you need. Apostille or translation may add time."
+    "plain_english": "You pick your timeline when ordering — options generally run from about one week to eight weeks depending on what you need. An apostille may add time."
   },
   {
     "question": "Does the platform tell me if I need an apostille?",
@@ -381,14 +410,14 @@
   },
   {
     "question": "Does an apostille replace a translation?",
-    "answer": "No. These are two different things. An apostille authenticates the origin of the document — the signature, the capacity of the signatory, and the seal. A translation renders the document's text into Italian. Depending on the receiving Italian authority, you may need both.",
+    "answer": "No. These are two different things. An apostille authenticates the origin of the document — the signature, the capacity of the signatory, and the seal. A translation renders the document's text into Italian. Depending on the receiving Italian authority, you may need both. ItalianNotary.com does not currently provide translation services. If you are preparing a document for an Italian Comune or another recipient, confirm directly with the intended recipient whether the document is acceptable as drafted, including any translation or formatting requirements.",
     "section": "5.5",
     "category": "apostille",
     "tags": [
       "apostille",
       "versus translation"
     ],
-    "plain_english": "An apostille proves the notarization is genuine. A translation converts the words into Italian. They do different things — you might need both."
+    "plain_english": "An apostille proves the notarization is genuine. A translation converts the words into Italian. They do different things — you might need both. ItalianNotary.com does not currently provide translation; confirm requirements with whoever will receive the document."
   },
   {
     "question": "Why can't I just use my local bank notary?",
@@ -531,7 +560,7 @@
   },
   {
     "question": "I'm not sure what document I need. Can you help?",
-    "answer": "ItalianNotary.com works with English-speaking lawyers admitted in Italy who have decades of experience in cross-border US–Italy matters. We encourage you to submit an inquiry with further details on your situation at info@italiannotary.com so we can better understand your request, or schedule a legal consultation with partner law firm Studio Legale Metta at studiolegalemetta.com/booking_step_one/booking-step-1-other/",
+    "answer": "ItalianNotary.com works with English-speaking lawyers admitted in Italy who have decades of experience in cross-border US–Italy matters. We encourage you to submit an inquiry with further details on your situation at info@italiannotary.com so we can better understand your request, or schedule a legal consultation with partner law firm Studio Legale Metta at https://www.studiolegalemetta.com/booking-appointments/",
     "section": "7.12",
     "category": "documents",
     "tags": [
@@ -570,7 +599,7 @@
   },
   {
     "question": "I'm applying for Italian citizenship by descent — what do I need notarized?",
-    "answer": "Italian citizenship by descent (jure sanguinis) applications typically require various supporting documents, some of which may need notarization, apostille, or translation. Common examples include affidavits of identity and sworn statements. Requirements vary considerably by the Italian consulate or Comune handling the application, so you should confirm the specific requirements with your citizenship attorney or the receiving office before ordering.",
+    "answer": "Italian citizenship by descent (jure sanguinis) applications typically require various supporting documents, some of which may need notarization or an apostille. Common examples include affidavits of identity and sworn statements. Requirements vary considerably by the Italian consulate or Comune handling the application, so you should confirm the specific requirements with your citizenship attorney or the receiving office before ordering, including any translation or formatting requirements. ItalianNotary.com does not currently provide translation services.",
     "section": "8.3",
     "category": "use-cases",
     "tags": [
@@ -689,7 +718,7 @@
   },
   {
     "question": "How do I schedule a legal consultation?",
-    "answer": "You can schedule a consultation with partner law firm Studio Legale Metta at studiolegalemetta.com/booking_step_one/booking-step-1-other/ — English-speaking Italian lawyers with decades of experience in cross-border US–Italy matters. You can also email ItalianNotary.com at info@italiannotary.com and they will point you to the right resource.",
+    "answer": "You can schedule a consultation with partner law firm Studio Legale Metta at https://www.studiolegalemetta.com/booking-appointments/ — English-speaking Italian lawyers with decades of experience in cross-border US–Italy matters. You can also email ItalianNotary.com at info@italiannotary.com and they will point you to the right resource.",
     "section": "9.5",
     "category": "legal",
     "tags": [
@@ -697,7 +726,7 @@
       "booking",
       "studio legale metta"
     ],
-    "plain_english": "Book with Studio Legale Metta at studiolegalemetta.com/booking_step_one/booking-step-1-other/, or email info@italiannotary.com and they will point you to the right resource."
+    "plain_english": "Book with Studio Legale Metta at https://www.studiolegalemetta.com/booking-appointments/, or email info@italiannotary.com and they will point you to the right resource."
   },
   {
     "question": "Will my online notarization be accepted in Italy?",
@@ -710,6 +739,20 @@
       "apostille"
     ],
     "plain_english": "Usually yes — with an apostille attached, Italian authorities accept these documents, and ItalianNotary.com arranges the apostille for you. Because online notarization produces an electronic document, not every US state will issue an apostille on one — that's part of what the service handles for you. And as with any international paperwork, the office receiving it has the final say. So before you order, it's worth having your lawyer, your Italian notary, or you directly ask the receiving office whether they accept documents notarized this way."
+  },
+  {
+    "question": "Is my online notarization guaranteed to be accepted in Italy?",
+    "answer": "Normally, yes — a document notarized through this service and filed in Italy together with an Apostille Certificate is accepted by Italian authorities, courts and institutions. Acceptance is not a guarantee, because the receiving Italian authority ultimately determines acceptance for the specific purpose. ItalianNotary.com arranges apostille certification to meet international authentication standards under the Hague Convention and Italian requirements. Because remote online notarization produces an electronically signed document, not every US state issues apostilles on electronically notarized documents — this is part of what ItalianNotary.com manages on your behalf when routing your order. We recommend that you or your legal representative confirm with the receiving office in advance that a document notarized via Remote Online Notarization is an accepted form.",
+    "section": "10.1a",
+    "category": "validity",
+    "tags": [
+      "guaranteed",
+      "accepted in italy",
+      "always",
+      "ron",
+      "apostille"
+    ],
+    "plain_english": "Normally yes — with an apostille, Italian authorities accept these documents. It is not a guarantee: the office receiving the document has the final say, so it is worth confirming with them first."
   },
   {
     "question": "What is the Hague Convention and why does it matter?",
@@ -737,7 +780,7 @@
   },
   {
     "question": "Is it safe to assume a notarized document accepted in one country will be accepted in another?",
-    "answer": "No. This is one of the most common and costly mistakes. Requirements vary by country, document type, and receiving institution. A document that is perfectly valid in the US may require an apostille, a specific form of translation, or additional certification to be accepted in Italy — and the reverse is equally true. ItalianNotary.com determines these requirements for you during the ordering process, and where the receiving authority's requirements are unusual, will help you confirm them in advance.",
+    "answer": "No. This is one of the most common and costly mistakes. Requirements vary by country, document type, and receiving institution. A document that is perfectly valid in the US may require an apostille, a specific form of translation, or additional certification to be accepted in Italy — and the reverse is equally true. Confirm translation and formatting requirements with the intended recipient before executing the document. ItalianNotary.com does not currently provide translation services. ItalianNotary.com determines notarization and apostille requirements for you during the ordering process, and where the receiving authority's requirements are unusual, will help you confirm them in advance.",
     "section": "10.4",
     "category": "validity",
     "tags": [
@@ -745,7 +788,7 @@
       "accepted",
       "cross-border"
     ],
-    "plain_english": "Don't assume. A document that's fine in the US may be rejected in Italy without an apostille or the right kind of translation. ItalianNotary.com works this out for you as part of the order, so you don't have to guess."
+    "plain_english": "Don't assume. A document that's fine in the US may be rejected in Italy without an apostille or the right kind of translation. Confirm those requirements with the receiving office. ItalianNotary.com does not currently provide translation; it does work out notarization and apostille needs as part of the order."
   },
   {
     "question": "What is the most common mistake people make?",
@@ -761,7 +804,7 @@
   },
   {
     "question": "What other mistakes do people commonly make?",
-    "answer": "Using the wrong form of notarization for the intended use; misunderstanding apostille or County Clerk requirements; obtaining the wrong category of translation; and assuming a document accepted in one country will automatically be accepted in another. These mistakes typically happen when people assemble the process themselves. ItalianNotary.com determines the requirements for your situation as part of the order, which removes nearly all of them.",
+    "answer": "Using the wrong form of notarization for the intended use; misunderstanding apostille or County Clerk requirements; and assuming a document accepted in one country will automatically be accepted in another, including translation or formatting requirements. These mistakes typically happen when people assemble the process themselves. Confirm any translation requirements with the intended recipient — ItalianNotary.com does not currently provide translation services. ItalianNotary.com determines notarization and apostille requirements for your situation as part of the order, which removes nearly all of those mistakes.",
     "section": "11.2",
     "category": "mistakes",
     "tags": [
@@ -769,11 +812,11 @@
       "wrong notarization",
       "apostille"
     ],
-    "plain_english": "Getting the wrong type of notarization, skipping the apostille because they didn't know they needed it, paying for the wrong kind of translation, or assuming everything transfers automatically between countries. These are the mistakes people make doing it alone — ItalianNotary.com works it out for you as part of the order."
+    "plain_english": "Getting the wrong type of notarization, skipping the apostille because they didn't know they needed it, or assuming everything transfers automatically between countries — including translation requirements. ItalianNotary.com does not currently provide translation. It does work out notarization and apostille needs as part of the order."
   },
   {
     "question": "How do I contact ItalianNotary.com?",
-    "answer": "Email: info@italiannotary.com | Contact form: italiannotary.com/contact-us. For legal consultations, visit studiolegalemetta.com/booking_step_one/booking-step-1-other/",
+    "answer": "Email: info@italiannotary.com | Contact form: italiannotary.com/contact-us. For legal consultations, visit https://www.studiolegalemetta.com/booking-appointments/",
     "section": "12.1",
     "category": "contact",
     "tags": [

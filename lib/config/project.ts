@@ -47,6 +47,18 @@ export interface ProjectConfig {
    * return `fallbackNoKnowledge` (human handoff / hard rules).
    */
   humanHandoffIntentTokens?: string[];
+  /**
+   * Ordered token groups with dedicated canned replies. Checked before
+   * `humanHandoffIntentTokens`. First matching group wins.
+   */
+  cannedHandoffs?: Array<{ tokens: string[]; reply: string }>;
+  /**
+   * Categories to force-include (prepend) when the query matches
+   * `forceIncludeCategoryIntentTokens`.
+   */
+  forceIncludeCategories?: string[];
+  /** If the user query matches any of these tokens, force-include the categories above. */
+  forceIncludeCategoryIntentTokens?: string[];
   /** Shown in embed UI / ARIA when set (e.g. ItalianNotary.com). */
   brandName?: string;
   /** Override empty-state prompt and starter chips per UI language. */
@@ -88,30 +100,40 @@ The response format (Answer / optional Simplified) is defined at the end of this
 
 If you are recommending professional help or a platform from the Context, include that guidance inside the "Answer" section.`;
 
-const ITALIAN_NOTARY_FALLBACK =
-  "I don't have a specific answer to that in my knowledge base. For personalized help, please email ItalianNotary.com at info@italiannotary.com, or use the contact form at italiannotary.com/contact-us. For legal questions specific to your situation, you can schedule a consultation with partner law firm Studio Legale Metta at studiolegalemetta.com/booking_step_one/booking-step-1-other/";
+export const ITALIAN_NOTARY_SLM_BOOKING =
+  "https://www.studiolegalemetta.com/booking-appointments/";
+
+export const ITALIAN_NOTARY_FALLBACK =
+  `I don't have a specific answer to that in my knowledge base. For personalized help, please email ItalianNotary.com at info@italiannotary.com, or use the contact form at italiannotary.com/contact-us. For legal questions specific to your situation, you can schedule a consultation with partner law firm Studio Legale Metta at ${ITALIAN_NOTARY_SLM_BOOKING}`;
+
+export const ITALIAN_NOTARY_CONTACT_REPLY =
+  "We handle inquiries by email so we can route them to the right person — info@italiannotary.com, or the contact form at italiannotary.com/contact-us.";
+
+export const ITALIAN_NOTARY_TRANSLATION_REPLY =
+  "ItalianNotary.com does not currently provide translation services. If you are preparing a document for an Italian Comune or another recipient, it is advisable to confirm directly with the intended recipient whether the document is acceptable as drafted before executing it, including any translation or formatting requirements.";
 
 const ITALIAN_NOTARY_SYSTEM_PROMPT = `You are the ItalianNotary.com assistant — a helpful bot that answers questions about ItalianNotary.com's US remote online notarization service (apostille, shipping, and related document support) for clients who need documents for use in Italy or the United States.
 
-Primary resource: **ItalianNotary.com** (https://italiannotary.com) — a one-stop service for legally notarized documents, apostilles, international shipping, and (when separately confirmed by a human) translations, with one point of contact.
+Primary resource: **ItalianNotary.com** (https://italiannotary.com) — a one-stop service for legally notarized documents, apostilles, and international shipping, with one point of contact. ItalianNotary.com does not currently provide translation services.
 
 Strict rules you MUST follow:
 1. Use ONLY the information in the provided "Context" block to answer. Do not use outside knowledge.
 2. If the answer is not in the context, reply with exactly this fallback (do not paraphrase): ${ITALIAN_NOTARY_FALLBACK}
 3. Never provide legal advice about a user's individual circumstances. Route those questions to a human using the fallback in rule 2.
-4. Do not speculate, invent procedures, prices, turnaround times, or Italian/US legal outcomes.
+4. Do not speculate, invent procedures, prices, turnaround times, or Italian/US legal outcomes. Do not quote a price for the Italian legal document preparation add-on; if asked, say pricing has not been finalized and they should contact ItalianNotary.com.
 5. Keep a professional, neutral tone.
 6. Do not list criteria, exceptions, or examples that are not clearly supported by the Context.
 7. If the Context is only partial, say only what the Context supports, then use the fallback in rule 2.
-8. Never provide a phone number. No phone number exists in this knowledge base; do not invent or infer one.
+8. Never provide a phone number. No phone number exists in this knowledge base; do not invent or infer one. Direct contact-method questions to email (info@italiannotary.com) or the contact form at italiannotary.com/contact-us.
 9. Never state or imply that a money-back guarantee exists.
-10. Do not answer translation questions (which form of translation an Italian authority will accept, sworn vs certified, whether a Comune/court/office will accept a translation). Direct the user to a human using the fallback in rule 2.
-11. Do not answer whether a specific Italian office, court, or Comune will accept a particular document. Direct the user to a human using the fallback in rule 2.
+10. ItalianNotary.com does not currently provide translation services. If asked about translation (sworn vs certified, whether a Comune will accept a translation, or whether you offer translation), say so and advise the user to confirm translation and formatting requirements with the intended recipient before executing the document. Never quote a translation price. Never invent whether a specific office will accept a translation.
+11. Do not answer whether a specific Italian office, court, or Comune will accept a particular document (other than restating the translation guidance in rule 10 when the question is about translation). Direct the user to a human using the fallback in rule 2.
 12. If asked for a copy of a session recording, do not invent an answer — use the fallback in rule 2.
 13. A US notary public is not a substitute for an Italian *notaio*. When Context says a property title transfer or similar act must be performed before a *notaio*, keep that distinction.
 14. Use site names and URLs exactly as they appear in Context. Format the first mention of each site as a Markdown link. Do not invent URLs.
 15. In every reply, use readable formatting: short paragraphs, lists where the Context enumerates several points, **bold** for the most important takeaway, and *italics* for non-English terms (e.g. *notaio*, *procura*, *apostille*).
 16. Do not mention CodiceFiscale.ai, ItalianCodiceFiscale.com, ItalianTaxes.com, or ItalianVisa.com unless they explicitly appear in Context for this turn.
+17. If the user uses an absolute qualifier such as "guaranteed," "always," or "definitely," lead with what the Context affirms, then state the limitation. Never open a substantive answer with a bare "No" when the Context frames the point affirmatively.
 
 The response format (Answer / optional Simplified) is defined at the end of this message — follow it exactly.`;
 
@@ -214,16 +236,23 @@ export const PROJECTS: Record<string, ProjectConfig> = {
       "marketing",
       "collaborat",
     ],
+    cannedHandoffs: [
+      {
+        tokens: ["translat", "traduzion", "asseverat", "giurat"],
+        reply: ITALIAN_NOTARY_TRANSLATION_REPLY,
+      },
+      {
+        tokens: [
+          "phone number",
+          "telephone number",
+          "numero di telefono",
+          "whatsapp",
+        ],
+        reply: ITALIAN_NOTARY_CONTACT_REPLY,
+      },
+    ],
     humanHandoffIntentTokens: [
-      "translat",
-      "traduzion",
-      "asseverat",
-      "giurat",
       "legalizzata",
-      "phone number",
-      "telephone number",
-      "numero di telefono",
-      "whatsapp",
       "money-back",
       "money back",
       "refund guarantee",
@@ -236,6 +265,22 @@ export const PROJECTS: Record<string, ProjectConfig> = {
       "tribunale",
       "giudice di pace",
       "comune",
+    ],
+    forceIncludeCategories: ["eligibility"],
+    forceIncludeCategoryIntentTokens: [
+      "eligib",
+      "can i use",
+      "can we use",
+      "qualify",
+      "non-us",
+      "non us",
+      "green card",
+      "who can",
+      "never been to the us",
+      "no us documents",
+      "no us document",
+      "no us id",
+      "italian citizen",
     ],
     simplifyIntentTokens: [
       "simplify",

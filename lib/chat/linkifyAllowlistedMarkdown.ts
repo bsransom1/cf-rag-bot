@@ -23,15 +23,28 @@ function isInsideMarkdownLink(s: string, start: number): boolean {
 
 type LinkRule = { re: RegExp; href: string; label: string };
 
+const SLM_BOOKING_HREF =
+  "https://www.studiolegalemetta.com/booking-appointments/";
+
 const RULES: LinkRule[] = [
   {
-    re: /\bstudiolegalemetta\.com\/booking_step_one\/booking-step-1-other\/?/i,
-    href: "https://studiolegalemetta.com/booking_step_one/booking-step-1-other/",
+    re: /\bhttps:\/\/(?:www\.)?studiolegalemetta\.com\/booking-appointments\/?/i,
+    href: SLM_BOOKING_HREF,
     label: "Studio Legale Metta",
   },
   {
-    re: /\bhttps:\/\/studiolegalemetta\.com\/booking_step_one\/booking-step-1-other\/?/i,
-    href: "https://studiolegalemetta.com/booking_step_one/booking-step-1-other/",
+    re: /\b(?:www\.)?studiolegalemetta\.com\/booking-appointments\/?/i,
+    href: SLM_BOOKING_HREF,
+    label: "Studio Legale Metta",
+  },
+  {
+    re: /\bhttps:\/\/(?:www\.)?studiolegalemetta\.com\/booking_step_one\/booking-step-1-other\/?/i,
+    href: SLM_BOOKING_HREF,
+    label: "Studio Legale Metta",
+  },
+  {
+    re: /\b(?:www\.)?studiolegalemetta\.com\/booking_step_one\/booking-step-1-other\/?/i,
+    href: SLM_BOOKING_HREF,
     label: "Studio Legale Metta",
   },
   {
