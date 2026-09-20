@@ -1,0 +1,52 @@
+<!--
+  ItalianNotary.com — chat assistant embed
+  Paste this once, before </body>, on every page that should show the widget.
+
+  Requirements:
+  - Parent page must be HTTPS
+  - Do not omit the <script>: without it the iframe stays 72×72 and the chat cannot open
+  - Do not set Permissions-Policy: microphone=() on the parent if dictation should work
+  - No API keys on this site; the iframe talks to cf-rag-bot.vercel.app
+-->
+<iframe
+  id="italian-notary-assistant"
+  title="ItalianNotary assistant"
+  src="https://cf-rag-bot.vercel.app/embed/italian-notary"
+  allow="microphone"
+  style="
+    border: 0;
+    background: transparent;
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    z-index: 9999;
+  "
+></iframe>
+<script>
+(function () {
+  var ORIGIN = "https://cf-rag-bot.vercel.app";
+  var iframe = document.getElementById("italian-notary-assistant");
+  if (!iframe) return;
+
+  window.addEventListener("message", function (event) {
+    if (event.origin !== ORIGIN) return;
+    var data = event.data;
+    if (!data || data.type !== "CF_EMBED_RESIZE") return;
+
+    if (data.open) {
+      iframe.style.width = "min(400px, calc(100vw - 32px))";
+      iframe.style.height = "min(640px, calc(100dvh - 32px))";
+      iframe.style.borderRadius = "16px";
+      iframe.style.boxShadow = "0 12px 40px rgba(122, 18, 25, 0.35)";
+    } else {
+      iframe.style.width = "72px";
+      iframe.style.height = "72px";
+      iframe.style.borderRadius = "50%";
+      iframe.style.boxShadow = "none";
+    }
+  });
+})();
+</script>

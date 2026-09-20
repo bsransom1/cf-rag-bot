@@ -8,6 +8,8 @@ node_modules
 .vercel
 dist
 build
-.cursor
+.cursor/*
+!.cursor/skills/
+!.cursor/skills/**
 *.tsbuildinfo
 .eslintcache

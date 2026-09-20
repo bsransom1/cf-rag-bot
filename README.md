@@ -67,8 +67,10 @@ lib/
     project.ts          # Per-project config registry
 data/
   italian_immigration.faq.json   # Source FAQ data
+  sources/                       # Last-fetched Google Doc snapshots
 scripts/
   ingest.ts             # `npm run ingest`
+  fetch-kb-doc.ts       # `npm run fetch-kb` — export Google Doc, diff vs FAQ
 supabase/
   schema.sql            # DB schema + match_documents(jsonb) RPC
 types/
@@ -119,6 +121,15 @@ Ingest a specific project:
 npm run ingest -- <project_id>
 ```
 
+Stakeholder Google Docs are the authoring files. Chat still reads the `documents` table, not Google. Pull a Doc and print a FAQ diff (does **not** ingest):
+
+```bash
+npm run fetch-kb -- italian_immigration
+npm run fetch-kb -- italian_notary
+```
+
+Snapshots land in `data/sources/<project_id>.md`. Review the diff, update the JSON if needed, then ingest. In Cursor, name the project and ask to sync from the Doc (`.cursor/skills/sync-kb-from-doc`).
+
 ### 3.5 Run locally
 
 ```bash
@@ -138,12 +149,21 @@ If you previously ran an older schema, re-running [`supabase/schema.sql`](./supa
 
 ### Chat transcripts & dashboard (first-time)
 
-1. Re-run or append the **`chat_*`** / **`dashboard_users`** section from [`supabase/schema.sql`](./supabase/schema.sql) in the Supabase SQL editor.
+1. Re-run or append the **`chat_*`** / **`dashboard_users`** section from [`supabase/schema.sql`](./supabase/schema.sql) in the Supabase SQL editor (CodiceFiscale project — that is where logins live). Existing projects: run [`supabase/dashboard_users_site.sql`](supabase/dashboard_users_site.sql).
 2. In **Authentication → URL configuration**, set **Site URL** to your production origin and add **`https://<your-domain>/auth/callback`** to **Redirect URLs**.
-3. Create a dashboard user (invite by email or sign up), then allowlist them:
-   `insert into public.dashboard_users (user_id) values ('<uuid-from-auth.users>');`
-4. Set **`NEXT_PUBLIC_SUPABASE_URL`** and **`NEXT_PUBLIC_SUPABASE_ANON_KEY`** (same as `SUPABASE_URL` / `SUPABASE_ANON_KEY`) so `/login` and `/dashboard` work.
-5. Open **`/dashboard`** (internal reviewers only; not linked from the public chat).
+3. Invite reviewers by email (Authentication → Users). Then allowlist them:
+
+```sql
+insert into public.dashboard_users (user_id, site)
+values
+  ('<cf-uuid>', 'CF'),
+  ('<notary-uuid-1>', 'italian-notary'),
+  ('<notary-uuid-2>', 'italian-notary'),
+  ('<notary-uuid-3>', 'italian-notary');
+```
+
+4. Set **`NEXT_PUBLIC_SUPABASE_URL`** and **`NEXT_PUBLIC_SUPABASE_ANON_KEY`**. Italian Notary chats also need **`SUPABASE_*_ITALIAN_NOTARY`** (including the service role) so `/dashboard/italian-notary` can read that database.
+5. Reviewers open **`/dashboard/CF`** or **`/dashboard/italian-notary`** (not linked from the public chat). Each signs in with their own email and password on that page.
 
 ---
 
@@ -236,11 +256,13 @@ The composer **microphone** records audio in the browser using `MediaRecorder` +
 
 Dictation calls `getUserMedia({ audio: true })`. If the chat is shown inside **another site’s `<iframe>`** (for example CodiceFiscale.ai embedding the Vercel `/embed` URL), the **parent page must delegate** the microphone feature to the iframe, or the browser will block access and you will see “Microphone access was blocked.”
 
+**Production iframe src:** `https://cf-rag-bot.vercel.app/embed` (not `cf-rag-bot-mem2.vercel.app` — that duplicate project is gone). Host install: [`handoff/codicefiscale.ai/`](handoff/codicefiscale.ai/).
+
 **Fix on the host site (CodiceFiscale.ai, WordPress, etc.):** add `allow="microphone"` to the iframe tag:
 
 ```html
 <iframe
-  src="https://YOUR-APP.vercel.app/embed"
+  src="https://cf-rag-bot.vercel.app/embed"
   allow="microphone"
   title="CodiceFiscale assistant"
   …
@@ -255,30 +277,18 @@ Reload the page after saving. Users must still click **Allow** if the browser sh
 
 | Item | Value |
 |------|--------|
-| **Embed URL** | `https://YOUR-APP.vercel.app/embed/italian-notary` |
+| **Embed URL** | `https://cf-rag-bot.vercel.app/embed/italian-notary` |
 | **`project_id`** | `italian_notary` |
 | **Supabase** | `databaseProfileId: italian_notary` → `SUPABASE_URL_ITALIAN_NOTARY`, `SUPABASE_ANON_KEY_ITALIAN_NOTARY`, `SUPABASE_SERVICE_ROLE_KEY_ITALIAN_NOTARY` (not the CodiceFiscale default DB) |
 | **FAQ source** | `data/italian_notary.faq.json` |
 | **Local preview** | `/embed-preview/italian-notary` |
+| **Host install (italiannotary.com)** | [`handoff/italiannotary.com/`](handoff/italiannotary.com/) — iframe **plus** resize script |
 
 **Ingest** (after creating a dedicated Supabase project and applying `supabase/schema.sql` there):
 
 ```bash
 npm run ingest -- italian_notary
 ```
-
-**Host snippet** for [italiannotary.com](https://italiannotary.com/):
-
-```html
-<iframe
-  src="https://YOUR-APP.vercel.app/embed/italian-notary"
-  allow="microphone"
-  title="ItalianNotary assistant"
-  style="border:0;background:transparent;position:fixed;right:16px;bottom:16px;width:72px;height:72px;border-radius:50%;z-index:9999;"
-></iframe>
-```
-
-Listen for `postMessage` `{ type: "CF_EMBED_RESIZE", open: boolean }` to resize the iframe (same protocol as `/embed`).
 
 **Vercel (required for hosted `/embed/italian-notary`):** add the three `SUPABASE_*_ITALIAN_NOTARY` variables to the **same** Vercel project as the app (Production + Preview), then redeploy. Without them, `/api/chat` cannot reach the notary database (ingest only updates Supabase from your laptop).
 
@@ -394,6 +404,7 @@ Change `EMBEDDING_MODEL` and/or `CHAT_MODEL` in `lib/ai/client.ts`. If the embed
 | `npm run start`      | Serve production build                  |
 | `npm run typecheck`  | `tsc --noEmit`                          |
 | `npm run ingest`     | Embed FAQ and upsert into Supabase      |
+| `npm run fetch-kb -- <project_id>` | Export the project's Google Doc, write `data/sources/`, print a FAQ diff. Add `--write-faq` to overlay Doc Q&As onto JSON (does not ingest). |
 
 ---
 

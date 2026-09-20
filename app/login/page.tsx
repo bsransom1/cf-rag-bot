@@ -1,17 +1,14 @@
-import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
-import { LoginForm } from "./login-form";
+import { getDashboardAccess } from "@/lib/dashboard/auth";
+import { DASHBOARD_SITE_CONFIG } from "@/lib/dashboard/sites";
 
-export default function LoginPage() {
-  return (
-    <Suspense
-      fallback={
-        <div className="mx-auto flex min-h-dvh max-w-md items-center justify-center px-4">
-          <p className="text-cf-muted">Loading…</p>
-        </div>
-      }
-    >
-      <LoginForm />
-    </Suspense>
-  );
+export const dynamic = "force-dynamic";
+
+export default async function LoginPage() {
+  const access = await getDashboardAccess();
+  if (access.status === "ok") {
+    redirect(DASHBOARD_SITE_CONFIG[access.site].path);
+  }
+  redirect(DASHBOARD_SITE_CONFIG.CF.path);
 }

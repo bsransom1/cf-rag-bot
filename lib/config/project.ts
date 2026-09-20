@@ -22,6 +22,11 @@ export interface ProjectConfig {
   name: string;
   /** Path (relative to repo root) to the FAQ JSON file used by the ingest script. */
   faqDataPath: string;
+  /**
+   * Google Doc id for the stakeholder knowledge-base file (anyone-with-link Viewer).
+   * Used by `npm run fetch-kb`. Chat never reads this at runtime.
+   */
+  googleDocId?: string;
   /** System prompt applied to every request. */
   systemPrompt: string;
   /** Message returned verbatim when retrieval yields nothing useful. */
@@ -141,6 +146,7 @@ export const PROJECTS: Record<string, ProjectConfig> = {
   italian_immigration: {
     id: "italian_immigration",
     name: "CodiceFiscale.ai — Italian Immigration",
+    googleDocId: "1sxTzC6ZqgWmDsyOP0lX-OnjYdF9hPruhAQ_xuqeQ8_g",
     faqDataPath: "data/italian_immigration.faq.json",
     systemPrompt: ITALIAN_IMMIGRATION_SYSTEM_PROMPT,
     fallbackNoKnowledge:
@@ -219,6 +225,7 @@ export const PROJECTS: Record<string, ProjectConfig> = {
       },
     },
     databaseProfileId: "italian_notary",
+    googleDocId: "1iKCziLNvE7ime1nXW58emFraFOfRPm7EvwPNZb65FAQ",
     faqDataPath: "data/italian_notary.faq.json",
     systemPrompt: ITALIAN_NOTARY_SYSTEM_PROMPT,
     fallbackNoKnowledge: ITALIAN_NOTARY_FALLBACK,

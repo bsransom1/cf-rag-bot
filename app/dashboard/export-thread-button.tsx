@@ -27,9 +27,9 @@ export function ExportThreadButton({ json, csv }: Props) {
         onClick={() =>
           downloadText(json, "application/json", `chat-export-${Date.now()}.json`)
         }
-        className="rounded-lg border border-cf-border bg-cf-surface px-3 py-2 text-sm font-medium text-cf-body transition-colors hover:bg-cf-page dark:border-cf-border dark:bg-cf-surface dark:hover:bg-cf-page"
+        className="rounded-md px-2 py-1 text-sm text-cf-muted hover:underline"
       >
-        Export JSON
+        Download JSON
       </button>
       {csv ? (
         <button
@@ -37,9 +37,9 @@ export function ExportThreadButton({ json, csv }: Props) {
           onClick={() =>
             downloadText(csv, "text/csv", `chat-export-${Date.now()}.csv`)
           }
-          className="rounded-lg border border-cf-border bg-cf-surface px-3 py-2 text-sm font-medium text-cf-body transition-colors hover:bg-cf-page dark:border-cf-border dark:bg-cf-surface dark:hover:bg-cf-page"
+          className="rounded-md px-2 py-1 text-sm text-cf-muted hover:underline"
         >
-          Export CSV
+          Download CSV
         </button>
       ) : null}
     </div>

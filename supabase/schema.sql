@@ -134,11 +134,14 @@ grant execute on function public.match_documents(jsonb)
 -- Dashboard users (rows in dashboard_users) may read/delete transcripts via
 -- the anon key + logged-in JWT.
 --
--- First-time setup: after Auth is enabled, invite Sarah (or create the user),
--- copy her uuid from auth.users, then:
---   insert into public.dashboard_users (user_id) values ('<uuid>');
+-- First-time setup: after Auth is enabled, invite the reviewer, copy their
+-- uuid from auth.users, then:
+--   insert into public.dashboard_users (user_id, site)
+--   values ('<uuid>', 'CF');           -- CodiceFiscale.ai → /dashboard/CF
+--   insert into public.dashboard_users (user_id, site)
+--   values ('<uuid>', 'italian-notary'); -- ItalianNotary.com → /dashboard/italian-notary
 --
--- App routes: /login, /auth/callback, /dashboard (see README § Chat dashboard).
+-- App routes: /dashboard/CF, /dashboard/italian-notary.
 -- -----------------------------------------------------------------------------
 
 create table if not exists public.chat_sessions (
@@ -176,7 +179,10 @@ create unique index if not exists chat_messages_session_client_id_unique
 
 create table if not exists public.dashboard_users (
   user_id       uuid primary key references auth.users (id) on delete cascade,
-  created_at    timestamptz not null default now()
+  created_at    timestamptz not null default now(),
+  -- Which dashboard this person may open: 'CF' or 'italian-notary'.
+  site          text not null default 'CF'
+    check (site in ('CF', 'italian-notary'))
 );
 
 alter table public.chat_sessions enable row level security;
@@ -198,6 +204,7 @@ create policy "dashboard_select_sessions"
     exists (
       select 1 from public.dashboard_users du
       where du.user_id = auth.uid()
+        and du.site = 'CF'
     )
   );
 
@@ -209,6 +216,7 @@ create policy "dashboard_delete_sessions"
     exists (
       select 1 from public.dashboard_users du
       where du.user_id = auth.uid()
+        and du.site = 'CF'
     )
   );
 
@@ -220,6 +228,7 @@ create policy "dashboard_select_messages"
     exists (
       select 1 from public.dashboard_users du
       where du.user_id = auth.uid()
+        and du.site = 'CF'
     )
   );
 
@@ -231,6 +240,7 @@ create policy "dashboard_delete_messages"
     exists (
       select 1 from public.dashboard_users du
       where du.user_id = auth.uid()
+        and du.site = 'CF'
     )
   );
 

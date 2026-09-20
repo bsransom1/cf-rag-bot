@@ -60,8 +60,7 @@
       "email",
       "contact",
       "info@italiannotary.com"
-    ],
-    "plain_english": "Email info@italiannotary.com."
+    ]
   },
   {
     "question": "How do I place an order on ItalianNotary.com?",
@@ -77,7 +76,7 @@
   },
   {
     "question": "Can I reach a real person if I have questions?",
-    "answer": "Yes. Knowledgeable assistance is available throughout the process — you are not left to navigate things on your own. You can reach the ItalianNotary.com team by email at info@italiannotary.com or through the contact form at italiannotary.com/contact-us. Questions about your order, the process, timing, shipping, or what documents you need go to the ItalianNotary.com support team. During the notarization session itself, you will be able to talk with the commissioned US notary handling your document. If your question is a legal one — what a document should say, or how Italian property or succession law applies to your situation — that falls outside what the support team can advise on, and you would be referred to one of the partner Italian lawyers.",
+    "answer": "Yes. Knowledgeable assistance is available throughout the process — you are not left to navigate things on your own.\n\nYou can reach the ItalianNotary.com team by email at info@italiannotary.com or through the contact form at italiannotary.com/contact-us. Questions about your order, the process, timing, shipping, or what documents you need go to the ItalianNotary.com support team.\n\nDuring the notarization session itself, you will be able to talk with the commissioned US notary handling your document.\n\nIf your question is a legal one — what a document should say, or how Italian property or succession law applies to your situation — that falls outside what the support team can advise on, and you would be referred to one of the partner Italian lawyers.",
     "section": "1.7",
     "category": "support",
     "tags": [
@@ -102,7 +101,7 @@
       "apostille",
       "procura"
     ],
-    "plain_english": "Notary Public (US) — A notary is basically an official witness with a license from their state. They check your ID, watch you sign, and stamp the document to confirm the signature is genuine.\n\nItalian notary (notaio) — An Italian notary is a much bigger deal than a US notary. For some things in Italy — like actually transferring the title on a house — only an Italian notary can do it. A US notary can't stand in for one.\n\nRemote Online Notarization (RON) — A notarization done over video call instead of in person. Legal in many US states.\n\nKnowledge-Based Authentication — Before you sign, the platform asks you a few questions to confirm you're really you.\n\nApostille — A certificate from the state government where the document was notarized that tells Italy the notarization is real.\n\nCounty Clerk Certification — In some states, before you can even get an apostille, the county government has to confirm the notary's credentials.\n\nPower of Attorney — A legal permission slip so someone can sign specific things on your behalf.\n\nSworn Translation — Italy's procedure where a translator swears an oath in front of a court official. Stricter than a typical certified translation.\n\nHague Apostille Convention — Around 120 countries, including the US and Italy, agree to accept apostilled documents from one another."
+    "plain_english": "Notary Public (US) — A notary is basically an official witness with a license from their state. They check your ID, watch you sign, and stamp the document to confirm the signature is genuine. The whole point is to prevent fraud on important legal paperwork.\n\nItalian notary (notaio) — An Italian notary is a much bigger deal than a US notary. They're a public official who writes up deeds, handles the taxes on a sale, and files property titles with the government. For some things in Italy — like actually transferring the title on a house — only an Italian notary can do it. A US notary can't stand in for one.\n\nRemote Online Notarization (RON) — It's a notarization done over video call instead of in person. The notary sees your face, sees your ID, watches you sign on screen — same thing as being in a room with them, but you're at home. Legal in many US states.\n\nKnowledge-Based Authentication — Before you sign, the platform asks you a few questions to confirm you're really you — the kind of thing pulled from public records. It only takes a minute and it's easy, but you do have to pass it.\n\nApostille — You get a document notarized in the US, but Italy has no way of knowing that notary is legitimate. The apostille is a certificate from the state government where it was notarized that tells Italy: this is real, we vouch for it.\n\nCounty Clerk Certification — In some states, before you can even get an apostille, the county government has to confirm the notary's credentials. It's an extra step that not everyone needs.\n\nPower of Attorney — Say you need to sign a contract to buy a house in Italy but you're in California. A power of attorney lets you say in writing: I give this specific person permission to sign this specific thing on my behalf. It's like a legal permission slip.\n\nSworn Translation — Italy has a specific procedure where a translator swears an oath in front of a court official that the translation is faithful. That oath is what gives it legal weight in Italy — not just the translator signing something. It's stricter than what most countries call a certified translation.\n\nHague Apostille Convention — Around 120 countries made a deal: if a document has an apostille, we'll all agree to accept it. The US and Italy both signed. That's why the apostille system works."
   },
   {
     "question": "How much does notarization from ItalianNotary.com cost?",
@@ -156,7 +155,7 @@
   },
   {
     "question": "Who can use this service?",
-    "answer": "You can use ItalianNotary.com if at least one of the following is true:\n1. You are a US citizen.\n2. You have current US immigration status, such as a valid green card or a valid US visa.\n3. You hold a current US government-issued photo ID, such as a driver license.\n4. At least one other signer on the same document is a US citizen or has US immigration status.\n5. Your document completes a transaction in the US, such as opening a bank account or buying property.\n\nEligibility can depend on additional factors, so the website includes a short eligibility check at the start of the order process. If none of the above clearly applies to you, we encourage you to submit an inquiry with further details on your situation so we can better understand your request — some situations may still qualify.",
+    "answer": "You can use ItalianNotary.com if at least one of the following is true:\n\n1. You are a US citizen.\n2. You have current US immigration status, such as a valid green card or a valid US visa.\n3. You hold a current US government-issued photo ID, such as a driver license.\n4. At least one other signer on the same document is a US citizen or has US immigration status.\n5. Your document completes a transaction in the US, such as opening a bank account or buying property.\n\nEligibility can depend on additional factors, so the website includes a short eligibility check at the start of the order process. If none of the above clearly applies to you, we encourage you to submit an inquiry with further details on your situation so we can better understand your request — some situations may still qualify.",
     "section": "3.1",
     "category": "eligibility",
     "tags": [
@@ -235,7 +234,7 @@
   },
   {
     "question": "What do I need to prepare before my online notarization session?",
-    "answer": "Before your session, make sure you have:\n1. A valid, unexpired government-issued ID — passport (any country) or US government-issued photo ID. You must have the physical ID with you.\n2. The document to be notarized, uploaded in advance through your order.\n3. A device with a working camera and microphone — phone, tablet, or laptop all work.\n4. A stable, strong Wi-Fi connection. Cellular data is not recommended, as it can be unreliable and may cause technical problems that delay or lengthen your signing session.\n5. A quiet, reasonably well-lit space where you can be seen clearly on camera.\n\nPrior to signing, the platform will conduct a brief identity verification and knowledge-based assessment. It is straightforward and easy to navigate, but you will need your valid ID available and a stable connection to complete it.\n\nBeing unprepared is the most common cause of delays or rescheduling.",
+    "answer": "Before your session, make sure you have:\n\n1. A valid, unexpired government-issued ID — passport (any country) or US government-issued photo ID. You must have the physical ID with you.\n2. The document to be notarized, uploaded in advance through your order.\n3. A device with a working camera and microphone — phone, tablet, or laptop all work.\n4. A stable, strong Wi-Fi connection. Cellular data is not recommended, as it can be unreliable and may cause technical problems that delay or lengthen your signing session.\n5. A quiet, reasonably well-lit space where you can be seen clearly on camera.\n\nPrior to signing, the platform will conduct a brief identity verification and knowledge-based assessment. It is straightforward and easy to navigate, but you will need your valid ID available and a stable connection to complete it.\n\nBeing unprepared is the most common cause of delays or rescheduling.",
     "section": "4.1",
     "category": "process",
     "tags": [
@@ -245,11 +244,11 @@
       "id",
       "kba"
     ],
-    "plain_english": "Have your actual ID with you, make sure your document is already uploaded, and get somewhere with strong wifi — not cellular data, which tends to drop and drag the session out. Before you sign, the platform runs a quick identity check and asks you a few verification questions. It's easy, but you do need your ID in hand and a solid connection. The call is short — don't let a dead phone battery or a forgotten passport be the reason it gets pushed."
+    "plain_english": "Have your actual ID with you, make sure your document is already uploaded, and get somewhere with strong wifi — not cellular data, which tends to drop and drag the session out. Before you sign, the platform runs a quick identity check and asks you a few verification questions. It's easy, but you do need your ID in hand and a solid connection to get through it. The call is short — don't let a dead phone battery or a forgotten passport be the reason it gets pushed."
   },
   {
     "question": "How does the online notarization process work?",
-    "answer": "After you upload your document, answer some questions and schedule your online notarization appointment, you will join a secure audio-visual session with a commissioned US notary. During the session the notary verifies your identity, reviews the document, and witnesses your electronic signature before applying the notarial certificate and seal. The session typically takes 15–30 minutes. Afterwards, ItalianNotary.com coordinates apostille processing if selected and arranges shipping to the final destination if requested.",
+    "answer": "After you upload your document, answer some questions and schedule your online notarization appointment, you will join a secure audio-visual session with a commissioned US notary.\n\nDuring the session the notary verifies your identity, reviews the document, and witnesses your electronic signature before applying the notarial certificate and seal. The session typically takes 15–30 minutes.\n\nAfterwards, ItalianNotary.com coordinates apostille processing if selected and arranges shipping to the final destination if requested.",
     "section": "4.2",
     "category": "process",
     "tags": [
@@ -275,7 +274,7 @@
   },
   {
     "question": "How long does the whole process take?",
-    "answer": "You select the turnaround time that best fits your needs during ordering. Depending on the service selected, timing options generally range from approximately one week to eight weeks. Apostille processing may affect overall timing depending on the options selected.",
+    "answer": "You select the turnaround time that best fits your needs during ordering. Depending on the service selected, timing options generally range from approximately one week to eight weeks. Apostille processing and translation may affect overall timing depending on the options selected.",
     "section": "4.4",
     "category": "process",
     "tags": [
@@ -285,7 +284,7 @@
       "one week",
       "eight weeks"
     ],
-    "plain_english": "You pick your timeline when ordering — options generally run from about one week to eight weeks depending on what you need. An apostille may add time."
+    "plain_english": "You pick your timeline when ordering — options generally run from about one week to eight weeks depending on what you need. Apostille or translation may add time."
   },
   {
     "question": "Does the platform tell me if I need an apostille?",
@@ -375,7 +374,7 @@
   },
   {
     "question": "Do I need an apostille for my document to be accepted in Italy?",
-    "answer": "In most cases, yes. If your notarized document will be filed with or submitted to Italian authorities, courts, or institutions, it will generally need an apostille attached. Two things are worth knowing up front. First, in some states a County Clerk certification is required before the state apostille can be issued. Second, requirements can vary depending on which Italian authority is receiving the document. ItalianNotary.com determines what applies to your situation during the ordering process and handles it end to end, so you do not need to navigate government offices yourself.",
+    "answer": "In most cases, yes. If your notarized document will be filed with or submitted to Italian authorities, courts, or institutions, it will generally need an apostille attached.\n\nTwo things are worth knowing up front. First, in some states a County Clerk certification is required before the state apostille can be issued. Second, requirements can vary depending on which Italian authority is receiving the document.\n\nItalianNotary.com determines what applies to your situation during the ordering process and handles it end to end, so you do not need to navigate government offices yourself.",
     "section": "5.2",
     "category": "apostille",
     "tags": [
@@ -532,8 +531,7 @@
     "tags": [
       "separazione dei beni",
       "matrimonial property"
-    ],
-    "plain_english": "Spouses agree in writing to keep assets separate rather than jointly owned. In Italy this has to be properly documented and authenticated."
+    ]
   },
   {
     "question": "What is signature authentication (Autentica di Firma)?",
@@ -585,7 +583,7 @@
   },
   {
     "question": "I'm buying property in Italy — what do I need notarized?",
-    "answer": "For Italian property purchases, a Power of Attorney (procura) is the most commonly notarized document. It allows a representative in Italy — such as your lawyer — to act on your behalf. An important point: under Italian law, property transfer contracts must be signed before an Italian notaio, who conducts the formal checks, calculates and collects the applicable taxes, and files the title with the Land Registry (Conservatoria). The US notarization does not replace that step. What it does is authenticate the Power of Attorney so that your representative can appear before the notaio in your place. You may also need supporting declarations, affidavits, or a separation of property agreement. Your Italian lawyer will specify exactly what is required for your transaction.",
+    "answer": "For Italian property purchases, a Power of Attorney (procura) is the most commonly notarized document. It allows a representative in Italy — such as your lawyer — to act on your behalf.\n\nAn important point: under Italian law, property transfer contracts must be signed before an Italian notaio, who conducts the formal checks, calculates and collects the applicable taxes, and files the title with the Land Registry (Conservatoria). The US notarization does not replace that step. What it does is authenticate the Power of Attorney so that your representative can appear before the notaio in your place.\n\nYou may also need supporting declarations, affidavits, or a separation of property agreement. Your Italian lawyer will specify exactly what is required for your transaction.",
     "section": "8.2",
     "category": "use-cases",
     "tags": [
@@ -595,7 +593,7 @@
       "notaio",
       "rogito"
     ],
-    "plain_english": "If you're buying a house in Italy from abroad, you typically need a Power of Attorney so your representative in Italy can handle the signing for you. In Italy, the actual property deed has to be signed in front of an Italian notary — that's the law, and a US notarization doesn't replace it. What the US notarization does is make your Power of Attorney valid, so your person in Italy can go stand in front of the Italian notary instead of you."
+    "plain_english": "If you're buying a house in Italy from abroad, you typically need a Power of Attorney so your representative in Italy can handle the signing for you. One thing worth understanding: in Italy, the actual property deed has to be signed in front of an Italian notary — that's the law, and a US notarization doesn't replace it. What the US notarization does is make your Power of Attorney valid, so your person in Italy can go stand in front of the Italian notary instead of you."
   },
   {
     "question": "I'm applying for Italian citizenship by descent — what do I need notarized?",
@@ -611,7 +609,7 @@
   },
   {
     "question": "I am handling an inheritance in Italy from the US — what do I need?",
-    "answer": "For Italian inheritance matters you may need one or more of the following:\n- A Power of Attorney authorizing someone in Italy to act on your behalf\n- An Inheritance Renunciation, if you are disclaiming the inheritance\n- An Affidavit regarding your identity or the facts of the estate\n- Certified Copies of relevant US documents\nItalianNotary.com can notarize all of these. Because Italian succession law differs substantially from US law, legal advice is recommended.",
+    "answer": "For Italian inheritance matters you may need one or more of the following:\n\n* A Power of Attorney authorizing someone in Italy to act on your behalf\n* An Inheritance Renunciation, if you are disclaiming the inheritance\n* An Affidavit regarding your identity or the facts of the estate\n* Certified Copies of relevant US documents\n\nItalianNotary.com can notarize all of these. Because Italian succession law differs substantially from US law, legal advice is recommended.",
     "section": "8.4",
     "category": "use-cases",
     "tags": [
@@ -647,7 +645,7 @@
   },
   {
     "question": "Why not just use an Italian notary, or go to the US Embassy in Italy?",
-    "answer": "Both are possible, but each adds steps. An Italian-notarized document intended for use in the United States often requires an apostille and, in some cases, translation or further certification — which adds time and cost. Italian notai are also limited in number: approximately 5,000 practice nationally, admitted through a competitive state examination, so appointments can require significant lead time. US Embassy and Consulate notarial appointments in Italy are available but are typically limited, must be booked in advance, and require travelling to the consular post in person. A US remote online notarization produces a US-notarized document from the outset, which can avoid those additional steps entirely, is typically much faster, and does not require you to travel.",
+    "answer": "Both are possible, but each adds steps. An Italian-notarized document intended for use in the United States often requires an apostille and, in some cases, translation or further certification — which adds time and cost. Italian notai are also limited in number: approximately 5,000 practice nationally, admitted through a competitive state examination, so appointments can require significant lead time.\n\nUS Embassy and Consulate notarial appointments in Italy are available but are typically limited, must be booked in advance, and require travelling to the consular post in person.\n\nA US remote online notarization produces a US-notarized document from the outset, which can avoid those additional steps entirely, is typically much faster, and does not require you to travel.",
     "section": "8.7",
     "category": "use-cases",
     "tags": [
@@ -730,7 +728,7 @@
   },
   {
     "question": "Will my online notarization be accepted in Italy?",
-    "answer": "Normally, yes — a document notarized through this service and filed in Italy together with an Apostille Certificate is accepted by Italian authorities, courts and institutions. ItalianNotary.com arranges apostille certification to meet international authentication standards under the Hague Convention and Italian requirements. Two things are worth understanding. First, because remote online notarization produces an electronically signed document, not every US state issues apostilles on electronically notarized documents — this is part of what ItalianNotary.com manages on your behalf when routing your order. Second, as with any cross-border filing, the receiving Italian authority ultimately determines acceptance for the specific purpose. For this reason, we recommend that you or your legal representative — your attorney or notaio — confirm with the receiving office in advance that a document notarized via Remote Online Notarization is an accepted form. Tell ItalianNotary.com when you order if your document is going to a specific office, court or institution, so the correct route can be selected. Examples of situations worth checking first: filings with a specific Comune or Tribunale, matters already before an Italian court, and any office that has previously rejected a foreign document from you.",
+    "answer": "Normally, yes — a document notarized through this service and filed in Italy together with an Apostille Certificate is accepted by Italian authorities, courts and institutions. ItalianNotary.com arranges apostille certification to meet international authentication standards under the Hague Convention and Italian requirements.\n\nTwo things are worth understanding. First, because remote online notarization produces an electronically signed document, not every US state issues apostilles on electronically notarized documents — this is part of what ItalianNotary.com manages on your behalf when routing your order. Second, as with any cross-border filing, the receiving Italian authority ultimately determines acceptance for the specific purpose.\n\nFor this reason, we recommend that you or your legal representative — your attorney or notaio — confirm with the receiving office in advance that a document notarized via Remote Online Notarization is an accepted form. Tell ItalianNotary.com when you order if your document is going to a specific office, court or institution, so the correct route can be selected. Examples of situations worth checking first: filings with a specific Comune or Tribunale, matters already before an Italian court, and any office that has previously rejected a foreign document from you.",
     "section": "10.1",
     "category": "validity",
     "tags": [
@@ -738,7 +736,7 @@
       "ron",
       "apostille"
     ],
-    "plain_english": "Usually yes — with an apostille attached, Italian authorities accept these documents, and ItalianNotary.com arranges the apostille for you. Because online notarization produces an electronic document, not every US state will issue an apostille on one — that's part of what the service handles for you. And as with any international paperwork, the office receiving it has the final say. So before you order, it's worth having your lawyer, your Italian notary, or you directly ask the receiving office whether they accept documents notarized this way."
+    "plain_english": "Usually yes — with an apostille attached, Italian authorities accept these documents, and ItalianNotary.com arranges the apostille for you. Two things worth knowing. Because online notarization produces an electronic document, not every US state will issue an apostille on one — that's part of what the service handles for you. And as with any international paperwork, the office receiving it has the final say. So before you order, it's worth having your lawyer, your Italian notary, or you directly ask the receiving office whether they accept documents notarized this way. It's a five-minute question that can save weeks."
   },
   {
     "question": "Is my online notarization guaranteed to be accepted in Italy?",
@@ -847,8 +845,7 @@
       "track",
       "order status",
       "order number"
-    ],
-    "plain_english": "Yes — use your order number on the website, and you'll be notified when documents are ready."
+    ]
   },
   {
     "question": "Does ItalianNotary.com have an affiliate program?",
@@ -857,8 +854,7 @@
     "category": "advertising",
     "tags": [
       "affiliate"
-    ],
-    "plain_english": "Yes — see affiliate.italiannotary.com"
+    ]
   },
   {
     "question": "Can lawyers or businesses register with ItalianNotary.com?",
@@ -869,8 +865,7 @@
       "business",
       "lawyers",
       "register"
-    ],
-    "plain_english": "Yes — register at italiannotary.com/business/register"
+    ]
   },
   {
     "question": "Where can I find the Terms of Service and Privacy Policy?",
@@ -880,8 +875,7 @@
     "tags": [
       "terms",
       "privacy policy"
-    ],
-    "plain_english": "Terms: italiannotary.com/terms-of-service. Privacy: italiannotary.com/privacy-policy."
+    ]
   },
   {
     "question": "I want to advertise or partner with ItalianNotary.com. Who do I contact?",
@@ -892,8 +886,7 @@
       "advertise",
       "partner",
       "partnership"
-    ],
-    "plain_english": "Use italiannotary.com/contact-us or email info@italiannotary.com."
+    ]
   },
   {
     "question": "What does 'by The Italian Bureau' mean?",

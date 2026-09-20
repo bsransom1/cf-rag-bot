@@ -11,13 +11,15 @@ export async function GET(request: Request): Promise<NextResponse> {
   const next = searchParams.get("next") ?? "/dashboard";
 
   if (!code) {
-    return NextResponse.redirect(`${origin}/login?error=auth`);
+    return NextResponse.redirect(`${origin}/dashboard/CF`);
   }
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const url =
+    process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  const anon =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
   if (!url || !anon) {
-    return NextResponse.redirect(`${origin}/login?error=config`);
+    return NextResponse.redirect(`${origin}/dashboard/CF`);
   }
 
   const cookieStore = cookies();
@@ -38,7 +40,7 @@ export async function GET(request: Request): Promise<NextResponse> {
 
   const { error } = await supabase.auth.exchangeCodeForSession(code);
   if (error) {
-    return NextResponse.redirect(`${origin}/login?error=auth`);
+    return NextResponse.redirect(`${origin}/dashboard/CF`);
   }
 
   return NextResponse.redirect(`${origin}${next}`);

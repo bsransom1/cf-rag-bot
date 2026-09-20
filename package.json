@@ -13,6 +13,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "ingest": "tsx scripts/ingest.ts",
+    "fetch-kb": "tsx scripts/fetch-kb-doc.ts",
     "test:chat-scenarios": "tsx scripts/chat-scenarios.ts"
   },
   "dependencies": {
