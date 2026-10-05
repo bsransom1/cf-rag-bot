@@ -39,6 +39,15 @@ export function parseDashboardSite(value: unknown): DashboardSite | null {
   return isDashboardSite(value) ? value : null;
 }
 
+/** Where /dashboard and /login send someone who can open one or both rooms. */
+export function dashboardLandingPath(sites: readonly DashboardSite[]): string {
+  if (sites.includes("italian-notary")) {
+    return DASHBOARD_SITE_CONFIG["italian-notary"].path;
+  }
+  const site = sites[0] ?? "CF";
+  return DASHBOARD_SITE_CONFIG[site].path;
+}
+
 /** Date + time, no seconds: "Sep 19, 2026, 8:44 PM". */
 export function formatDashboardTime(iso: string): string {
   return new Date(iso).toLocaleString("en-US", {

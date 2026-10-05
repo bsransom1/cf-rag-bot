@@ -17,13 +17,13 @@ export async function SiteDashboardHome({ site }: { site: DashboardSite }) {
   if (access.status === "forbidden") {
     return <NotAllowlistedNotice site={site} />;
   }
-  if (access.site !== site) {
-    return <WrongSiteNotice attempted={site} actual={access.site} />;
+  if (!access.sites.includes(site)) {
+    return <WrongSiteNotice attempted={site} actual={access.sites[0]} />;
   }
 
   const { conversations, error } = await listDashboardConversations(site);
   return (
-    <DashboardShell site={site} email={access.email}>
+    <DashboardShell site={site} email={access.email} sites={access.sites}>
       <ConversationList
         site={site}
         conversations={conversations}

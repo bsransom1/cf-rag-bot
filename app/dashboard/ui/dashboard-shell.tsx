@@ -8,13 +8,16 @@ import {
 export function DashboardShell({
   site,
   email,
+  sites,
   children,
 }: {
   site: DashboardSite;
   email: string | null;
+  sites?: DashboardSite[];
   children: React.ReactNode;
 }) {
   const config = DASHBOARD_SITE_CONFIG[site];
+  const others = (sites ?? []).filter((other) => other !== site);
   return (
     <div className="min-h-dvh bg-cf-page">
       <header className="border-b border-cf-border bg-cf-surface px-4 py-3 dark:border-cf-border dark:bg-cf-surface">
@@ -26,6 +29,15 @@ export function DashboardShell({
             {config.title}
           </Link>
           <nav className="flex items-center gap-3 text-sm text-cf-muted">
+            {others.map((other) => (
+              <Link
+                key={other}
+                href={DASHBOARD_SITE_CONFIG[other].path}
+                className="text-cf-brand-cta hover:underline"
+              >
+                {DASHBOARD_SITE_CONFIG[other].title}
+              </Link>
+            ))}
             {email ? (
               <span className="truncate text-cf-body" title={email}>
                 {email}

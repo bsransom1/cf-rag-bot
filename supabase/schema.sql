@@ -178,11 +178,13 @@ create unique index if not exists chat_messages_session_client_id_unique
   where client_message_id is not null;
 
 create table if not exists public.dashboard_users (
-  user_id       uuid primary key references auth.users (id) on delete cascade,
+  user_id       uuid not null references auth.users (id) on delete cascade,
   created_at    timestamptz not null default now(),
-  -- Which dashboard this person may open: 'CF' or 'italian-notary'.
+  -- Which dashboard this row grants: 'CF' and/or 'italian-notary'.
+  -- One person can have both rows.
   site          text not null default 'CF'
-    check (site in ('CF', 'italian-notary'))
+    check (site in ('CF', 'italian-notary')),
+  primary key (user_id, site)
 );
 
 alter table public.chat_sessions enable row level security;

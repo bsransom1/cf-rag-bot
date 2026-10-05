@@ -51,7 +51,7 @@ export async function deleteChatSessionAction(
   if (access.status === "anon") {
     redirect(home);
   }
-  if (access.status !== "ok" || access.site !== site) {
+  if (access.status !== "ok" || !access.sites.includes(site)) {
     redirect(home);
   }
 

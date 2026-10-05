@@ -25,8 +25,8 @@ export async function SiteDashboardThread({
   if (access.status === "forbidden") {
     return <NotAllowlistedNotice site={site} />;
   }
-  if (access.site !== site) {
-    return <WrongSiteNotice attempted={site} actual={access.site} />;
+  if (!access.sites.includes(site)) {
+    return <WrongSiteNotice attempted={site} actual={access.sites[0]} />;
   }
 
   const { session, messages, error } = await getDashboardThread(site, sessionId);
@@ -35,7 +35,7 @@ export async function SiteDashboardThread({
   }
 
   return (
-    <DashboardShell site={site} email={access.email}>
+    <DashboardShell site={site} email={access.email} sites={access.sites}>
       {error ? (
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800">
           Could not load this conversation.
